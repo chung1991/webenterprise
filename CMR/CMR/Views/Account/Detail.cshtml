@@ -1,0 +1,60 @@
+﻿@model CMR.Models.UserDetailModel
+
+<div>
+    <h4>Information For @Html.DisplayNameFor(model => model.fullName)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.userName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.roleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.roleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telelphone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telelphone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.birthday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.birthday)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { accountId = Model.accountId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

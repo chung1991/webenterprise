@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CMRDBModelStoreContainer" CdmEntityContainer="CRMContext">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="CMRDBModel.Account">
+        <MappingFragment StoreEntitySet="Account">
+          <ScalarProperty Name="accountId" ColumnName="accountId" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+          <ScalarProperty Name="profileId" ColumnName="profileId" />
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AnnualCourses">
+      <EntityTypeMapping TypeName="CMRDBModel.AnnualCourse">
+        <MappingFragment StoreEntitySet="AnnualCourse">
+          <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
+          <ScalarProperty Name="clAccountId" ColumnName="clAccountId" />
+          <ScalarProperty Name="cmAccountId" ColumnName="cmAccountId" />
+          <ScalarProperty Name="academicYear" ColumnName="academicYear" />
+          <ScalarProperty Name="courseId" ColumnName="courseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ApproveStatus">
+      <EntityTypeMapping TypeName="CMRDBModel.ApproveStatu">
+        <MappingFragment StoreEntitySet="ApproveStatus">
+          <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="CMRDBModel.Comment">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="commentId" ColumnName="commentId" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="reportId" ColumnName="reportId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="CMRDBModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="courseId" ColumnName="courseId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="facultyId" ColumnName="facultyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Faculties">
+      <EntityTypeMapping TypeName="CMRDBModel.Faculty">
+        <MappingFragment StoreEntitySet="Faculty">
+          <ScalarProperty Name="facultyId" ColumnName="facultyId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="pvcAccountId" ColumnName="pvcAccountId" />
+          <ScalarProperty Name="dltAccountId" ColumnName="dltAccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="CMRDBModel.Profile">
+        <MappingFragment StoreEntitySet="Profile">
+          <ScalarProperty Name="profileId" ColumnName="profileId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="telephone" ColumnName="telephone" />
+          <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reports">
+      <EntityTypeMapping TypeName="CMRDBModel.Report">
+        <MappingFragment StoreEntitySet="Report">
+          <ScalarProperty Name="reportId" ColumnName="reportId" />
+          <ScalarProperty Name="reportTypeId" ColumnName="reportTypeId" />
+          <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+          <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportTypes">
+      <EntityTypeMapping TypeName="CMRDBModel.ReportType">
+        <MappingFragment StoreEntitySet="ReportType">
+          <ScalarProperty Name="reportTypeId" ColumnName="reportTypeId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="CMRDBModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="roleId" ColumnName="roleId" />
+          <ScalarProperty Name="roleName" ColumnName="roleName" />
+          <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

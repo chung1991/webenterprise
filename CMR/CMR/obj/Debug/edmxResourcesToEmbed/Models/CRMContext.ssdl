@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CMRDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="accountId" />
+    </Key>
+    <Property Name="accountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="varchar" MaxLength="20" />
+    <Property Name="userPassword" Type="varchar" MaxLength="100" />
+    <Property Name="profileId" Type="int" />
+    <Property Name="roleId" Type="int" />
+  </EntityType>
+  <EntityType Name="AnnualCourse">
+    <Key>
+      <PropertyRef Name="annualCourseId" />
+    </Key>
+    <Property Name="annualCourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="clAccountId" Type="int" />
+    <Property Name="cmAccountId" Type="int" />
+    <Property Name="academicYear" Type="int" />
+    <Property Name="courseId" Type="int" />
+  </EntityType>
+  <EntityType Name="ApproveStatus">
+    <Key>
+      <PropertyRef Name="approveStatusId" />
+    </Key>
+    <Property Name="approveStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="commentId" />
+    </Key>
+    <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="content" Type="varchar" MaxLength="500" />
+    <Property Name="reportId" Type="int" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="courseId" />
+    </Key>
+    <Property Name="courseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="facultyId" Type="int" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="facultyId" />
+    </Key>
+    <Property Name="facultyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="pvcAccountId" Type="int" />
+    <Property Name="dltAccountId" Type="int" />
+  </EntityType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="profileId" />
+    </Key>
+    <Property Name="profileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="address" Type="varchar" MaxLength="255" />
+    <Property Name="telephone" Type="varchar" MaxLength="12" />
+    <Property Name="dateOfBirth" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="reportId" />
+    </Key>
+    <Property Name="reportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="reportTypeId" Type="int" />
+    <Property Name="approveStatusId" Type="int" />
+    <Property Name="annualCourseId" Type="int" />
+  </EntityType>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="reportTypeId" />
+    </Key>
+    <Property Name="reportTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="roleId" />
+    </Key>
+    <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roleName" Type="varchar" MaxLength="100" />
+    <Property Name="roleDescription" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__Account__profile__267ABA7A">
+    <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="profileId" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="profileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Account__roleId__276EDEB3">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="roleId" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="roleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AnnualCou__clAcc__30F848ED">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="accountId" />
+      </Principal>
+      <Dependent Role="AnnualCourse">
+        <PropertyRef Name="clAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AnnualCou__cmAcc__31EC6D26">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="accountId" />
+      </Principal>
+      <Dependent Role="AnnualCourse">
+        <PropertyRef Name="cmAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__AnnualCou__cours__32E0915F">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="courseId" />
+      </Principal>
+      <Dependent Role="AnnualCourse">
+        <PropertyRef Name="courseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Comment__reportI__3F466844">
+    <End Role="Report" Type="Self.Report" Multiplicity="0..1" />
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Report">
+        <PropertyRef Name="reportId" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="reportId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Course__facultyI__2E1BDC42">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+    <End Role="Course" Type="Self.Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="facultyId" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="facultyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Faculty__dltAcco__2B3F6F97">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="accountId" />
+      </Principal>
+      <Dependent Role="Faculty">
+        <PropertyRef Name="dltAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Faculty__pvcAcco__2A4B4B5E">
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="accountId" />
+      </Principal>
+      <Dependent Role="Faculty">
+        <PropertyRef Name="pvcAccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__annualCo__3C69FB99">
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnnualCourse">
+        <PropertyRef Name="annualCourseId" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="annualCourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__approveS__3B75D760">
+    <End Role="ApproveStatus" Type="Self.ApproveStatus" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproveStatus">
+        <PropertyRef Name="approveStatusId" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="approveStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__reportTy__3A81B327">
+    <End Role="ReportType" Type="Self.ReportType" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="reportTypeId" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="reportTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CMRDBModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnnualCourse" EntityType="Self.AnnualCourse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ApproveStatus" EntityType="Self.ApproveStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReportType" EntityType="Self.ReportType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Account__profile__267ABA7A" Association="Self.FK__Account__profile__267ABA7A">
+      <End Role="Profile" EntitySet="Profile" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Account__roleId__276EDEB3" Association="Self.FK__Account__roleId__276EDEB3">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AnnualCou__clAcc__30F848ED" Association="Self.FK__AnnualCou__clAcc__30F848ED">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="AnnualCourse" EntitySet="AnnualCourse" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AnnualCou__cmAcc__31EC6D26" Association="Self.FK__AnnualCou__cmAcc__31EC6D26">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="AnnualCourse" EntitySet="AnnualCourse" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AnnualCou__cours__32E0915F" Association="Self.FK__AnnualCou__cours__32E0915F">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="AnnualCourse" EntitySet="AnnualCourse" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Comment__reportI__3F466844" Association="Self.FK__Comment__reportI__3F466844">
+      <End Role="Report" EntitySet="Report" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Course__facultyI__2E1BDC42" Association="Self.FK__Course__facultyI__2E1BDC42">
+      <End Role="Faculty" EntitySet="Faculty" />
+      <End Role="Course" EntitySet="Course" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Faculty__dltAcco__2B3F6F97" Association="Self.FK__Faculty__dltAcco__2B3F6F97">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Faculty" EntitySet="Faculty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Faculty__pvcAcco__2A4B4B5E" Association="Self.FK__Faculty__pvcAcco__2A4B4B5E">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Faculty" EntitySet="Faculty" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__annualCo__3C69FB99" Association="Self.FK__Report__annualCo__3C69FB99">
+      <End Role="AnnualCourse" EntitySet="AnnualCourse" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__approveS__3B75D760" Association="Self.FK__Report__approveS__3B75D760">
+      <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__reportTy__3A81B327" Association="Self.FK__Report__reportTy__3A81B327">
+      <End Role="ReportType" EntitySet="ReportType" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
