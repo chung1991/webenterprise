@@ -76,3 +76,8 @@ create table Comment (
 	commentId int primary key identity(1, 1),
 	content varchar(500),
 )
+create table CLAnnualCourse(
+	Id int primary key identity (1, 1),
+	CLId int foreign key(CLId) references Account(accountId),
+	annualCourseId int foreign key(annualCourseId) references AnnualCourse(annualCourseId)
+)
