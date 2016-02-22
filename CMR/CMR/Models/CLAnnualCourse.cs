@@ -12,21 +12,13 @@ namespace CMR.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Report
+    public partial class CLAnnualCourse
     {
-        public Report()
-        {
-            this.Comments = new HashSet<Comment>();
-        }
-    
-        public int reportId { get; set; }
-        public Nullable<int> reportTypeId { get; set; }
-        public Nullable<int> approveStatusId { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> CLId { get; set; }
         public Nullable<int> annualCourseId { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual AnnualCourse AnnualCourse { get; set; }
-        public virtual ApproveStatu ApproveStatu { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ReportType ReportType { get; set; }
     }
 }

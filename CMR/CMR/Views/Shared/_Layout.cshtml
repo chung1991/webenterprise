@@ -38,33 +38,19 @@
     <div class="container body-content">
         <div class="row">
             <div class="col-sm-3">
-                <div class="sidebar">
-                    <ul>
-                        <li>
-                            <a href="#" class="head collapsed @Html.ActivePage("Account")"><i class="fa fa-users fa-lg"></i> Users <span class="arrow"></span></a>
-                            <ul class="sub-menu">
-                                <li class="@Html.ActivePage("Account","Register")">
-                                    @Html.ActionLink("Create new user","Register","Account")
-                                </li>
-                                <li class="@Html.ActivePage("Account","Index")">
-                                    @Html.ActionLink("List of users", "Index", "Account")
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="head collapsed @Html.ActivePage("Report")"><i class="fa fa-folder-open"></i> Reports <span class="arrow"></span></a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#">Exception report</a>
-                                </li>
-                                <li>
-                                    <a href="#">Another report</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </div>
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        Html.RenderPartial("_AdminAction");
+                    }
+                    else
+                    {
+                        if (User.IsInRole("CL"))
+                        {
+                            Html.RenderPartial("_CLAction");
+                        }
+                    }
+                }
             </div>
 
 

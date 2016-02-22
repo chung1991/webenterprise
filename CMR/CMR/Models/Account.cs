@@ -16,18 +16,15 @@ namespace CMR.Models
     {
         public Account()
         {
-            this.AnnualCourses = new HashSet<AnnualCourse>();
-            this.AnnualCourses1 = new HashSet<AnnualCourse>();
-            this.Faculties = new HashSet<Faculty>();
-            this.Faculties1 = new HashSet<Faculty>();
+            this.CLAnnualCourses = new HashSet<CLAnnualCourse>();
         }
-        public Account(int accountId,String userName,String passWord,int? profileId,int? roleId)
+        public Account(int accountId, String userName, String passWord, int? profileId, int? roleId)
         {
             this.accountId = (int)accountId;
             this.userName = userName;
             this.userPassword = passWord;
-            this.profileId =(int) profileId;
-            this.roleId =(int) roleId;
+            this.profileId = (int)profileId;
+            this.roleId = (int)roleId;
         }
         public int accountId { get; set; }
         public string userName { get; set; }
@@ -37,9 +34,6 @@ namespace CMR.Models
     
         public virtual Profile Profile { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<AnnualCourse> AnnualCourses { get; set; }
-        public virtual ICollection<AnnualCourse> AnnualCourses1 { get; set; }
-        public virtual ICollection<Faculty> Faculties { get; set; }
-        public virtual ICollection<Faculty> Faculties1 { get; set; }
+        public virtual ICollection<CLAnnualCourse> CLAnnualCourses { get; set; }
     }
 }

@@ -11,23 +11,23 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class AnnualCourse
     {
         public AnnualCourse()
         {
-            this.Reports = new HashSet<Report>();
+            this.AnnualCourseRecords = new HashSet<AnnualCourseRecord>();
+            this.CLAnnualCourses = new HashSet<CLAnnualCourse>();
         }
     
         public int annualCourseId { get; set; }
-        public Nullable<int> clAccountId { get; set; }
-        public Nullable<int> cmAccountId { get; set; }
+        [Display(Name="Academic Year")]
         public Nullable<int> academicYear { get; set; }
         public Nullable<int> courseId { get; set; }
     
-        public virtual Account Account { get; set; }
-        public virtual Account Account1 { get; set; }
+        public virtual ICollection<AnnualCourseRecord> AnnualCourseRecords { get; set; }
         public virtual Course Course { get; set; }
-        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<CLAnnualCourse> CLAnnualCourses { get; set; }
     }
 }

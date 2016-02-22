@@ -1,7 +1,7 @@
-﻿@model CMR.Models.UserDetailModel
+﻿@model CMR.Models.Account
 
 <div>
-    <h4>Information For @Html.DisplayNameFor(model => model.fullName)</h4>
+    <h4>Account</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -13,43 +13,39 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.fullName)
+            @Html.DisplayNameFor(model => model.Profile.name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fullName)
+            @Html.DisplayFor(model => model.Profile.name)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.address)
+            @Html.DisplayNameFor(model => model.Profile.address)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.address)
+            @Html.DisplayFor(model => model.Profile.address)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.roleName)
+            @Html.DisplayNameFor(model => model.Profile.telephone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.roleName)
+            @Html.DisplayFor(model => model.Profile.telephone)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.telelphone)
+            @Html.DisplayNameFor(model => model.Profile.dateOfBirth)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.telelphone)
+            @Html.DisplayFor(model => model.Profile.dateOfBirth)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.birthday)
+            @Html.DisplayNameFor(model => model.Role.roleName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.birthday)
+            @Html.DisplayFor(model => model.Role.roleName)
         </dd>
 
     </dl>

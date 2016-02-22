@@ -19,6 +19,7 @@ namespace CMR.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -66,7 +67,7 @@ namespace CMR.Controllers
                     db.Profiles.Add(p);
                     db.SaveChanges();
                     int lastID = db.Profiles.Max(pro => pro.profileId);
-                    Account a = new Account(r.accountId,r.userName, r.passWord, lastID, r.roleId);
+                    Account a = new Account(r.accountId, r.userName, r.passWord, lastID, r.roleId);
                     db.Accounts.Add(a);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -98,20 +99,18 @@ namespace CMR.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userDetail = from acc in db.Accounts
+            var userDetail =( from acc in db.Accounts
                            join r in db.Roles on acc.roleId equals r.roleId
                            join pro in db.Profiles on acc.profileId equals pro.profileId
                            where acc.accountId == accountId
-                           select new { acc.accountId,acc.userName, r.roleName,pro.name,pro.address,pro.telephone,pro.dateOfBirth };
+                           select acc).First();
 
             if (userDetail == null)
             {
                 return HttpNotFound();
             }
-            var userInfo = userDetail.First();
-            UserDetailModel udm = new UserDetailModel(userInfo.accountId, userInfo.userName,userInfo.name,userInfo.roleName,userInfo.address,userInfo.telephone,userInfo.dateOfBirth);
-            
-            return View(udm);
+
+            return View(userDetail);
         }
 
         [CustomAuthorize(Roles = "Admin")]
@@ -182,7 +181,6 @@ namespace CMR.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
 
         public Boolean verifyUser(String userName,bool edit=false,String oldUser="")
         {

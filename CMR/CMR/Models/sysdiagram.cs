@@ -12,16 +12,12 @@ namespace CMR.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ReportType
+    public partial class sysdiagram
     {
-        public ReportType()
-        {
-            this.Reports = new HashSet<Report>();
-        }
-    
-        public int reportTypeId { get; set; }
         public string name { get; set; }
-    
-        public virtual ICollection<Report> Reports { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

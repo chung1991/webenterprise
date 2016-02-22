@@ -11,6 +11,7 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Course
     {
@@ -20,6 +21,7 @@ namespace CMR.Models
         }
     
         public int courseId { get; set; }
+        [Display(Name="Name")]
         public string name { get; set; }
         public Nullable<int> facultyId { get; set; }
     

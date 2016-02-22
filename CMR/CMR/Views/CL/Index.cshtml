@@ -1,0 +1,49 @@
+﻿@model IEnumerable<CMR.Models.AnnualCourse>
+<h4>Your Courses</h4>
+@{
+    var index = 1;
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Order")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.academicYear)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{
+                    @index
+        index++;
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.academicYear)
+            </td>
+
+            <td>
+                @{
+        var report = item.AnnualCourseRecords.FirstOrDefault();
+        if (report == null)
+        {
+            @Html.ActionLink("Create Report", "CreateReport", new { annualCourseId = item.annualCourseId })
+        }
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>

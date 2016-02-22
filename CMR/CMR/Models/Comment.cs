@@ -16,8 +16,5 @@ namespace CMR.Models
     {
         public int commentId { get; set; }
         public string content { get; set; }
-        public Nullable<int> reportId { get; set; }
-    
-        public virtual Report Report { get; set; }
     }
 }

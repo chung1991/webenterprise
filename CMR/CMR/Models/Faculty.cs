@@ -21,11 +21,7 @@ namespace CMR.Models
     
         public int facultyId { get; set; }
         public string name { get; set; }
-        public Nullable<int> pvcAccountId { get; set; }
-        public Nullable<int> dltAccountId { get; set; }
     
-        public virtual Account Account { get; set; }
-        public virtual Account Account1 { get; set; }
         public virtual ICollection<Course> Courses { get; set; }
     }
 }
