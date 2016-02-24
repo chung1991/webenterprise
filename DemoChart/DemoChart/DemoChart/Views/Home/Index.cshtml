@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Index</title>
+    <link href="@Url.Content("~/content/Site.css")" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <div style="display: inline-block">
+        <div>
+            <img usemap="#ChartImageMap" src="@Url.Action("GetChart","Home")"
+            alt="Asp.Net Charting generated image"
+            style="width:450px;height:300px;border-width:0px;" />
+            @Html.Raw(Model.ChartImageMap("ChartImageMap"))
+        </div>
+        <div style="margin-right: 20px; text-align: right">
+            <a href="@Url.Action("getpdf","Home")">Get the chart in Pdf</a>
+        </div>
+    </div>
+</body>
+</html>

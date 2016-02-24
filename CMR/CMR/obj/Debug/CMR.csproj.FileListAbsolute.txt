@@ -28,3 +28,4 @@ F:\FPT_UNIVERSITY\TOP_UP\SEM_6\Enterprise web development\PROJECT\CMR\CMR\bin\En
 F:\FPT_UNIVERSITY\TOP_UP\SEM_6\Enterprise web development\PROJECT\CMR\CMR\bin\EntityFramework.xml
 F:\FPT_UNIVERSITY\TOP_UP\SEM_6\Enterprise web development\PROJECT\CMR\CMR\bin\EntityFramework.SqlServer.xml
 F:\FPT_UNIVERSITY\TOP_UP\SEM_6\Enterprise web development\PROJECT\CMR\CMR\obj\Debug\CMR.csprojResolveAssemblyReference.cache
+D:\ThanhPD\Lung tung\WEA\CourseMonitoring\CMR\CMR\obj\Debug\CMR.csprojResolveAssemblyReference.cache
