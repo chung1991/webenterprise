@@ -18,14 +18,7 @@ namespace CMR.Models
         {
             this.CLAnnualCourses = new HashSet<CLAnnualCourse>();
         }
-        public Account(int accountId, String userName, String passWord, int? profileId, int? roleId)
-        {
-            this.accountId = (int)accountId;
-            this.userName = userName;
-            this.userPassword = passWord;
-            this.profileId = (int)profileId;
-            this.roleId = (int)roleId;
-        }
+    
         public int accountId { get; set; }
         public string userName { get; set; }
         public string userPassword { get; set; }

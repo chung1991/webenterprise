@@ -35,7 +35,7 @@
 
             <td>
                 @{
-        var report = item.AnnualCourseRecords.FirstOrDefault();
+        var report = item.CourseMonitoringReports.FirstOrDefault();
         if (report == null)
         {
             @Html.ActionLink("Create Report", "CreateReport", new { annualCourseId = item.annualCourseId })

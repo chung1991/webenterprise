@@ -11,25 +11,15 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
-    public partial class AnnualCourseRecord
+    public partial class CourseMonitoringReport
     {
-        public int annualCourseRecordId { get; set; }
+        public int CourseMonitoringReportId { get; set; }
         public Nullable<int> annualCourseId { get; set; }
-        [Required]
-        [Display(Name="Fail Count")]
         public Nullable<int> failCount { get; set; }
-        [Required]
-        [Display(Name="Pass Count")]
         public Nullable<int> passCount { get; set; }
-        [Required]
-        [Display(Name="Credit Count")]
         public Nullable<int> creditCount { get; set; }
-        [Required]
-        [Display(Name="Dist Count")]
         public Nullable<int> distinctionCount { get; set; }
-        [Display(Name="Evaluation")]
         public string evaluation { get; set; }
         public Nullable<int> approveStatusId { get; set; }
     

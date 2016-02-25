@@ -11,19 +11,17 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class ApproveStatu
     {
         public ApproveStatu()
         {
-            this.AnnualCourseRecords = new HashSet<AnnualCourseRecord>();
+            this.CourseMonitoringReports = new HashSet<CourseMonitoringReport>();
         }
     
         public int approveStatusId { get; set; }
-        [Display(Name="Status")]
         public string name { get; set; }
     
-        public virtual ICollection<AnnualCourseRecord> AnnualCourseRecords { get; set; }
+        public virtual ICollection<CourseMonitoringReport> CourseMonitoringReports { get; set; }
     }
 }

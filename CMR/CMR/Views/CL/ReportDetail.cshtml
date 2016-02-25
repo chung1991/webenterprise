@@ -1,4 +1,4 @@
-﻿@model CMR.Models.AnnualCourseRecord
+﻿@model CMR.Models.CourseMonitoringReport
 
 <div>
     <h4>AnnualCourseRecord</h4>
@@ -70,6 +70,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditReport", new { id = Model.annualCourseRecordId }) |
+    @{
+        if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
+        { 
+            <text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
+        }
+}
+    
     @Html.ActionLink("Back to List", "ReportList")
 </p>

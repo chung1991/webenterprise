@@ -26,15 +26,15 @@ namespace CMR.Models
         }
     
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<AnnualCourseRecord> AnnualCourseRecords { get; set; }
         public virtual DbSet<AnnualCourse> AnnualCourses { get; set; }
-        public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<ApproveStatu> ApproveStatus { get; set; }
         public virtual DbSet<CLAnnualCourse> CLAnnualCourses { get; set; }
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<CourseMonitoringReport> CourseMonitoringReports { get; set; }
+        public virtual DbSet<Faculty> Faculties { get; set; }
+        public virtual DbSet<Profile> Profiles { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

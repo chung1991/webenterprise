@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CMR.Models.AnnualCourseRecord>
+﻿@model IEnumerable<CMR.Models.CourseMonitoringReport>
 
 <h4>Your Report List</h4>
 <table class="table">
@@ -27,9 +27,16 @@
             @Html.DisplayFor(modelItem => item.ApproveStatu.name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditReport", new { id=item.annualCourseRecordId }) |
-            @Html.ActionLink("Details", "ReportDetail", new { id=item.annualCourseRecordId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.annualCourseRecordId })
+            @Html.ActionLink("Details", "ReportDetail", new { id = item.CourseMonitoringReportId })
+            @{
+    if (item.approveStatusId == 1 || item.approveStatusId == 3)
+    {
+        <text> |@Html.ActionLink("Edit", "EditReport", new { id = item.CourseMonitoringReportId }) |</text>
+        <text>@Html.ActionLink("Delete", "DeleteReport", new { id = item.CourseMonitoringReportId })</text>
+    }
+}     
+            
+            
         </td>
     </tr>
 }

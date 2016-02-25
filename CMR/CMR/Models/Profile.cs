@@ -18,21 +18,7 @@ namespace CMR.Models
         {
             this.Accounts = new HashSet<Account>();
         }
-        public Profile(String name, String address, String phone, DateTime birthday)
-        {
-            this.name = name;
-            this.address = address;
-            this.telephone = phone;
-            this.dateOfBirth = birthday;
-        }
-        public Profile(int? profileId, String name, String address, String phone, DateTime birthday)
-        {
-            this.profileId = (int)profileId;
-            this.name = name;
-            this.address = address;
-            this.telephone = phone;
-            this.dateOfBirth = birthday;
-        }
+    
         public int profileId { get; set; }
         public string name { get; set; }
         public string address { get; set; }

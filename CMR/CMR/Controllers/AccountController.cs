@@ -63,11 +63,25 @@ namespace CMR.Controllers
                     ModelState.AddModelError("userName", "User name have been existed");
                 else
                 {
-                    Profile p = new Profile(r.fullName, r.address,r.telephone,r.dateOfBirth);
+                    Profile p = new Profile
+                    {
+                        name=r.fullName,
+                        address=r.address,
+                        telephone=r.telephone,
+                        dateOfBirth=r.dateOfBirth
+                    };
+
                     db.Profiles.Add(p);
                     db.SaveChanges();
                     int lastID = db.Profiles.Max(pro => pro.profileId);
-                    Account a = new Account(r.accountId, r.userName, r.passWord, lastID, r.roleId);
+                    Account a = new Account
+                    {
+                        userName = r.userName,
+                        userPassword = r.passWord,
+                        profileId = lastID,
+                        roleId = r.roleId
+                    };
+
                     db.Accounts.Add(a);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -148,11 +162,26 @@ namespace CMR.Controllers
                 }
                 else
                 {
-                    Account account = new Account(rm.accountId, rm.userName,rm.passWord,ac.profileId,rm.roleId);
+                    Account account = new Account
+                    {
+                        accountId=rm.accountId,
+                        userName=rm.userName,
+                        userPassword=rm.passWord,
+                        profileId=ac.profileId,
+                        roleId=rm.roleId
+                    };
                     db.Entry(ac).CurrentValues.SetValues(account);
                     db.SaveChanges();
 
-                    Profile profile = new Profile(ac.profileId,rm.fullName,rm.address,rm.telephone,rm.dateOfBirth);
+                    Profile profile = new Profile
+                    {
+                        profileId =(int) ac.profileId,
+                        name = rm.fullName,
+                        address = rm.address,
+                        telephone = rm.telephone,
+                        dateOfBirth = rm.dateOfBirth
+                    };
+
                     db.Entry(profile).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
