@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75339e1a87c74214bb8f4d01905c8d31" Name="Diagram1">
+      <Diagram DiagramId="dce93db3cf6e404c93546b3852459008" Name="Diagram1">
         <EntityTypeShape EntityType="CMRDBModel.Account" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CMRDBModel.AnnualCourse" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CMRDBModel.ApproveStatu" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
@@ -21,8 +21,8 @@
         <AssociationConnector Association="CMRDBModel.FK__CLAnnualCo__CLId__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="CMRDBModel.FK__AnnualCou__cours__1DE57479" ManuallyRouted="false" />
         <AssociationConnector Association="CMRDBModel.FK__CLAnnualC__annua__37A5467C" ManuallyRouted="false" />
-        <AssociationConnector Association="CMRDBModel.FK__CourseMon__annua__49C3F6B7" ManuallyRouted="false" />
-        <AssociationConnector Association="CMRDBModel.FK__CourseMon__appro__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__CourseMon__annua__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__CourseMon__appro__5165187F" ManuallyRouted="false" />
         <AssociationConnector Association="CMRDBModel.FK__Course__facultyI__1B0907CE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

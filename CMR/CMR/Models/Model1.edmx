@@ -173,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CourseMon__annua__49C3F6B7">
+        <Association Name="FK__CourseMon__annua__5070F446">
           <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -185,7 +185,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CourseMon__appro__4AB81AF0">
+        <Association Name="FK__CourseMon__appro__5165187F">
           <End Role="ApproveStatus" Type="Self.ApproveStatus" Multiplicity="0..1" />
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,11 +233,11 @@
             <End Role="Faculty" EntitySet="Faculty" />
             <End Role="Course" EntitySet="Course" />
           </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__annua__49C3F6B7" Association="Self.FK__CourseMon__annua__49C3F6B7">
+          <AssociationSet Name="FK__CourseMon__annua__5070F446" Association="Self.FK__CourseMon__annua__5070F446">
             <End Role="AnnualCourse" EntitySet="AnnualCourse" />
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReport" />
           </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__appro__4AB81AF0" Association="Self.FK__CourseMon__appro__4AB81AF0">
+          <AssociationSet Name="FK__CourseMon__appro__5165187F" Association="Self.FK__CourseMon__appro__5165187F">
             <End Role="ApproveStatus" EntitySet="ApproveStatus" />
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReport" />
           </AssociationSet>
@@ -269,7 +269,7 @@
           <Property Name="courseId" Type="Int32" />
           <NavigationProperty Name="Course" Relationship="Self.FK__AnnualCou__cours__1DE57479" FromRole="AnnualCourse" ToRole="Course" />
           <NavigationProperty Name="CLAnnualCourses" Relationship="Self.FK__CLAnnualC__annua__37A5467C" FromRole="AnnualCourse" ToRole="CLAnnualCourse" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__annua__49C3F6B7" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__annua__5070F446" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="ApproveStatu">
           <Key>
@@ -277,7 +277,7 @@
           </Key>
           <Property Name="approveStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__appro__4AB81AF0" FromRole="ApproveStatus" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__appro__5165187F" FromRole="ApproveStatus" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="CLAnnualCourse">
           <Key>
@@ -318,8 +318,8 @@
           <Property Name="distinctionCount" Type="Int32" />
           <Property Name="evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="approveStatusId" Type="Int32" />
-          <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__49C3F6B7" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
-          <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__4AB81AF0" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
+          <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__5070F446" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
+          <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__5165187F" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -419,7 +419,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CourseMon__annua__49C3F6B7">
+        <Association Name="FK__CourseMon__annua__5070F446">
           <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -431,7 +431,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CourseMon__appro__4AB81AF0">
+        <Association Name="FK__CourseMon__appro__5165187F">
           <End Role="ApproveStatus" Type="Self.ApproveStatu" Multiplicity="0..1" />
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -487,11 +487,11 @@
             <End Role="AnnualCourse" EntitySet="AnnualCourses" />
             <End Role="CLAnnualCourse" EntitySet="CLAnnualCourses" />
           </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__annua__49C3F6B7" Association="Self.FK__CourseMon__annua__49C3F6B7">
+          <AssociationSet Name="FK__CourseMon__annua__5070F446" Association="Self.FK__CourseMon__annua__5070F446">
             <End Role="AnnualCourse" EntitySet="AnnualCourses" />
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
           </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__appro__4AB81AF0" Association="Self.FK__CourseMon__appro__4AB81AF0">
+          <AssociationSet Name="FK__CourseMon__appro__5165187F" Association="Self.FK__CourseMon__appro__5165187F">
             <End Role="ApproveStatus" EntitySet="ApproveStatus" />
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
           </AssociationSet>

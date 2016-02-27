@@ -9,113 +9,9 @@
     <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="profileId" Type="Int32" />
     <Property Name="roleId" Type="Int32" />
-    <NavigationProperty Name="Profile" Relationship="Self.FK__Account__profile__267ABA7A" FromRole="Account" ToRole="Profile" />
-    <NavigationProperty Name="Role" Relationship="Self.FK__Account__roleId__276EDEB3" FromRole="Account" ToRole="Role" />
-    <NavigationProperty Name="CLAnnualCourses" Relationship="CMRDBModel.FK__CLAnnualCo__CLId__36B12243" FromRole="Account" ToRole="CLAnnualCourse" />
-  </EntityType>
-  <EntityType Name="Profile">
-    <Key>
-      <PropertyRef Name="profileId" />
-    </Key>
-    <Property Name="profileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="dateOfBirth" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__profile__267ABA7A" FromRole="Profile" ToRole="Account" />
-  </EntityType>
-  <EntityType Name="Role">
-    <Key>
-      <PropertyRef Name="roleId" />
-    </Key>
-    <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="roleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__roleId__276EDEB3" FromRole="Role" ToRole="Account" />
-  </EntityType>
-  <Association Name="FK__Account__profile__267ABA7A">
-    <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
-    <End Role="Account" Type="Self.Account" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Profile">
-        <PropertyRef Name="profileId" />
-      </Principal>
-      <Dependent Role="Account">
-        <PropertyRef Name="profileId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Account__roleId__276EDEB3">
-    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-    <End Role="Account" Type="Self.Account" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Role">
-        <PropertyRef Name="roleId" />
-      </Principal>
-      <Dependent Role="Account">
-        <PropertyRef Name="roleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Accounts" EntityType="Self.Account" />
-    <EntitySet Name="Profiles" EntityType="Self.Profile" />
-    <EntitySet Name="Roles" EntityType="Self.Role" />
-    <AssociationSet Name="FK__Account__profile__267ABA7A" Association="Self.FK__Account__profile__267ABA7A">
-      <End Role="Profile" EntitySet="Profiles" />
-      <End Role="Account" EntitySet="Accounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Account__roleId__276EDEB3" Association="Self.FK__Account__roleId__276EDEB3">
-      <End Role="Role" EntitySet="Roles" />
-      <End Role="Account" EntitySet="Accounts" />
-    </AssociationSet>
-    <EntitySet Name="AnnualCourseRecords" EntityType="CMRDBModel.AnnualCourseRecord" />
-    <EntitySet Name="AnnualCourses" EntityType="CMRDBModel.AnnualCourse" />
-    <EntitySet Name="Comments" EntityType="CMRDBModel.Comment" />
-    <EntitySet Name="Courses" EntityType="CMRDBModel.Course" />
-    <EntitySet Name="Faculties" EntityType="CMRDBModel.Faculty" />
-    <AssociationSet Name="FK__AnnualCou__annua__22AA2996" Association="CMRDBModel.FK__AnnualCou__annua__22AA2996">
-      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-      <End Role="AnnualCourseRecord" EntitySet="AnnualCourseRecords" />
-    </AssociationSet>
-    <AssociationSet Name="FK__AnnualCou__cours__1DE57479" Association="CMRDBModel.FK__AnnualCou__cours__1DE57479">
-      <End Role="Course" EntitySet="Courses" />
-      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Course__facultyI__1B0907CE" Association="CMRDBModel.FK__Course__facultyI__1B0907CE">
-      <End Role="Faculty" EntitySet="Faculties" />
-      <End Role="Course" EntitySet="Courses" />
-    </AssociationSet>
-    <EntitySet Name="ApproveStatus" EntityType="CMRDBModel.ApproveStatu" />
-    <AssociationSet Name="FK__AnnualCou__appro__239E4DCF" Association="CMRDBModel.FK__AnnualCou__appro__239E4DCF">
-      <End Role="ApproveStatu" EntitySet="ApproveStatus" />
-      <End Role="AnnualCourseRecord" EntitySet="AnnualCourseRecords" />
-    </AssociationSet>
-    <EntitySet Name="CLAnnualCourses" EntityType="CMRDBModel.CLAnnualCourse" />
-    <EntitySet Name="sysdiagrams" EntityType="CMRDBModel.sysdiagram" />
-    <AssociationSet Name="FK__CLAnnualCo__CLId__36B12243" Association="CMRDBModel.FK__CLAnnualCo__CLId__36B12243">
-      <End Role="Account" EntitySet="Accounts" />
-      <End Role="CLAnnualCourse" EntitySet="CLAnnualCourses" />
-    </AssociationSet>
-    <AssociationSet Name="FK__CLAnnualC__annua__37A5467C" Association="CMRDBModel.FK__CLAnnualC__annua__37A5467C">
-      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-      <End Role="CLAnnualCourse" EntitySet="CLAnnualCourses" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="AnnualCourseRecord">
-    <Key>
-      <PropertyRef Name="annualCourseRecordId" />
-    </Key>
-    <Property Name="annualCourseRecordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="annualCourseId" Type="Int32" />
-    <Property Name="failCount" Type="Int32" />
-    <Property Name="passCount" Type="Int32" />
-    <Property Name="creditCount" Type="Int32" />
-    <Property Name="distinctionCount" Type="Int32" />
-    <Property Name="evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="approveStatusId" Type="Int32" />
-    <NavigationProperty Name="AnnualCourse" Relationship="CMRDBModel.FK__AnnualCou__annua__22AA2996" FromRole="AnnualCourseRecord" ToRole="AnnualCourse" />
-    <NavigationProperty Name="ApproveStatu" Relationship="CMRDBModel.FK__AnnualCou__appro__239E4DCF" FromRole="AnnualCourseRecord" ToRole="ApproveStatu" />
+    <NavigationProperty Name="Profile" Relationship="Self.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
+    <NavigationProperty Name="Role" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
+    <NavigationProperty Name="CLAnnualCourses" Relationship="Self.FK__CLAnnualCo__CLId__36B12243" FromRole="Account" ToRole="CLAnnualCourse" />
   </EntityType>
   <EntityType Name="AnnualCourse">
     <Key>
@@ -124,9 +20,27 @@
     <Property Name="annualCourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="academicYear" Type="Int32" />
     <Property Name="courseId" Type="Int32" />
-    <NavigationProperty Name="AnnualCourseRecords" Relationship="CMRDBModel.FK__AnnualCou__annua__22AA2996" FromRole="AnnualCourse" ToRole="AnnualCourseRecord" />
-    <NavigationProperty Name="Course" Relationship="CMRDBModel.FK__AnnualCou__cours__1DE57479" FromRole="AnnualCourse" ToRole="Course" />
-    <NavigationProperty Name="CLAnnualCourses" Relationship="CMRDBModel.FK__CLAnnualC__annua__37A5467C" FromRole="AnnualCourse" ToRole="CLAnnualCourse" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__AnnualCou__cours__1DE57479" FromRole="AnnualCourse" ToRole="Course" />
+    <NavigationProperty Name="CLAnnualCourses" Relationship="Self.FK__CLAnnualC__annua__37A5467C" FromRole="AnnualCourse" ToRole="CLAnnualCourse" />
+    <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__annua__49C3F6B7" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
+  </EntityType>
+  <EntityType Name="ApproveStatu">
+    <Key>
+      <PropertyRef Name="approveStatusId" />
+    </Key>
+    <Property Name="approveStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__appro__4AB81AF0" FromRole="ApproveStatus" ToRole="CourseMonitoringReport" />
+  </EntityType>
+  <EntityType Name="CLAnnualCourse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CLId" Type="Int32" />
+    <Property Name="annualCourseId" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="Self.FK__CLAnnualCo__CLId__36B12243" FromRole="CLAnnualCourse" ToRole="Account" />
+    <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CLAnnualC__annua__37A5467C" FromRole="CLAnnualCourse" ToRole="AnnualCourse" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>
@@ -142,8 +56,23 @@
     <Property Name="courseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="facultyId" Type="Int32" />
-    <NavigationProperty Name="AnnualCourses" Relationship="CMRDBModel.FK__AnnualCou__cours__1DE57479" FromRole="Course" ToRole="AnnualCourse" />
-    <NavigationProperty Name="Faculty" Relationship="CMRDBModel.FK__Course__facultyI__1B0907CE" FromRole="Course" ToRole="Faculty" />
+    <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__cours__1DE57479" FromRole="Course" ToRole="AnnualCourse" />
+    <NavigationProperty Name="Faculty" Relationship="Self.FK__Course__facultyI__1B0907CE" FromRole="Course" ToRole="Faculty" />
+  </EntityType>
+  <EntityType Name="CourseMonitoringReport">
+    <Key>
+      <PropertyRef Name="CourseMonitoringReportId" />
+    </Key>
+    <Property Name="CourseMonitoringReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="annualCourseId" Type="Int32" />
+    <Property Name="failCount" Type="Int32" />
+    <Property Name="passCount" Type="Int32" />
+    <Property Name="creditCount" Type="Int32" />
+    <Property Name="distinctionCount" Type="Int32" />
+    <Property Name="evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="approveStatusId" Type="Int32" />
+    <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__49C3F6B7" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
+    <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__4AB81AF0" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
   </EntityType>
   <EntityType Name="Faculty">
     <Key>
@@ -151,87 +80,65 @@
     </Key>
     <Property Name="facultyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Courses" Relationship="CMRDBModel.FK__Course__facultyI__1B0907CE" FromRole="Faculty" ToRole="Course" />
+    <NavigationProperty Name="Courses" Relationship="Self.FK__Course__facultyI__1B0907CE" FromRole="Faculty" ToRole="Course" />
   </EntityType>
-  <Association Name="FK__AnnualCou__annua__22AA2996">
-    <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="0..1" />
-    <End Type="CMRDBModel.AnnualCourseRecord" Role="AnnualCourseRecord" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AnnualCourse">
-        <PropertyRef Name="annualCourseId" />
-      </Principal>
-      <Dependent Role="AnnualCourseRecord">
-        <PropertyRef Name="annualCourseId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__AnnualCou__cours__1DE57479">
-    <End Type="CMRDBModel.Course" Role="Course" Multiplicity="0..1" />
-    <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Course">
-        <PropertyRef Name="courseId" />
-      </Principal>
-      <Dependent Role="AnnualCourse">
-        <PropertyRef Name="courseId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Course__facultyI__1B0907CE">
-    <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="0..1" />
-    <End Type="CMRDBModel.Course" Role="Course" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Faculty">
-        <PropertyRef Name="facultyId" />
-      </Principal>
-      <Dependent Role="Course">
-        <PropertyRef Name="facultyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="ApproveStatu">
+  <EntityType Name="Profile">
     <Key>
-      <PropertyRef Name="approveStatusId" />
+      <PropertyRef Name="profileId" />
     </Key>
-    <Property Name="approveStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="profileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="AnnualCourseRecords" Relationship="CMRDBModel.FK__AnnualCou__appro__239E4DCF" FromRole="ApproveStatu" ToRole="AnnualCourseRecord" />
+    <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="dateOfBirth" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
   </EntityType>
-  <Association Name="FK__AnnualCou__appro__239E4DCF">
-    <End Type="CMRDBModel.ApproveStatu" Role="ApproveStatu" Multiplicity="0..1" />
-    <End Type="CMRDBModel.AnnualCourseRecord" Role="AnnualCourseRecord" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ApproveStatu">
-        <PropertyRef Name="approveStatusId" />
-      </Principal>
-      <Dependent Role="AnnualCourseRecord">
-        <PropertyRef Name="approveStatusId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="CLAnnualCourse">
+  <EntityType Name="Role">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="roleId" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CLId" Type="Int32" />
-    <Property Name="annualCourseId" Type="Int32" />
-    <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__CLAnnualCo__CLId__36B12243" FromRole="CLAnnualCourse" ToRole="Account" />
-    <NavigationProperty Name="AnnualCourse" Relationship="CMRDBModel.FK__CLAnnualC__annua__37A5467C" FromRole="CLAnnualCourse" ToRole="AnnualCourse" />
+    <Property Name="roleId" Type="Int32" Nullable="false" />
+    <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="roleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="principal_id" Type="Int32" Nullable="false" />
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <Association Name="FK__Account__profile__15502E78">
+    <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="profileId" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="profileId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Account__roleId__164452B1">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="Account" Type="Self.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="roleId" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="roleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__CLAnnualCo__CLId__36B12243">
-    <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-    <End Type="CMRDBModel.CLAnnualCourse" Role="CLAnnualCourse" Multiplicity="*" />
+    <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+    <End Role="CLAnnualCourse" Type="Self.CLAnnualCourse" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Account">
         <PropertyRef Name="accountId" />
@@ -241,9 +148,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__AnnualCou__cours__1DE57479">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="courseId" />
+      </Principal>
+      <Dependent Role="AnnualCourse">
+        <PropertyRef Name="courseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__CLAnnualC__annua__37A5467C">
-    <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="0..1" />
-    <End Type="CMRDBModel.CLAnnualCourse" Role="CLAnnualCourse" Multiplicity="*" />
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
+    <End Role="CLAnnualCourse" Type="Self.CLAnnualCourse" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AnnualCourse">
         <PropertyRef Name="annualCourseId" />
@@ -253,4 +172,85 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__CourseMon__annua__49C3F6B7">
+    <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
+    <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnnualCourse">
+        <PropertyRef Name="annualCourseId" />
+      </Principal>
+      <Dependent Role="CourseMonitoringReport">
+        <PropertyRef Name="annualCourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CourseMon__appro__4AB81AF0">
+    <End Role="ApproveStatus" Type="Self.ApproveStatu" Multiplicity="0..1" />
+    <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ApproveStatus">
+        <PropertyRef Name="approveStatusId" />
+      </Principal>
+      <Dependent Role="CourseMonitoringReport">
+        <PropertyRef Name="approveStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Course__facultyI__1B0907CE">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+    <End Role="Course" Type="Self.Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="facultyId" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="facultyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="Self.Account" />
+    <EntitySet Name="AnnualCourses" EntityType="Self.AnnualCourse" />
+    <EntitySet Name="ApproveStatus" EntityType="Self.ApproveStatu" />
+    <EntitySet Name="CLAnnualCourses" EntityType="Self.CLAnnualCourse" />
+    <EntitySet Name="Comments" EntityType="Self.Comment" />
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="CourseMonitoringReports" EntityType="Self.CourseMonitoringReport" />
+    <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+    <EntitySet Name="Profiles" EntityType="Self.Profile" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__Account__profile__15502E78" Association="Self.FK__Account__profile__15502E78">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Account__roleId__164452B1" Association="Self.FK__Account__roleId__164452B1">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CLAnnualCo__CLId__36B12243" Association="Self.FK__CLAnnualCo__CLId__36B12243">
+      <End Role="Account" EntitySet="Accounts" />
+      <End Role="CLAnnualCourse" EntitySet="CLAnnualCourses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__AnnualCou__cours__1DE57479" Association="Self.FK__AnnualCou__cours__1DE57479">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CLAnnualC__annua__37A5467C" Association="Self.FK__CLAnnualC__annua__37A5467C">
+      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+      <End Role="CLAnnualCourse" EntitySet="CLAnnualCourses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseMon__annua__49C3F6B7" Association="Self.FK__CourseMon__annua__49C3F6B7">
+      <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+      <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CourseMon__appro__4AB81AF0" Association="Self.FK__CourseMon__appro__4AB81AF0">
+      <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+      <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Course__facultyI__1B0907CE" Association="Self.FK__Course__facultyI__1B0907CE">
+      <End Role="Faculty" EntitySet="Faculties" />
+      <End Role="Course" EntitySet="Courses" />
+    </AssociationSet>
+  </EntityContainer>
 </Schema>
