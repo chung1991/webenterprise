@@ -1,0 +1,63 @@
+﻿@model CMR.Models.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/login_style/jquery.backstretch.min.js"></script>
+    <link href="~/Content/login_style/login-form-elements.css" rel="stylesheet" />
+    <link href="~/Content/login_style/login-style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="top-content">
+
+        <div class="inner-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Login to CRM</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-bottom">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true);
+
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-username">Username</label>
+                                    @Html.EditorFor(model => model.userName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Username..." } })
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="form-password">Password</label>
+                                    @Html.EditorFor(model => model.passWord, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password..." } })
+                                </div>
+                                <div class="form-group">
+                                    @Html.CheckBoxFor(model => model.rememberMe) Remember me?
+                                </div>
+
+                                <button type="submit" class="btn">Sign in!</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>
+
+

@@ -1,0 +1,81 @@
+﻿@model CMR.Models.CourseMonitoringReport
+
+<div>
+    <h4>AnnualCourseRecord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AnnualCourse.Course.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnnualCourse.Course.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnnualCourse.academicYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.failCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.failCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.passCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.passCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.creditCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.creditCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.distinctionCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.distinctionCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.evaluation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.evaluation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ApproveStatu.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApproveStatu.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @{
+        if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
+        { 
+            <text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
+        }
+}
+    
+    @Html.ActionLink("Back to List", "ReportList")
+</p>
