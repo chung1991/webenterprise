@@ -22,3 +22,23 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.dl-horizontal dt {
+    float: left;
+    width: 160px;
+    overflow: hidden;
+    clear: left;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 50px;
+    margin-bottom: 5px;
+}
+.form-horizontal .control-label {
+    text-align: left;
+}
+@media screen and (min-width: 768px) {
+	
+	#myModal .modal-dialog  {width:550px;}
+
+}

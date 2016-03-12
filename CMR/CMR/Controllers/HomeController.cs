@@ -10,6 +10,18 @@ namespace CMR.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Account");
+            }
+            if (User.IsInRole("CL"))
+            {
+                return RedirectToAction("Index", "CL");
+            }
+            if (User.IsInRole("CM"))
+            {
+                return RedirectToAction("Index", "CM");
+            }
             return View();
         }
 

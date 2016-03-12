@@ -16,16 +16,16 @@ namespace CMR.Models
     {
         public AnnualCourse()
         {
-            this.CLAnnualCourses = new HashSet<CLAnnualCourse>();
             this.CourseMonitoringReports = new HashSet<CourseMonitoringReport>();
         }
     
         public int annualCourseId { get; set; }
         public Nullable<int> academicYear { get; set; }
         public Nullable<int> courseId { get; set; }
+        public Nullable<int> clAccount { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual Course Course { get; set; }
-        public virtual ICollection<CLAnnualCourse> CLAnnualCourses { get; set; }
         public virtual ICollection<CourseMonitoringReport> CourseMonitoringReports { get; set; }
     }
 }

@@ -16,7 +16,11 @@ namespace CMR.Models
     {
         public Account()
         {
-            this.CLAnnualCourses = new HashSet<CLAnnualCourse>();
+            this.AnnualCourses = new HashSet<AnnualCourse>();
+            this.Comments = new HashSet<Comment>();
+            this.Faculties = new HashSet<Faculty>();
+            this.Faculties1 = new HashSet<Faculty>();
+            this.Faculties2 = new HashSet<Faculty>();
         }
     
         public int accountId { get; set; }
@@ -27,6 +31,10 @@ namespace CMR.Models
     
         public virtual Profile Profile { get; set; }
         public virtual Role Role { get; set; }
-        public virtual ICollection<CLAnnualCourse> CLAnnualCourses { get; set; }
+        public virtual ICollection<AnnualCourse> AnnualCourses { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Faculty> Faculties { get; set; }
+        public virtual ICollection<Faculty> Faculties1 { get; set; }
+        public virtual ICollection<Faculty> Faculties2 { get; set; }
     }
 }

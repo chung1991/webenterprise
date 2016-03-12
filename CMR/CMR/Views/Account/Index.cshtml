@@ -6,69 +6,77 @@
         var index = 0;
     }
 </p>
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-               @Html.Display("Index")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.userName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.roleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.telelphone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.birthday)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+<div>
+    <table class="tablesaw" data-tablesaw-mode="stack">
+        <thead>
             <tr>
-                <td>
-                    @{
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
+                    #
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+                    @Html.DisplayNameFor(model => model.userName)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+                    @Html.DisplayNameFor(model => model.fullName)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+                    @Html.DisplayNameFor(model => model.address)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+                    @Html.DisplayNameFor(model => model.roleName)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
+                    @Html.DisplayNameFor(model => model.telelphone)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">
+                    @Html.DisplayNameFor(model => model.birthday)
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="7">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @{
                 index++;
                 @index
-                    }
-                </td>
+                        }
+                    </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.userName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.roleName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.telelphone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.birthday)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { accountId = item.accountId }) |
-                    @Html.ActionLink("Detail", "Detail", new { accountId = item.accountId }) |
-                    @Html.ActionLink("Delete", "Delete", new { accountId = item.accountId })
-                </td>
-            </tr>
-        }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.userName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fullName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.roleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.telelphone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.birthday)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { accountId = item.accountId }) |
+                        @Html.ActionLink("Detail", "Detail", new { accountId = item.accountId }) |
+                        @Html.ActionLink("Delete", "Delete", new { accountId = item.accountId })
+                    </td>
+                </tr>
+            }
+        </tbody>
 
     </table>
+
 </div>
 

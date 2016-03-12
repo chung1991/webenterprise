@@ -18,8 +18,7 @@ namespace CMR.Controllers
             var currUser =User.Identity;
             String userName = currUser.Name;
             var course = (from ac in db.AnnualCourses
-                         join cl in db.CLAnnualCourses on ac.annualCourseId equals cl.annualCourseId
-                         join a in db.Accounts on cl.CLId equals a.accountId
+                         join a in db.Accounts on ac.clAccount equals a.accountId
                          where a.userName == userName
                          select ac).ToList();
             return View(course);
