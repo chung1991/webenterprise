@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -98,6 +101,58 @@ namespace CMR.Controllers
             db.CourseMonitoringReports.Remove(acr);
             db.SaveChanges();
 
+            return RedirectToAction("ReportList");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Contact()
+        {
+            if (ModelState.IsValid)
+            {
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("thanhpdgc00489@gmail.com")); 
+                message.Subject = "Your email subject";
+                message.Body = "Please connect to course monitoring system. You have a new course report to review.";
+                message.IsBodyHtml = true;
+                using (var smtp = new SmtpClient())
+                {
+                    await smtp.SendMailAsync(message);
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Sent()
+        {
+            string host = "smtp.gmail.com";
+            int port = 587;
+
+            string from = "course.monitoring.system@gmail.com";
+            string to = "thanhpdgc00489@gmail.com";
+            string subject = "New report from Course Monitoring System";
+            string body = "You have new report to review. Please connect to Course Monitoring System.";
+            MailMessage msg = new MailMessage(from, to, subject, body);
+            SmtpClient smtp = new SmtpClient(host, port);
+
+            string username = "course.monitoring.system@gmail.com";
+            string password = "greenwich";
+
+            smtp.Credentials = new NetworkCredential(username, password);
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = false;
+
+            try
+            {
+                smtp.Send(msg);
+            }
+            catch (Exception exp)
+            {
+                Response.Write("<script>alert('" + exp.Message + "')</script>"); 
+            }
             return RedirectToAction("ReportList");
         }
     }
