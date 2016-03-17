@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CMR.Models.UserDetailModel>
+﻿@model IEnumerable<CMR.Models.Account>
 
 <p>
     @Html.ActionLink("Create New", "Register")
@@ -14,22 +14,22 @@
                     #
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
-                    @Html.DisplayNameFor(model => model.userName)
+                    @Html.DisplayName("User Name")
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
-                    @Html.DisplayNameFor(model => model.fullName)
-                </th>
-                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                    @Html.DisplayNameFor(model => model.address)
+                    @Html.DisplayName("Full Name")
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
-                    @Html.DisplayNameFor(model => model.roleName)
+                    @Html.DisplayName("Role")
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
-                    @Html.DisplayNameFor(model => model.telelphone)
+                    @Html.DisplayName("Telephone")
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">
-                    @Html.DisplayNameFor(model => model.birthday)
+                    @Html.DisplayName("Email")
+                </th>
+                <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+                    @Html.DisplayName("Address")
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="7">Action</th>
             </tr>
@@ -52,20 +52,20 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.fullName)
+                        @Html.DisplayFor(modelItem => item.Profile.name)
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.address)
+                        @Html.DisplayFor(modelItem => item.Role.roleName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.roleName)
+                        @Html.DisplayFor(modelItem => item.Profile.telephone)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.telelphone)
+                        @Html.DisplayFor(modelItem => item.Profile.email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.birthday)
+                        @Html.DisplayFor(modelItem => item.Profile.address)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { accountId = item.accountId }) |

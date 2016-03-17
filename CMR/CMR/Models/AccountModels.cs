@@ -19,18 +19,6 @@ namespace CMR.Models
         }
 
         public class RegisterModel{
-            public RegisterModel(int? accountId,String userName,String passWord, String confirmPassWord,int? roleId,String fullName,String address,String telephone,DateTime? birthday)
-            {
-                this.accountId =(int) accountId;
-                this.userName = userName;
-                this.passWord = passWord;
-                this.confirmPassWord = confirmPassWord;
-                this.roleId =(int) roleId;
-                this.fullName = fullName;
-                this.telephone = telephone;
-                this.dateOfBirth =(DateTime) birthday;
-                this.address = address;
-            }
             public RegisterModel()
             {
 
@@ -68,5 +56,8 @@ namespace CMR.Models
 
             [Display(Name = "Address")]
             public String address { get; set; }
+
+            [Display(Name = "Email")]
+            public String email { get; set; }
     }
 }

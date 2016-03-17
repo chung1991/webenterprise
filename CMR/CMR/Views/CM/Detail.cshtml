@@ -11,35 +11,43 @@
             @Html.DisplayFor(model => model.AnnualCourse.Course.name)
         </dd>
         <dt>
-            @Html.DisplayName("Fail Count")
+            @Html.DisplayName("Student Total")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.failCount)
+            @Html.DisplayFor(model => model.studentTotal)
         </dd>
 
         <dt>
-            @Html.DisplayName("Pass Count")
+            @Html.DisplayName("Mark A")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.passCount)
+            @Html.DisplayFor(model => model.markA)
         </dd>
 
         <dt>
-            @Html.DisplayName("Credit Count")
+            @Html.DisplayName("Mark B")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.creditCount)
+            @Html.DisplayFor(model => model.markB)
         </dd>
 
         <dt>
-            @Html.DisplayName("Dist count")
+            @Html.DisplayName("Mark C")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.distinctionCount)
+            @Html.DisplayFor(model => model.markC)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mark D")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markD)
         </dd>
 
         <dt>
@@ -47,7 +55,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.evaluation)
+            @Html.DisplayFor(model => model.clEvaluation)
         </dd>
 
         <dt>
@@ -88,7 +96,7 @@
                         <div class="form-group">
                             @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("status", (SelectList)ViewBag.status, htmlAttributes: new { @class = "form-control" })
+                                @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.listEvent, htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="form-group">

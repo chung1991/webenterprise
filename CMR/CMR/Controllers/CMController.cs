@@ -30,6 +30,7 @@ namespace CMR.Controllers
                           where a.userName == userName && cmr.approveStatusId != 1
                           select cmr
                         );
+
             if (searchString != null)
             {
                 page = 1;
@@ -79,17 +80,15 @@ namespace CMR.Controllers
             }
             List<SelectListItem> items = new List<SelectListItem>();
 
-            items.Add(new SelectListItem { Text = "--- Select one ---", Value = "2" });
+            items.Add(new SelectListItem { Text = "-- Select One --", Value = "2" });
+            items.Add(new SelectListItem { Text = "Approve", Value = "4", Selected = (4 == report.approveStatusId ? true : false) });
+            items.Add(new SelectListItem { Text = "Reject", Value = "3", Selected=(3==report.approveStatusId  ? true : false) });
 
-            items.Add(new SelectListItem { Text = "Approve", Value = "4"});
+            ViewBag.listEvent = items;
 
-            items.Add(new SelectListItem { Text = "Reject", Value = "3" });
-
-            SelectList selectList = new SelectList(items, "Value", "Text",4);
-
-            ViewBag.status = selectList;
             return View(report);
         }
+
         [HttpPost]
         public ActionResult Approve(int courseMonitoringReportId, int status, String approve_desc)
         {

@@ -23,13 +23,13 @@
                 @Html.ActionLink("Course Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.currentFilter })
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
-                @Html.DisplayName("Fail count")
+                @Html.DisplayName("Student Total")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                @Html.DisplayName("Pass Count")
+                @Html.DisplayName("Mark A")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
-                @Html.DisplayName("Credit Count")
+                @Html.DisplayName("Mark B")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
                 @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.currentFilter })
@@ -57,13 +57,13 @@
                     @Html.DisplayFor(modelItem => item.AnnualCourse.Course.name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.failCount)
+                    @Html.DisplayFor(modelItem => item.studentTotal)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.passCount)
+                    @Html.DisplayFor(modelItem => item.markA)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.creditCount)
+                    @Html.DisplayFor(modelItem => item.markB)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ApproveStatu.name)
