@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -32,11 +34,35 @@ namespace CMR.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateReport(CourseMonitoringReport acr)
+        public async Task<ActionResult> CreateReport(CourseMonitoringReport acr, String waiting)
         {
+            
             if (ModelState.IsValid)
             {
                 CRMContext db = new CRMContext();
+
+                if (waiting != null)
+                {
+                    acr.approveStatusId = 2;
+                    var userName = User.Identity.Name;
+                    var user = db.Accounts.SingleOrDefault(u => u.userName == userName);
+                    var AnnualCourse = db.AnnualCourses.SingleOrDefault(a => a.annualCourseId == acr.annualCourseId);
+                    int CMId = (int)AnnualCourse.Course.Faculty.cmAccount;
+                    var Cm = db.Accounts.SingleOrDefault(u => u.accountId == CMId);
+
+                    var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(Cm.Profile.email));
+                    message.Subject = "Course Monitoring Report";
+                    message.Body = string.Format(body, user.Profile.name, user.Profile.email, "There is a report That you need to approve");
+                    message.IsBodyHtml = true;
+                    using (var smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message);
+
+                    }
+                }
+
                 db.CourseMonitoringReports.Add(acr);
                 db.SaveChanges();
                 return RedirectToAction("ReportList");
@@ -75,11 +101,33 @@ namespace CMR.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditReport(CourseMonitoringReport acr)
+        public async Task<ActionResult> EditReport(CourseMonitoringReport acr, String waiting)
         {
             CRMContext db = new CRMContext();
             if (ModelState.IsValid)
             {
+                if (waiting != null)
+                {
+                    acr.approveStatusId=2;
+
+                    var userName = User.Identity.Name;
+                    var user = db.Accounts.SingleOrDefault(u => u.userName == userName);
+                    var AnnualCourse = db.AnnualCourses.SingleOrDefault(a => a.annualCourseId == acr.annualCourseId);
+                    int CMId =(int) AnnualCourse.Course.Faculty.cmAccount;
+                    var Cm = db.Accounts.SingleOrDefault(u => u.accountId == CMId);
+
+                    var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                    var message = new MailMessage();
+                    message.To.Add(new MailAddress(Cm.Profile.email));
+                    message.Subject = "Course Monitoring Report";
+                    message.Body = string.Format(body,user.Profile.name, user.Profile.email, "There is a report That you need to approve");
+                    message.IsBodyHtml = true;
+                    using (var smtp = new SmtpClient())
+                    {
+                        await smtp.SendMailAsync(message);
+
+                    }
+                }
                 db.Entry(acr).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("ReportList");
