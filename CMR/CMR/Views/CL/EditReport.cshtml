@@ -13,7 +13,7 @@
         @Html.HiddenFor(model => model.approveStatusId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.studentTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Student Total", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.studentTotal, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.studentTotal, "", new { @class = "text-danger" })
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.markA, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Mark A", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.markA, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.markA, "", new { @class = "text-danger" })
@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.markB, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Mark B", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.markB, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.markB, "", new { @class = "text-danger" })
@@ -37,24 +37,32 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.markC, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Mark C", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.markC, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.markC, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.markD, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Mark D", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.markD, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.markD, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.clEvaluation, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Evaluation", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.clEvaluation, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.clEvaluation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Send To CM", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    <input type="checkbox" value="2" name="waiting">
+                </div>
             </div>
         </div>
 
