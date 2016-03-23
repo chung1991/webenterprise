@@ -151,7 +151,7 @@ namespace CMR.Controllers
             }
             catch (Exception exp)
             {
-                Response.Write("<script>alert('" + exp.Message + "')</script>"); 
+                Response.Write("<script>alert('" + exp.Message + "')</script>");
             }
             return RedirectToAction("ReportList");
         }
