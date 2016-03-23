@@ -1,81 +1,118 @@
 ﻿@model CMR.Models.CourseMonitoringReport
 
-<div>
-    <h4>AnnualCourseRecord</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AnnualCourse.Course.name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.Course.name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
-        </dt>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<h4>AnnualCourseRecord</h4>
+			<hr />
+			<dl class="dl-horizontal">
+				<dt>
+					@Html.DisplayNameFor(model => model.AnnualCourse.Course.name)
+				</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.academicYear)
-        </dd>
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.Course.name)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.failCount)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.academicYear)
+				</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.failCount)
-        </dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.studentTotal)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.passCount)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.studentTotal)
+				</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.passCount)
-        </dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.markA)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.creditCount)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.markA)
+				</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.creditCount)
-        </dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.markB)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.distinctionCount)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.markB)
+				</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.distinctionCount)
-        </dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.markC)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.evaluation)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.markC)
+				</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.evaluation)
-        </dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.markD)
+				</dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ApproveStatu.name)
-        </dt>
+				<dd>
+					@Html.DisplayFor(model => model.markD)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.clEvaluation)
+				</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ApproveStatu.name)
-        </dd>
+				<dd>
+					@Html.DisplayFor(model => model.clEvaluation)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.ApproveStatu.name)
+				</dt>
 
-    </dl>
+				<dd>
+					@Html.DisplayFor(model => model.ApproveStatu.name)
+				</dd>
+
+			</dl>
+
+
+
+		</div>
+		<div class="col-sm-4">
+			<div class="detailBox">
+				<div class="actionBox">
+					<ul class="commentList">
+
+						@foreach (var item in Model.Comments.Reverse())
+						{
+							<li>
+								<div class="commentText">
+									<strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
+									<p class="">@Html.DisplayFor(modelItem => item.content)</p>
+								</div>
+							</li>
+						}
+					</ul>
+					@using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline" }))
+					{
+						@Html.HiddenFor(model => model.CourseMonitoringReportId)
+						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @style = "width:100%", @placeholder = "Write a comment..." } })
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <p>
-    @{
-        if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
-        { 
-            <text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
-        }
-}
-    
-    @Html.ActionLink("Back to List", "ReportList")
+	@{
+		if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
+		{
+			<text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
+		}
+	}
+
+	@Html.ActionLink("Back to List", "ReportList")
 </p>

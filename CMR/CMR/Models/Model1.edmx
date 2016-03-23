@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CMRDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CMRDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="accountId" />
@@ -39,6 +39,7 @@
           <Property Name="content" Type="varchar" MaxLength="500" />
           <Property Name="accountId" Type="int" />
           <Property Name="monitoringReportId" Type="int" />
+          <Property Name="time" Type="datetime" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -54,13 +55,16 @@
           </Key>
           <Property Name="CourseMonitoringReportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="annualCourseId" Type="int" />
-          <Property Name="failCount" Type="int" />
-          <Property Name="passCount" Type="int" />
-          <Property Name="creditCount" Type="int" />
-          <Property Name="distinctionCount" Type="int" />
-          <Property Name="evaluation" Type="varchar" MaxLength="500" />
+          <Property Name="studentTotal" Type="int" />
+          <Property Name="markA" Type="int" />
+          <Property Name="markB" Type="int" />
+          <Property Name="markC" Type="int" />
+          <Property Name="markD" Type="int" />
+          <Property Name="clEvaluation" Type="varchar" MaxLength="500" />
           <Property Name="approveStatusId" Type="int" />
           <Property Name="approve_desc" Type="varchar" MaxLength="500" />
+          <Property Name="dltComment" Type="varchar" MaxLength="255" />
+          <Property Name="dateCreated" Type="date" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -79,16 +83,27 @@
           <Property Name="profileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
           <Property Name="telephone" Type="varchar" MaxLength="12" />
-          <Property Name="dateOfBirth" Type="datetime" />
+          <Property Name="dateOfBirth" Type="date" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleId" />
           </Key>
-          <Property Name="roleId" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="roleName" Type="varchar" MaxLength="100" />
           <Property Name="roleDescription" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK__Account__profile__15502E78">
           <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
@@ -234,6 +249,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="CMRDBModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnnualCourse" EntityType="Self.AnnualCourse" Schema="dbo" store:Type="Tables" />
@@ -244,6 +290,7 @@
           <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Account__profile__15502E78" Association="Self.FK__Account__profile__15502E78">
             <End Role="Profile" EntitySet="Profile" />
             <End Role="Account" EntitySet="Account" />
@@ -293,11 +340,100 @@
             <End Role="Faculty" EntitySet="Faculty" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMRDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="CMRDBModel.Account" />
+          <EntitySet Name="AnnualCourses" EntityType="CMRDBModel.AnnualCourse" />
+          <EntitySet Name="ApproveStatus" EntityType="CMRDBModel.ApproveStatu" />
+          <EntitySet Name="Comments" EntityType="CMRDBModel.Comment" />
+          <EntitySet Name="Courses" EntityType="CMRDBModel.Course" />
+          <EntitySet Name="CourseMonitoringReports" EntityType="CMRDBModel.CourseMonitoringReport" />
+          <EntitySet Name="Faculties" EntityType="CMRDBModel.Faculty" />
+          <EntitySet Name="Profiles" EntityType="CMRDBModel.Profile" />
+          <EntitySet Name="Roles" EntityType="CMRDBModel.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="CMRDBModel.sysdiagram" />
+          <AssociationSet Name="FK__Account__profile__15502E78" Association="CMRDBModel.FK__Account__profile__15502E78">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__roleId__164452B1" Association="CMRDBModel.FK__Account__roleId__164452B1">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnnualCou__clAcc__21B6055D" Association="CMRDBModel.FK__AnnualCou__clAcc__21B6055D">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__account__2A4B4B5E" Association="CMRDBModel.FK__Comment__account__2A4B4B5E">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__cmAccou__1B0907CE" Association="CMRDBModel.FK__Faculty__cmAccou__1B0907CE">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__dltAcco__1A14E395" Association="CMRDBModel.FK__Faculty__dltAcco__1A14E395">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__pvcAcco__1920BF5C" Association="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnnualCou__cours__20C1E124" Association="CMRDBModel.FK__AnnualCou__cours__20C1E124">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CourseMon__annua__267ABA7A" Association="CMRDBModel.FK__CourseMon__annua__267ABA7A">
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CourseMon__appro__276EDEB3" Association="CMRDBModel.FK__CourseMon__appro__276EDEB3">
+            <End Role="ApproveStatu" EntitySet="ApproveStatus" />
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__monitor__2B3F6F97" Association="CMRDBModel.FK__Comment__monitor__2B3F6F97">
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__facultyI__1DE57479" Association="CMRDBModel.FK__Course__facultyI__1DE57479">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(CMRDBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(CMRDBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="accountId" />
@@ -307,13 +443,13 @@
           <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="profileId" Type="Int32" />
           <Property Name="roleId" Type="Int32" />
-          <NavigationProperty Name="Profile" Relationship="Self.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
-          <NavigationProperty Name="Role" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
-          <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__clAcc__21B6055D" FromRole="Account" ToRole="AnnualCourse" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__account__2A4B4B5E" FromRole="Account" ToRole="Comment" />
-          <NavigationProperty Name="Faculties" Relationship="Self.FK__Faculty__cmAccou__1B0907CE" FromRole="Account" ToRole="Faculty" />
-          <NavigationProperty Name="Faculties1" Relationship="Self.FK__Faculty__dltAcco__1A14E395" FromRole="Account" ToRole="Faculty" />
-          <NavigationProperty Name="Faculties2" Relationship="Self.FK__Faculty__pvcAcco__1920BF5C" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Profile" Relationship="CMRDBModel.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
+          <NavigationProperty Name="Role" Relationship="CMRDBModel.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="AnnualCourses" Relationship="CMRDBModel.FK__AnnualCou__clAcc__21B6055D" FromRole="Account" ToRole="AnnualCourse" />
+          <NavigationProperty Name="Comments" Relationship="CMRDBModel.FK__Comment__account__2A4B4B5E" FromRole="Account" ToRole="Comment" />
+          <NavigationProperty Name="Faculties" Relationship="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Faculties1" Relationship="CMRDBModel.FK__Faculty__dltAcco__1A14E395" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Faculties2" Relationship="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" FromRole="Account" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="AnnualCourse">
           <Key>
@@ -323,9 +459,9 @@
           <Property Name="academicYear" Type="Int32" />
           <Property Name="courseId" Type="Int32" />
           <Property Name="clAccount" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__AnnualCou__clAcc__21B6055D" FromRole="AnnualCourse" ToRole="Account" />
-          <NavigationProperty Name="Course" Relationship="Self.FK__AnnualCou__cours__20C1E124" FromRole="AnnualCourse" ToRole="Course" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__annua__267ABA7A" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__AnnualCou__clAcc__21B6055D" FromRole="AnnualCourse" ToRole="Account" />
+          <NavigationProperty Name="Course" Relationship="CMRDBModel.FK__AnnualCou__cours__20C1E124" FromRole="AnnualCourse" ToRole="Course" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="CMRDBModel.FK__CourseMon__annua__267ABA7A" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="ApproveStatu">
           <Key>
@@ -333,7 +469,7 @@
           </Key>
           <Property Name="approveStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__appro__276EDEB3" FromRole="ApproveStatus" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="CMRDBModel.FK__CourseMon__appro__276EDEB3" FromRole="ApproveStatu" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -343,8 +479,9 @@
           <Property Name="content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="accountId" Type="Int32" />
           <Property Name="monitoringReportId" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Comment__account__2A4B4B5E" FromRole="Comment" ToRole="Account" />
-          <NavigationProperty Name="CourseMonitoringReport" Relationship="Self.FK__Comment__monitor__2B3F6F97" FromRole="Comment" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__Comment__account__2A4B4B5E" FromRole="Comment" ToRole="Account" />
+          <NavigationProperty Name="CourseMonitoringReport" Relationship="CMRDBModel.FK__Comment__monitor__2B3F6F97" FromRole="Comment" ToRole="CourseMonitoringReport" />
+          <Property Name="time" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -353,8 +490,8 @@
           <Property Name="courseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="facultyId" Type="Int32" />
-          <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__cours__20C1E124" FromRole="Course" ToRole="AnnualCourse" />
-          <NavigationProperty Name="Faculty" Relationship="Self.FK__Course__facultyI__1DE57479" FromRole="Course" ToRole="Faculty" />
+          <NavigationProperty Name="AnnualCourses" Relationship="CMRDBModel.FK__AnnualCou__cours__20C1E124" FromRole="Course" ToRole="AnnualCourse" />
+          <NavigationProperty Name="Faculty" Relationship="CMRDBModel.FK__Course__facultyI__1DE57479" FromRole="Course" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="CourseMonitoringReport">
           <Key>
@@ -362,16 +499,19 @@
           </Key>
           <Property Name="CourseMonitoringReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="annualCourseId" Type="Int32" />
-          <Property Name="failCount" Type="Int32" />
-          <Property Name="passCount" Type="Int32" />
-          <Property Name="creditCount" Type="Int32" />
-          <Property Name="distinctionCount" Type="Int32" />
-          <Property Name="evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="studentTotal" Type="Int32" />
+          <Property Name="markA" Type="Int32" />
+          <Property Name="markB" Type="Int32" />
+          <Property Name="markC" Type="Int32" />
+          <Property Name="markD" Type="Int32" />
+          <Property Name="clEvaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="approveStatusId" Type="Int32" />
           <Property Name="approve_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__267ABA7A" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
-          <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__276EDEB3" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__monitor__2B3F6F97" FromRole="CourseMonitoringReport" ToRole="Comment" />
+          <Property Name="dltComment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="AnnualCourse" Relationship="CMRDBModel.FK__CourseMon__annua__267ABA7A" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
+          <NavigationProperty Name="ApproveStatu" Relationship="CMRDBModel.FK__CourseMon__appro__276EDEB3" FromRole="CourseMonitoringReport" ToRole="ApproveStatu" />
+          <NavigationProperty Name="Comments" Relationship="CMRDBModel.FK__Comment__monitor__2B3F6F97" FromRole="CourseMonitoringReport" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -382,10 +522,10 @@
           <Property Name="pvcAccount" Type="Int32" />
           <Property Name="dltAccount" Type="Int32" />
           <Property Name="cmAccount" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Faculty__cmAccou__1B0907CE" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Account1" Relationship="Self.FK__Faculty__dltAcco__1A14E395" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Account2" Relationship="Self.FK__Faculty__pvcAcco__1920BF5C" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Courses" Relationship="Self.FK__Course__facultyI__1DE57479" FromRole="Faculty" ToRole="Course" />
+          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="CMRDBModel.FK__Faculty__dltAcco__1A14E395" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Account2" Relationship="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Courses" Relationship="CMRDBModel.FK__Course__facultyI__1DE57479" FromRole="Faculty" ToRole="Course" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -394,22 +534,33 @@
           <Property Name="profileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="dateOfBirth" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Accounts" Relationship="CMRDBModel.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleId" />
           </Key>
-          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="roleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
+          <NavigationProperty Name="Accounts" Relationship="CMRDBModel.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK__Account__profile__15502E78">
-          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
-          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <End Type="CMRDBModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
               <PropertyRef Name="profileId" />
@@ -420,8 +571,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Account__roleId__164452B1">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <End Type="CMRDBModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="roleId" />
@@ -432,8 +583,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AnnualCou__clAcc__21B6055D">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -444,8 +595,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Comment__account__2A4B4B5E">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -456,8 +607,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__cmAccou__1B0907CE">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -468,8 +619,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__dltAcco__1A14E395">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -480,8 +631,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__pvcAcco__1920BF5C">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
+          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -492,8 +643,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AnnualCou__cours__20C1E124">
-          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
-          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
+          <End Type="CMRDBModel.Course" Role="Course" Multiplicity="0..1" />
+          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="courseId" />
@@ -504,8 +655,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CourseMon__annua__267ABA7A">
-          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
-          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
+          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="0..1" />
+          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AnnualCourse">
               <PropertyRef Name="annualCourseId" />
@@ -516,10 +667,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CourseMon__appro__276EDEB3">
-          <End Role="ApproveStatus" Type="Self.ApproveStatu" Multiplicity="0..1" />
-          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
+          <End Type="CMRDBModel.ApproveStatu" Role="ApproveStatu" Multiplicity="0..1" />
+          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApproveStatus">
+            <Principal Role="ApproveStatu">
               <PropertyRef Name="approveStatusId" />
             </Principal>
             <Dependent Role="CourseMonitoringReport">
@@ -528,8 +679,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Comment__monitor__2B3F6F97">
-          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CourseMonitoringReport">
               <PropertyRef Name="CourseMonitoringReportId" />
@@ -540,8 +691,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Course__facultyI__1DE57479">
-          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
-          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="0..1" />
+          <End Type="CMRDBModel.Course" Role="Course" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Faculty">
               <PropertyRef Name="facultyId" />
@@ -551,65 +702,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="AnnualCourses" EntityType="Self.AnnualCourse" />
-          <EntitySet Name="ApproveStatus" EntityType="Self.ApproveStatu" />
-          <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="Courses" EntityType="Self.Course" />
-          <EntitySet Name="CourseMonitoringReports" EntityType="Self.CourseMonitoringReport" />
-          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
-          <EntitySet Name="Profiles" EntityType="Self.Profile" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <AssociationSet Name="FK__Account__profile__15502E78" Association="Self.FK__Account__profile__15502E78">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Account__roleId__164452B1" Association="Self.FK__Account__roleId__164452B1">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AnnualCou__clAcc__21B6055D" Association="Self.FK__AnnualCou__clAcc__21B6055D">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__account__2A4B4B5E" Association="Self.FK__Comment__account__2A4B4B5E">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__cmAccou__1B0907CE" Association="Self.FK__Faculty__cmAccou__1B0907CE">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__dltAcco__1A14E395" Association="Self.FK__Faculty__dltAcco__1A14E395">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__pvcAcco__1920BF5C" Association="Self.FK__Faculty__pvcAcco__1920BF5C">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AnnualCou__cours__20C1E124" Association="Self.FK__AnnualCou__cours__20C1E124">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__annua__267ABA7A" Association="Self.FK__CourseMon__annua__267ABA7A">
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__appro__276EDEB3" Association="Self.FK__CourseMon__appro__276EDEB3">
-            <End Role="ApproveStatus" EntitySet="ApproveStatus" />
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__monitor__2B3F6F97" Association="Self.FK__Comment__monitor__2B3F6F97">
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Course__facultyI__1DE57479" Association="Self.FK__Course__facultyI__1DE57479">
-            <End Role="Faculty" EntitySet="Faculties" />
-            <End Role="Course" EntitySet="Courses" />
-          </AssociationSet>
-        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -619,97 +722,137 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="CMRDBModel.Account">
               <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="accountId" ColumnName="accountId" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
-                <ScalarProperty Name="profileId" ColumnName="profileId" />
                 <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="profileId" ColumnName="profileId" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AnnualCourses">
             <EntityTypeMapping TypeName="CMRDBModel.AnnualCourse">
               <MappingFragment StoreEntitySet="AnnualCourse">
-                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
-                <ScalarProperty Name="academicYear" ColumnName="academicYear" />
-                <ScalarProperty Name="courseId" ColumnName="courseId" />
                 <ScalarProperty Name="clAccount" ColumnName="clAccount" />
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="academicYear" ColumnName="academicYear" />
+                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApproveStatus">
             <EntityTypeMapping TypeName="CMRDBModel.ApproveStatu">
               <MappingFragment StoreEntitySet="ApproveStatus">
-                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="CMRDBModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="commentId" ColumnName="commentId" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="monitoringReportId" ColumnName="monitoringReportId" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="CMRDBModel.Course">
               <MappingFragment StoreEntitySet="Course">
-                <ScalarProperty Name="courseId" ColumnName="courseId" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="facultyId" ColumnName="facultyId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CourseMonitoringReports">
             <EntityTypeMapping TypeName="CMRDBModel.CourseMonitoringReport">
               <MappingFragment StoreEntitySet="CourseMonitoringReport">
-                <ScalarProperty Name="CourseMonitoringReportId" ColumnName="CourseMonitoringReportId" />
-                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
-                <ScalarProperty Name="failCount" ColumnName="failCount" />
-                <ScalarProperty Name="passCount" ColumnName="passCount" />
-                <ScalarProperty Name="creditCount" ColumnName="creditCount" />
-                <ScalarProperty Name="distinctionCount" ColumnName="distinctionCount" />
-                <ScalarProperty Name="evaluation" ColumnName="evaluation" />
-                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
+                <ScalarProperty Name="dltComment" ColumnName="dltComment" />
                 <ScalarProperty Name="approve_desc" ColumnName="approve_desc" />
+                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+                <ScalarProperty Name="clEvaluation" ColumnName="clEvaluation" />
+                <ScalarProperty Name="markD" ColumnName="markD" />
+                <ScalarProperty Name="markC" ColumnName="markC" />
+                <ScalarProperty Name="markB" ColumnName="markB" />
+                <ScalarProperty Name="markA" ColumnName="markA" />
+                <ScalarProperty Name="studentTotal" ColumnName="studentTotal" />
+                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
+                <ScalarProperty Name="CourseMonitoringReportId" ColumnName="CourseMonitoringReportId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Faculties">
             <EntityTypeMapping TypeName="CMRDBModel.Faculty">
               <MappingFragment StoreEntitySet="Faculty">
-                <ScalarProperty Name="facultyId" ColumnName="facultyId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="pvcAccount" ColumnName="pvcAccount" />
-                <ScalarProperty Name="dltAccount" ColumnName="dltAccount" />
                 <ScalarProperty Name="cmAccount" ColumnName="cmAccount" />
+                <ScalarProperty Name="dltAccount" ColumnName="dltAccount" />
+                <ScalarProperty Name="pvcAccount" ColumnName="pvcAccount" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="facultyId" ColumnName="facultyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="CMRDBModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
-                <ScalarProperty Name="profileId" ColumnName="profileId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="telephone" ColumnName="telephone" />
                 <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="profileId" ColumnName="profileId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="CMRDBModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="roleId" ColumnName="roleId" />
-                <ScalarProperty Name="roleName" ColumnName="roleName" />
                 <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CMRDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="CMRDBModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="CMRDBModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="CMRDBModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="CMRDBModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMRDBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="CMRDBModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMRDBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="CMRDBModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="CMRDBModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
