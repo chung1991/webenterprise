@@ -20,7 +20,7 @@ namespace CMR.Models
         }
     
         public int facultyId { get; set; }
-        public string name { get; set; }
+        public string facultyName { get; set; }
         public Nullable<int> pvcAccount { get; set; }
         public Nullable<int> dltAccount { get; set; }
         public Nullable<int> cmAccount { get; set; }

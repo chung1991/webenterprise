@@ -11,7 +11,9 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataTypeAttribute(typeof(AnnualCourseMD))]
     public partial class AnnualCourse
     {
         public AnnualCourse()
@@ -20,9 +22,10 @@ namespace CMR.Models
         }
     
         public int annualCourseId { get; set; }
-        public Nullable<int> academicYear { get; set; }
+        public Nullable<System.DateTime> academicYear { get; set; }
         public Nullable<int> courseId { get; set; }
         public Nullable<int> clAccount { get; set; }
+        public string Status { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Course Course { get; set; }

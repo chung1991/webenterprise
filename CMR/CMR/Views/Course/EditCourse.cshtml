@@ -1,0 +1,96 @@
+﻿@model CMR.Models.Course
+
+@{
+    ViewBag.Title = "EditCourse";
+}
+
+
+<h2>Edit Course</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.courseId)
+        @*@if (Model.AnnualCourses.Count(x => x.Status == "Activate") != 0 || Model.AnnualCourses.Count(x => x.Status == "Wait") != 0)
+        {
+            @Html.HiddenFor(model => model.Status)
+        }*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.courseName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.courseName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.courseName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.facultyId, "Faculty Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.facultyId, (SelectList)ViewBag.roles, "--- Select one ---", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.facultyId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (Model.AnnualCourses.Count(x => x.Status == "Activate") == 0 && Model.AnnualCourses.Count(x => x.Status == "Wait") == 0)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @if (Model.Status == "Activate")
+                    {
+                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.state, htmlAttributes: new { @class = "form-control", @onchange = "myFun(this.value)", style = "background-image:url(../../Content/Images/Activate.png); background-size: 34px 34px; background-repeat:no-repeat; background-position: 93% 10%" })
+                    }
+                    @if ((Model.Status == "Cancel"))
+                    {
+                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.state, htmlAttributes: new { @class = "form-control", @onchange = "myFun(this.value)", style = "background-image:url(../../Content/Images/Cancel.png); background-size: 34px 34px; background-repeat:no-repeat; background-position: 93% 10%" })
+                    }
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        else
+        {
+            @Html.HiddenFor(model => model.Status)
+        }
+        
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <a href="/Course/ViewAllCourse"><input type="button" value="Cancel" class="btn btn-default" /></a>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ViewAllCourse")
+</div>
+<script>
+    function myFun(val)
+    {
+
+        if (val == "Activate")
+        {
+            document.getElementById("Status").style.backgroundImage = "url(../../Content/Images/Activate.png)";
+        }
+        else if (val == "Cancel")
+        {
+            document.getElementById("Status").style.backgroundImage = "url(../../Content/Images/Cancel.png)";
+        }
+        document.getElementById("Status").style.backgroundSize = "34px 34px";
+        document.getElementById("Status").style.backgroundRepeat = "no-repeat";
+        document.getElementById("Status").style.backgroundPosition = "93% 10%";
+
+    }
+
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

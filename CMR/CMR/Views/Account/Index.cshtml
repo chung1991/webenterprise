@@ -4,6 +4,7 @@
     @Html.ActionLink("Create New", "Register")
     @{
         var index = 0;
+        var straight = " | "; 
     }
 </p>
 <div>
@@ -11,7 +12,7 @@
         <thead>
             <tr>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
-                    #
+             
                 </th>
                 <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
                     @Html.DisplayName("User Name")
@@ -35,44 +36,48 @@
             </tr>
         </thead>
 
-        <tbody>
-
+        <tbody> 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @{
-                index++;
-                @index
-                        }
-                    </td>
+                
+                    <tr>
+                        <td>
+                            @{
+                            index++;
+                            @index
+                            }
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.userName)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.userName)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile.name)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Profile.name)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Role.roleName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile.telephone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile.email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Profile.address)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { accountId = item.accountId }) |
-                        @Html.ActionLink("Detail", "Detail", new { accountId = item.accountId }) |
-                        @Html.ActionLink("Delete", "Delete", new { accountId = item.accountId })
-                    </td>
-                </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Role.roleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Profile.telephone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Profile.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Profile.address)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { accountId = item.accountId }) |
+                            @Html.ActionLink("Detail", "Detail", new { accountId = item.accountId }) 
+                            @if (item.Role.roleName != "Admin")
+                            { 
+                               @straight @Html.ActionLink("Delete", "Delete", new { accountId = item.accountId }, new { onclick = "return confirm('Do you want to delete this user ?')" })
+                            }
+                        </td>
+                    </tr>
+                
             }
         </tbody>
 

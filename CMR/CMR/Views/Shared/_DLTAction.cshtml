@@ -1,0 +1,13 @@
+﻿@using CMR.CustomHtmlHelpers;
+<div class="sidebar">
+    <ul>
+        <li>
+            <a href="#" class="head collapsed @Html.ActivePage("DLT")"><i class="fa fa-users fa-lg"></i> DLT <span class="arrow"></span></a>
+            <ul class="sub-menu">
+                <li class="@Html.ActivePage("DLT","Index")">
+                    @Html.ActionLink("Task name", "", "")
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

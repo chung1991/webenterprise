@@ -44,16 +44,16 @@ namespace CMR.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                courses = courses.Where(s => s.AnnualCourse.Course.name.Contains(searchString));
+                courses = courses.Where(s => s.AnnualCourse.Course.courseName.Contains(searchString));
             }
 
             switch (sortOrder)
             {
                 case "name_desc":
-                    courses = courses.OrderByDescending(c => c.AnnualCourse.Course.name);
+                    courses = courses.OrderByDescending(c => c.AnnualCourse.Course.courseName);
                     break;
                 case "Name":
-                    courses = courses.OrderBy(c => c.AnnualCourse.Course.name);
+                    courses = courses.OrderBy(c => c.AnnualCourse.Course.courseName);
                     break;
                 case "status_desc":
                     courses = courses.OrderByDescending(c => c.approveStatusId);

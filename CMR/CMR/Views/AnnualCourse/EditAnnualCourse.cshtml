@@ -1,0 +1,48 @@
+﻿@model CMR.Models.AnnualCourse
+
+<h2>Edit Annual Course</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.annualCourseId)
+        @Html.HiddenFor(model => model.Status)
+        <div class="form-group">
+            @Html.LabelFor(model => model.academicYear, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.academicYear, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.academicYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.courseId, "Course name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.courseId, (SelectList)ViewBag.roles, "--- Select one ---", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.courseId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*@if (Model.Status.Equals("Wait"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Status, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.Status, (SelectList)ViewBag.state, htmlAttributes: new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }*@
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+                <a href="/AnnualCourse/ViewAllAnnualCourse"><input type="button" value="Cancel" class="btn btn-default" /></a>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ViewAllAnnualCourse")
+</div>
