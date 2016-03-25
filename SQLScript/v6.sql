@@ -29,10 +29,10 @@ create table [Profile] (
 )
 go
 insert into [Profile] values('Admin', 'Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
---insert into [Profile] values('CLAccount', 'Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
---insert into [Profile] values('CMAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
---insert into [Profile] values('DLTAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
---insert into [Profile] values('PVCAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
+insert into [Profile] values('CLAccount', 'Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
+insert into [Profile] values('CMAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
+insert into [Profile] values('DLTAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
+insert into [Profile] values('PVCAccount','Ha Noi','cmr@gmail.com','123456789', '1/1/1970')
 go
 create table Account (
 	accountId int primary key identity(1, 1),
@@ -43,10 +43,10 @@ create table Account (
 )
 go
 insert into Account values('admin', 'admin', 1, 1)
---insert into Account values('CLAccount', '123456', 2, 2)
---insert into Account values('CMAccount', '123456', 3, 3)
---insert into Account values('DLTccount', '123456', 4, 4)
---insert into Account values('PVCccount', '123456', 5, 5)
+insert into Account values('CLAccount', '123456', 2, 2)
+insert into Account values('CMAccount', '123456', 3, 3)
+insert into Account values('DLTccount', '123456', 4, 4)
+insert into Account values('PVCccount', '123456', 5, 5)
 
 go
 create table Faculty (
@@ -57,8 +57,8 @@ create table Faculty (
 	cmAccount int foreign key (cmAccount) references [Account] (accountId)
 )
 go
-insert into Faculty values('Sience',null,null,null)
---insert into Faculty values('Sience',null,null,3)
+--insert into Faculty values('Sience',null,null,null)
+insert into Faculty values('Sience',null,null,3)
 insert into Faculty values('Software',null,null,null)
 insert into Faculty values('Hardware',null,null,null)
 insert into Faculty values('Managment Bussiness',null,null,null)
