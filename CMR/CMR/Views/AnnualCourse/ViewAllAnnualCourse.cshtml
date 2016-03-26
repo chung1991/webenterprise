@@ -1,0 +1,103 @@
+﻿@model PagedList.IPagedList<CMR.Models.AnnualCourse>
+@using PagedList.Mvc;
+
+<h2>View All Annual Course</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-inline" style="margin-bottom:10px;">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            @Html.TextBox("txtAcademicYearFrom", ViewBag.From as String, "{0:dd/MM/yyyy}", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='date')", onfocusout = "(this.type='text')", @placeholder = "Time from..." })
+            @Html.TextBox("txtAcademicYearTo", ViewBag.To as String, "{0:dd/MM/yyyy}", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='date')", onfocusout = "(this.type='text')", @placeholder = "Time To..." })
+            @Html.TextBox("txtKeyWord", ViewBag.KeyWord as String, new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "User or course name..." })
+            @Html.DropDownList("txtStatus", (SelectList)ViewBag.State, "--- Select status ---", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Faculty name..." })
+            <input type="submit" value="Search" class="btn btn-default" style="margin-bottom:5px;" />
+        </div>
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Create New", "AddAnnualCourse")
+    @{
+        var index = 0;
+        var straight = " | ";
+    }
+</p>
+
+<table class="tablesaw" data-tablesaw-mode="stack">
+    <thead>
+        <tr>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist"></th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+                @Html.ActionLink("Academic year", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortAcademicYear, currentFilter = ViewBag.currentFilter })
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+                @Html.ActionLink("User name", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortUserName, currentFilter = ViewBag.currentFilter })
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+                @Html.ActionLink("Course name", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortCourseName, currentFilter = ViewBag.currentFilter })
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+                @Html.ActionLink("Status", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortStatus, currentFilter = ViewBag.currentFilter })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @{
+            index++;
+            @index
+                    }
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.academicYear, "{0:dd/MM/yyyy}")
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.userName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.courseName) - 
+                    @Html.DisplayFor(modelItem => item.Course.Faculty.facultyName)
+                </td>
+                <td>
+                    @if (item.Status.Equals("Activate"))
+                    {
+                        <img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
+                    }
+                    else if (item.Status.Equals("Finish"))
+                    {
+                        <img src="~/Content/Images/Finish.png" style="width:30px; height:30px;" title="Finish" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/Images/Wait.png" style="width:30px; height:30px;" title="Wait" />
+                    }
+
+                </td>
+                <td>
+                    @if (item.Status.Equals("Activate"))
+                    {
+                        @Html.ActionLink("Edit", "EditAnnualCourse", new { annualCourseId = item.annualCourseId })
+                    }
+                    @if (item.Status == "Wait")
+                    {
+                        @Html.ActionLink("Edit", "EditAnnualCourse", new { annualCourseId = item.annualCourseId })
+                        @straight
+                        @Html.ActionLink("Delete", "DeleteAnnualCourse", new { annualCourseId = item.annualCourseId }, new { onclick = "return confirm('Do you want to delete this annual course ?')" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ViewAllAnnualCourse",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
