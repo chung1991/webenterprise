@@ -1,0 +1,150 @@
+﻿@model CMR.Models.CourseMonitoringReport
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<h4>CourseMonitoringReport</h4>
+			<hr />
+			<dl class="dl-horizontal">
+				<dt>
+					@Html.DisplayName("Course Name")
+				</dt>
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.Course.name)
+				</dd>
+				<dt>
+					@Html.DisplayName("Student Total")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.studentTotal)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Mark A")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markA)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Mark B")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markB)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Mark C")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markC)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Mark D")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markD)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Evaluation")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.clEvaluation)
+				</dd>
+
+				<dt>
+					@Html.DisplayName("Status")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.ApproveStatu.name)
+				</dd>
+				<dt>
+					@Html.DisplayName("Sender")
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.Account.userName)
+				</dd>
+				<dt>
+					Action
+				</dt>
+
+				<dd>
+					<a href="#" data-toggle="modal" data-target="#myModal">Action</a>
+				</dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<div class="detailBox">
+				<div class="actionBox">
+					<ul class="commentList">
+						
+						@foreach (var item in Model.Comments.Reverse())
+						{
+							<li>
+								<div class="commentText">
+									<strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
+									<p class="">@Html.DisplayFor(modelItem => item.content)</p> 
+								</div>
+							</li>
+						}
+					</ul>					
+					@using (Html.BeginForm("SubmitComment", "CM", FormMethod.Post, new { @class = "form-inline" }))
+					{
+						@Html.HiddenFor(model => model.CourseMonitoringReportId)
+						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @style = "width:100%", @placeholder = "Write a comment..." } })
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Report Action</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Approve","CM",FormMethod.Post))
+                {
+                    @Html.HiddenFor(model=>model.CourseMonitoringReportId)
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.listEvent, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("approve_desc", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                } 
+            </div>
+        </div>
+        
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

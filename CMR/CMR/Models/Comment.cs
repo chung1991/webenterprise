@@ -16,5 +16,11 @@ namespace CMR.Models
     {
         public int commentId { get; set; }
         public string content { get; set; }
+        public Nullable<int> accountId { get; set; }
+        public Nullable<int> monitoringReportId { get; set; }
+        public Nullable<System.DateTime> time { get; set; }
+    
+        public virtual Account Account { get; set; }
+        public virtual CourseMonitoringReport CourseMonitoringReport { get; set; }
     }
 }

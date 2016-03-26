@@ -66,4 +66,22 @@ namespace CMR.Models
         [Required]
         public string evaluation { get; set; }
     }
+
+    public class CourseMonitoringReportMD
+    {
+        [Display(Name="Fail Count")]
+        public Nullable<int> failCount { get; set; }
+
+        [Display(Name="Pass Count")]
+        public Nullable<int> passCount { get; set; }
+
+        [Display(Name="Credit Count")]
+        public Nullable<int> creditCount { get; set; }
+
+        [Display(Name="Dist Count")]
+        public Nullable<int> distinctionCount { get; set; }
+
+        [Display(Name="Evaluation")]
+        public string evaluation { get; set; }
+    }
 }

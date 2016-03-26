@@ -10,6 +10,16 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/sidebar_style/sidebar.css" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/table_style/tablesaw.css" rel="stylesheet" />
+    <script src="~/Content/table_style/tablesaw-init.js"></script>
+    <script src="~/Content/table_style/tablesaw.js"></script>
+    <style>
+        .democolwidth {
+            width: 150px;
+        }
+    </style>
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -43,12 +53,13 @@
                     {
                         Html.RenderPartial("_AdminAction");
                     }
-                    else
+                    else if (User.IsInRole("CL"))
                     {
-                        if (User.IsInRole("CL"))
-                        {
-                            Html.RenderPartial("_CLAction");
-                        }
+                        Html.RenderPartial("_CLAction");
+                    }
+                    else if (User.IsInRole("CM"))
+                    {
+                        Html.RenderPartial("_CMAction");
                     }
                 }
             </div>

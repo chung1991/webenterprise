@@ -1,0 +1,14 @@
+﻿@using CMR.CustomHtmlHelpers;
+<div class="sidebar">
+    <ul>
+        <li>
+            <a href="#" class="head collapsed @Html.ActivePage("CM")"><i class="fa fa-users fa-lg"></i> Reports <span class="arrow"></span></a>
+            <ul class="sub-menu">
+                <li class="@Html.ActivePage("CM","Index")">
+                    @Html.ActionLink("Course Report", "Index", "CM")
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+

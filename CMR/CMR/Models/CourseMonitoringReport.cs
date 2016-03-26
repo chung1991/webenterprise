@@ -14,16 +14,26 @@ namespace CMR.Models
     
     public partial class CourseMonitoringReport
     {
+        public CourseMonitoringReport()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int CourseMonitoringReportId { get; set; }
         public Nullable<int> annualCourseId { get; set; }
-        public Nullable<int> failCount { get; set; }
-        public Nullable<int> passCount { get; set; }
-        public Nullable<int> creditCount { get; set; }
-        public Nullable<int> distinctionCount { get; set; }
-        public string evaluation { get; set; }
+        public Nullable<int> studentTotal { get; set; }
+        public Nullable<int> markA { get; set; }
+        public Nullable<int> markB { get; set; }
+        public Nullable<int> markC { get; set; }
+        public Nullable<int> markD { get; set; }
+        public string clEvaluation { get; set; }
         public Nullable<int> approveStatusId { get; set; }
+        public string approve_desc { get; set; }
+        public string dltComment { get; set; }
+        public Nullable<System.DateTime> dateCreated { get; set; }
     
         public virtual AnnualCourse AnnualCourse { get; set; }
         public virtual ApproveStatu ApproveStatu { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
