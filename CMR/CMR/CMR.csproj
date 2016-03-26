@@ -143,8 +143,10 @@
     <Compile Include="Controllers\CLController.cs" />
     <Compile Include="Controllers\CMController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\DLTController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PVCController.cs" />
     <Compile Include="CustomHtmlHelpers\HtmlHelperExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -307,6 +309,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Annual\" />
+    <Folder Include="Views\DLT\" />
+    <Folder Include="Views\PVC\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
