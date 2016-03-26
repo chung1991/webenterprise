@@ -4,25 +4,36 @@
         <li>
             <a href="#" class="head collapsed @Html.ActivePage("Account")"><i class="fa fa-users fa-lg"></i> Users <span class="arrow"></span></a>
             <ul class="sub-menu">
-                <li class="@Html.ActivePage("Account","Register")">
-                    @Html.ActionLink("Create new user", "Register", "Account")
-                </li>
                 <li class="@Html.ActivePage("Account","Index")">
                     @Html.ActionLink("List of users", "Index", "Account")
                 </li>
+                <li class="@Html.ActivePage("Account","Register")">
+                    @Html.ActionLink("Create new user", "Register", "Account")
+                </li>
+
             </ul>
         </li>
         <li>
             <a href="#" class="head collapsed @Html.ActivePage("Course")"><i class="fa fa-folder-open"></i> Course Mangement <span class="arrow"></span></a>
             <ul class="sub-menu">
-                <li>
-                    <a href="#">Create new course</a>
+                <li class="@Html.ActivePage("Course","ViewAllCourse")">
+                    @Html.ActionLink("List of courses", "ViewAllCourse", "Course")
                 </li>
-                <li>
-                    <a href="#">List of courses</a>
+                <li class="@Html.ActivePage("Course","AddCourse")">
+                    @Html.ActionLink("Create new course", "AddCourse", "Course")
                 </li>
             </ul>
         </li>
-
+        <li>
+            <a href="#" class="head collapsed @Html.ActivePage("AnnualCourse")"><i class="fa fa-folder-open"></i> AnnualCourse Mangement <span class="arrow"></span></a>
+            <ul class="sub-menu">
+                <li class="@Html.ActivePage("AnnualCourse","ViewAllAnnualCourse")">
+                    @Html.ActionLink("List of annual courses", "ViewAllAnnualCourse", "AnnualCourse")
+                </li>
+                <li class="@Html.ActivePage("AnnualCourse","AddAnnualCourse")">
+                    @Html.ActionLink("Create new annual course", "AddAnnualCourse", "AnnualCourse")
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>

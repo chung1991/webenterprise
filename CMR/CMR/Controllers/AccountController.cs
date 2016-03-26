@@ -31,6 +31,7 @@ namespace CMR.Controllers
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(m.userName, m.rememberMe);
+                    System.Web.HttpContext.Current.Session["UserSession"] = (Account)user; 
                     return RedirectToLocal(returnUrl);
                 }
                 else
