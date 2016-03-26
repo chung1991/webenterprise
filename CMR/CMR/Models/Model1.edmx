@@ -36,9 +36,10 @@
             <PropertyRef Name="commentId" />
           </Key>
           <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="content" Type="varchar" MaxLength="500" />
+          <Property Name="content" Type="varchar" MaxLength="1000" />
           <Property Name="accountId" Type="int" />
           <Property Name="monitoringReportId" Type="int" />
+          <Property Name="time" Type="datetime" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -54,13 +55,16 @@
           </Key>
           <Property Name="CourseMonitoringReportId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="annualCourseId" Type="int" />
-          <Property Name="failCount" Type="int" />
-          <Property Name="passCount" Type="int" />
-          <Property Name="creditCount" Type="int" />
-          <Property Name="distinctionCount" Type="int" />
-          <Property Name="evaluation" Type="varchar" MaxLength="500" />
+          <Property Name="studentTotal" Type="int" />
+          <Property Name="markA" Type="int" />
+          <Property Name="markB" Type="int" />
+          <Property Name="markC" Type="int" />
+          <Property Name="markD" Type="int" />
+          <Property Name="clEvaluation" Type="varchar" MaxLength="500" />
           <Property Name="approveStatusId" Type="int" />
           <Property Name="approve_desc" Type="varchar" MaxLength="500" />
+          <Property Name="dltComment" Type="varchar" MaxLength="255" />
+          <Property Name="dateCreated" Type="date" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -79,14 +83,15 @@
           <Property Name="profileId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="address" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
           <Property Name="telephone" Type="varchar" MaxLength="12" />
-          <Property Name="dateOfBirth" Type="datetime" />
+          <Property Name="dateOfBirth" Type="date" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleId" />
           </Key>
-          <Property Name="roleId" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="roleName" Type="varchar" MaxLength="100" />
           <Property Name="roleDescription" Type="varchar" MaxLength="255" />
         </EntityType>
@@ -138,7 +143,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__account__2A4B4B5E">
+        <Association Name="FK__Comment__account__36B12243">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -150,7 +155,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__monitor__2B3F6F97">
+        <Association Name="FK__Comment__monitor__37A5467C">
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,11 +265,11 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="AnnualCourse" EntitySet="AnnualCourse" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__account__2A4B4B5E" Association="Self.FK__Comment__account__2A4B4B5E">
+          <AssociationSet Name="FK__Comment__account__36B12243" Association="Self.FK__Comment__account__36B12243">
             <End Role="Account" EntitySet="Account" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__monitor__2B3F6F97" Association="Self.FK__Comment__monitor__2B3F6F97">
+          <AssociationSet Name="FK__Comment__monitor__37A5467C" Association="Self.FK__Comment__monitor__37A5467C">
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReport" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
@@ -310,7 +315,7 @@
           <NavigationProperty Name="Profile" Relationship="Self.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
           <NavigationProperty Name="Role" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
           <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__clAcc__21B6055D" FromRole="Account" ToRole="AnnualCourse" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__account__2A4B4B5E" FromRole="Account" ToRole="Comment" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__account__36B12243" FromRole="Account" ToRole="Comment" />
           <NavigationProperty Name="Faculties" Relationship="Self.FK__Faculty__cmAccou__1B0907CE" FromRole="Account" ToRole="Faculty" />
           <NavigationProperty Name="Faculties1" Relationship="Self.FK__Faculty__dltAcco__1A14E395" FromRole="Account" ToRole="Faculty" />
           <NavigationProperty Name="Faculties2" Relationship="Self.FK__Faculty__pvcAcco__1920BF5C" FromRole="Account" ToRole="Faculty" />
@@ -340,11 +345,12 @@
             <PropertyRef Name="commentId" />
           </Key>
           <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="accountId" Type="Int32" />
           <Property Name="monitoringReportId" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="Self.FK__Comment__account__2A4B4B5E" FromRole="Comment" ToRole="Account" />
-          <NavigationProperty Name="CourseMonitoringReport" Relationship="Self.FK__Comment__monitor__2B3F6F97" FromRole="Comment" ToRole="CourseMonitoringReport" />
+          <Property Name="time" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Comment__account__36B12243" FromRole="Comment" ToRole="Account" />
+          <NavigationProperty Name="CourseMonitoringReport" Relationship="Self.FK__Comment__monitor__37A5467C" FromRole="Comment" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -362,16 +368,19 @@
           </Key>
           <Property Name="CourseMonitoringReportId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="annualCourseId" Type="Int32" />
-          <Property Name="failCount" Type="Int32" />
-          <Property Name="passCount" Type="Int32" />
-          <Property Name="creditCount" Type="Int32" />
-          <Property Name="distinctionCount" Type="Int32" />
-          <Property Name="evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="studentTotal" Type="Int32" />
+          <Property Name="markA" Type="Int32" />
+          <Property Name="markB" Type="Int32" />
+          <Property Name="markC" Type="Int32" />
+          <Property Name="markD" Type="Int32" />
+          <Property Name="clEvaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="approveStatusId" Type="Int32" />
           <Property Name="approve_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="dltComment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="dateCreated" Type="DateTime" Precision="0" />
           <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__267ABA7A" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
           <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__276EDEB3" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__monitor__2B3F6F97" FromRole="CourseMonitoringReport" ToRole="Comment" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__monitor__37A5467C" FromRole="CourseMonitoringReport" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -394,15 +403,16 @@
           <Property Name="profileId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="dateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="roleId" />
           </Key>
-          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="roleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
@@ -443,7 +453,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__account__2A4B4B5E">
+        <Association Name="FK__Comment__account__36B12243">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -527,7 +537,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__monitor__2B3F6F97">
+        <Association Name="FK__Comment__monitor__37A5467C">
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -573,7 +583,7 @@
             <End Role="Account" EntitySet="Accounts" />
             <End Role="AnnualCourse" EntitySet="AnnualCourses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__account__2A4B4B5E" Association="Self.FK__Comment__account__2A4B4B5E">
+          <AssociationSet Name="FK__Comment__account__36B12243" Association="Self.FK__Comment__account__36B12243">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
@@ -601,7 +611,7 @@
             <End Role="ApproveStatus" EntitySet="ApproveStatus" />
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__monitor__2B3F6F97" Association="Self.FK__Comment__monitor__2B3F6F97">
+          <AssociationSet Name="FK__Comment__monitor__37A5467C" Association="Self.FK__Comment__monitor__37A5467C">
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
@@ -652,6 +662,7 @@
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
                 <ScalarProperty Name="monitoringReportId" ColumnName="monitoringReportId" />
+                <ScalarProperty Name="time" ColumnName="time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -669,13 +680,16 @@
               <MappingFragment StoreEntitySet="CourseMonitoringReport">
                 <ScalarProperty Name="CourseMonitoringReportId" ColumnName="CourseMonitoringReportId" />
                 <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
-                <ScalarProperty Name="failCount" ColumnName="failCount" />
-                <ScalarProperty Name="passCount" ColumnName="passCount" />
-                <ScalarProperty Name="creditCount" ColumnName="creditCount" />
-                <ScalarProperty Name="distinctionCount" ColumnName="distinctionCount" />
-                <ScalarProperty Name="evaluation" ColumnName="evaluation" />
+                <ScalarProperty Name="studentTotal" ColumnName="studentTotal" />
+                <ScalarProperty Name="markA" ColumnName="markA" />
+                <ScalarProperty Name="markB" ColumnName="markB" />
+                <ScalarProperty Name="markC" ColumnName="markC" />
+                <ScalarProperty Name="markD" ColumnName="markD" />
+                <ScalarProperty Name="clEvaluation" ColumnName="clEvaluation" />
                 <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
                 <ScalarProperty Name="approve_desc" ColumnName="approve_desc" />
+                <ScalarProperty Name="dltComment" ColumnName="dltComment" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -696,6 +710,7 @@
                 <ScalarProperty Name="profileId" ColumnName="profileId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="telephone" ColumnName="telephone" />
                 <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
               </MappingFragment>

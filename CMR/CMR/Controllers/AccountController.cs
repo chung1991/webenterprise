@@ -70,7 +70,6 @@ namespace CMR.Controllers
                         telephone=r.telephone,
                         dateOfBirth=r.dateOfBirth
                     };
-
                     db.Profiles.Add(p);
                     db.SaveChanges();
                     int lastID = db.Profiles.Max(pro => pro.profileId);
@@ -93,17 +92,10 @@ namespace CMR.Controllers
         [CustomAuthorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            List<UserDetailModel> model=new List<UserDetailModel>();
-            var userDetail =( from acc in db.Accounts
-                             join r in db.Roles on acc.roleId equals r.roleId
-                             join pro in db.Profiles on acc.profileId equals pro.profileId
-                             select new {acc.accountId, acc.userName, r.roleName, pro.name, pro.address, pro.telephone, pro.dateOfBirth }).ToList();
-            foreach (var item in userDetail)
-            {
-                model.Add(new UserDetailModel(item.accountId,item.userName,item.name,item.roleName,item.address,item.telephone,item.dateOfBirth));
-            }
+            var list = (from acc in db.Accounts
+                        select acc).ToList();
 
-            return View(model);
+            return View(list);
         }
 
         [CustomAuthorize(Roles = "Admin")]
@@ -134,16 +126,28 @@ namespace CMR.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var userDetail = (from acc in db.Accounts
-                             join r in db.Roles on acc.roleId equals r.roleId
-                             join pro in db.Profiles on acc.profileId equals pro.profileId
-                             where acc.accountId == accountId
-                             select new { acc.accountId, acc.userName,acc.userPassword,acc.roleId, pro.name, pro.address, pro.telephone, pro.dateOfBirth }).First();
+
+            var userDetail = db.Accounts.SingleOrDefault(a => a.accountId == accountId);
+
             if (userDetail == null)
             {
                 return HttpNotFound();
             }
-            RegisterModel rm = new RegisterModel(userDetail.accountId, userDetail.userName,userDetail.userPassword,userDetail.userPassword, userDetail.roleId,userDetail.name,userDetail.address,userDetail.telephone,userDetail.dateOfBirth);
+            RegisterModel rm = new RegisterModel
+            {
+                accountId = userDetail.accountId,
+                userName = userDetail.userName,
+                passWord = userDetail.userPassword,
+                confirmPassWord=userDetail.userPassword,
+                roleId = (int)userDetail.roleId,
+                fullName = userDetail.Profile.name,
+                address = userDetail.Profile.address,
+                email = userDetail.Profile.email,
+                telephone = userDetail.Profile.telephone,
+                dateOfBirth = (DateTime)userDetail.Profile.dateOfBirth
+
+            };
+
             ViewBag.roles = new SelectList(db.Roles, "roleId", "roleName",userDetail.roleId);
             return View(rm);
         }
@@ -178,6 +182,7 @@ namespace CMR.Controllers
                         profileId =(int) ac.profileId,
                         name = rm.fullName,
                         address = rm.address,
+                        email=rm.email,
                         telephone = rm.telephone,
                         dateOfBirth = rm.dateOfBirth
                     };

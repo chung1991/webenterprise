@@ -30,6 +30,7 @@ namespace CMR.Controllers
                           where a.userName == userName && cmr.approveStatusId != 1
                           select cmr
                         );
+
             if (searchString != null)
             {
                 page = 1;
@@ -71,6 +72,7 @@ namespace CMR.Controllers
         }
 
         public ActionResult Detail(int reportId) {
+			System.Diagnostics.Debug.WriteLine("Detail " + reportId);
             CRMContext db = new CRMContext();
             var report = db.CourseMonitoringReports.SingleOrDefault(c => c.CourseMonitoringReportId == reportId);
             if (report == null)
@@ -79,17 +81,15 @@ namespace CMR.Controllers
             }
             List<SelectListItem> items = new List<SelectListItem>();
 
-            items.Add(new SelectListItem { Text = "--- Select one ---", Value = "2" });
+            items.Add(new SelectListItem { Text = "-- Select One --", Value = "2" });
+            items.Add(new SelectListItem { Text = "Approve", Value = "4", Selected = (4 == report.approveStatusId ? true : false) });
+            items.Add(new SelectListItem { Text = "Reject", Value = "3", Selected=(3==report.approveStatusId  ? true : false) });
 
-            items.Add(new SelectListItem { Text = "Approve", Value = "4"});
+            ViewBag.listEvent = items;
 
-            items.Add(new SelectListItem { Text = "Reject", Value = "3" });
-
-            SelectList selectList = new SelectList(items, "Value", "Text",4);
-
-            ViewBag.status = selectList;
             return View(report);
         }
+
         [HttpPost]
         public ActionResult Approve(int courseMonitoringReportId, int status, String approve_desc)
         {
@@ -104,6 +104,28 @@ namespace CMR.Controllers
             }
             return RedirectToAction("Detail", new { reportId = courseMonitoringReportId });
         }
+
+		
+		[HttpPost]
+		public ActionResult SubmitComment(int courseMonitoringReportId, String comment_content)
+		{
+			System.Diagnostics.Debug.WriteLine("SubmitComment " + comment_content);
+			
+			if (ModelState.IsValid)
+			{
+				CRMContext db = new CRMContext();
+				Comment cmt = new Comment();
+				cmt.content = comment_content;
+				var acc = db.Accounts.SingleOrDefault(a => a.userName == User.Identity.Name);
+				cmt.accountId = acc.accountId;
+				cmt.time = DateTime.Now;
+				cmt.monitoringReportId = courseMonitoringReportId;
+				db.Comments.Add(cmt);
+				db.SaveChanges();
+				return RedirectToAction("Detail", new { reportId = courseMonitoringReportId });
+			}
+			return View();
+		}
 
     }
 }

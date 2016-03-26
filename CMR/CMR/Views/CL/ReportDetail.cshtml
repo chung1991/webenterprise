@@ -1,18 +1,19 @@
 ﻿@model CMR.Models.CourseMonitoringReport
 
+<<<<<<< HEAD
 <div>
     <h4>AnnualCourseRecord</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.AnnualCourse.Course.name)
+            @Html.DisplayName("Course Name")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.AnnualCourse.Course.name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
+            @Html.DisplayName("Academic Year")
         </dt>
 
         <dd>
@@ -20,47 +21,53 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.failCount)
+            @Html.DisplayName("Student Total")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.failCount)
+            @Html.DisplayFor(model => model.studentTotal)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.passCount)
+            @Html.DisplayName("Mark A")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.passCount)
+            @Html.DisplayFor(model => model.markA)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.creditCount)
+            @Html.DisplayName("Mark B")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.creditCount)
+            @Html.DisplayFor(model => model.markB)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.distinctionCount)
+            @Html.DisplayName("Mark C")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.distinctionCount)
+            @Html.DisplayFor(model => model.markC)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.evaluation)
+            @Html.DisplayName("Mark D")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.evaluation)
+            @Html.DisplayFor(model => model.markD)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.ApproveStatu.name)
+            @Html.DisplayName("Evaluation")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clEvaluation)
+        </dd>
+        <dt>
+            @Html.DisplayName("Status")
         </dt>
 
         <dd>
@@ -68,14 +75,121 @@
         </dd>
 
     </dl>
+=======
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-8">
+			<h4>AnnualCourseRecord</h4>
+			<hr />
+			<dl class="dl-horizontal">
+				<dt>
+					@Html.DisplayNameFor(model => model.AnnualCourse.Course.name)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.Course.name)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.AnnualCourse.academicYear)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.studentTotal)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.studentTotal)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.markA)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markA)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.markB)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markB)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.markC)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markC)
+				</dd>
+
+				<dt>
+					@Html.DisplayNameFor(model => model.markD)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.markD)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.clEvaluation)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.clEvaluation)
+				</dd>
+				<dt>
+					@Html.DisplayNameFor(model => model.ApproveStatu.name)
+				</dt>
+
+				<dd>
+					@Html.DisplayFor(model => model.ApproveStatu.name)
+				</dd>
+
+			</dl>
+
+
+
+		</div>
+		<div class="col-sm-4">
+			<div class="detailBox">
+				<div class="actionBox">
+					<ul class="commentList">
+
+						@foreach (var item in Model.Comments.Reverse())
+						{
+							<li>
+								<div class="commentText">
+									<strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
+									<p class="">@Html.DisplayFor(modelItem => item.content)</p>
+								</div>
+							</li>
+						}
+					</ul>
+					@using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline" }))
+					{
+						@Html.HiddenFor(model => model.CourseMonitoringReportId)
+						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @style = "width:100%", @placeholder = "Write a comment..." } })
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+>>>>>>> efac7ebfecadb5ad99cdd51aa4765d2bd728b49b
 </div>
 <p>
-    @{
-        if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
-        { 
-            <text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
-        }
-}
-    
-    @Html.ActionLink("Back to List", "ReportList")
+	@{
+		if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
+		{
+			<text>@Html.ActionLink("Edit", "EditReport", new { id = Model.CourseMonitoringReportId }) |</text>
+		}
+	}
+
+	@Html.ActionLink("Back to List", "ReportList")
 </p>
