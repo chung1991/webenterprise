@@ -108,7 +108,7 @@ create table CourseMonitoringReport (
 go
 create table Comment (
 	commentId int primary key identity(1, 1),
-	content varchar(500),
+	content varchar(1000),
 	accountId int foreign key (accountId) references Account (accountId),
 	monitoringReportId int foreign key (monitoringReportId) references CourseMonitoringReport (CourseMonitoringReportId),
 	[time] datetime NULL
