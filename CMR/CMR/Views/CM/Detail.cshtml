@@ -10,7 +10,7 @@
 					@Html.DisplayName("Course Name")
 				</dt>
 				<dd>
-					@Html.DisplayFor(model => model.AnnualCourse.Course.name)
+					@Html.DisplayFor(model => model.AnnualCourse.Course.courseName)
 				</dd>
 				<dt>
 					@Html.DisplayName("Student Total")
@@ -101,7 +101,7 @@
 					@using (Html.BeginForm("SubmitComment", "CM", FormMethod.Post, new { @class = "form-inline" }))
 					{
 						@Html.HiddenFor(model => model.CourseMonitoringReportId)
-						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @style = "width:100%", @placeholder = "Write a comment..." } })
+						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @maxlength = 1000, @style = "width:100%", @placeholder = "Write a comment..." } })
 					}
 				</div>
 			</div>

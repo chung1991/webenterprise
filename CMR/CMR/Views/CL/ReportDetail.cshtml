@@ -1,97 +1,21 @@
 ﻿@model CMR.Models.CourseMonitoringReport
 
-<<<<<<< HEAD
-<div>
-    <h4>AnnualCourseRecord</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayName("Course Name")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.Course.courseName)
-        </dd>
-        <dt>
-            @Html.DisplayName("Academic Year")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.academicYear)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Student Total")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.studentTotal)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark A")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markA)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark B")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markB)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark C")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markC)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark D")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markD)
-        </dd>
-        <dt>
-            @Html.DisplayName("Evaluation")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.clEvaluation)
-        </dd>
-        <dt>
-            @Html.DisplayName("Status")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApproveStatu.name)
-        </dd>
-
-    </dl>
-=======
-
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
 			<h4>AnnualCourseRecord</h4>
 			<hr />
 			<dl class="dl-horizontal">
+
 				<dt>
-					@Html.DisplayNameFor(model => model.AnnualCourse.Course.courseName)
+					@Html.DisplayName("Course Name")
 				</dt>
 
 				<dd>
 					@Html.DisplayFor(model => model.AnnualCourse.Course.courseName)
 				</dd>
 				<dt>
-					@Html.DisplayNameFor(model => model.AnnualCourse.academicYear)
+					@Html.DisplayName("Academic Year")
 				</dt>
 
 				<dd>
@@ -99,7 +23,7 @@
 				</dd>
 
 				<dt>
-					@Html.DisplayNameFor(model => model.studentTotal)
+					@Html.DisplayName("Total Student")
 				</dt>
 
 				<dd>
@@ -107,7 +31,7 @@
 				</dd>
 
 				<dt>
-					@Html.DisplayNameFor(model => model.markA)
+					@Html.DisplayName("Mark A")
 				</dt>
 
 				<dd>
@@ -115,7 +39,7 @@
 				</dd>
 
 				<dt>
-					@Html.DisplayNameFor(model => model.markB)
+					@Html.DisplayName("Mark B")
 				</dt>
 
 				<dd>
@@ -123,7 +47,7 @@
 				</dd>
 
 				<dt>
-					@Html.DisplayNameFor(model => model.markC)
+					@Html.DisplayName("Mark C")
 				</dt>
 
 				<dd>
@@ -131,21 +55,21 @@
 				</dd>
 
 				<dt>
-					@Html.DisplayNameFor(model => model.markD)
+					@Html.DisplayName("Mark D")
 				</dt>
 
 				<dd>
 					@Html.DisplayFor(model => model.markD)
 				</dd>
 				<dt>
-					@Html.DisplayNameFor(model => model.clEvaluation)
+					@Html.DisplayName("Evaluation")
 				</dt>
 
 				<dd>
 					@Html.DisplayFor(model => model.clEvaluation)
 				</dd>
 				<dt>
-					@Html.DisplayNameFor(model => model.ApproveStatu.name)
+					@Html.DisplayName("Status")
 				</dt>
 
 				<dd>
@@ -153,36 +77,62 @@
 				</dd>
 
 			</dl>
-
-
-
 		</div>
-		<div class="col-sm-4">
-			<div class="detailBox">
-				<div class="actionBox">
-					<ul class="commentList">
+        <div class="row">
+            <div class="col-sm-12">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="@Url.Action("CreateScoreChart", new { id = Model.CourseMonitoringReportId})" alt="Score chart" />
+                            </td>
 
-						@foreach (var item in Model.Comments.Reverse())
-						{
-							<li>
-								<div class="commentText">
-									<strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
-									<p class="">@Html.DisplayFor(modelItem => item.content)</p>
-								</div>
-							</li>
-						}
-					</ul>
-					@using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline" }))
-					{
-						@Html.HiddenFor(model => model.CourseMonitoringReportId)
-						@Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @style = "width:100%", @placeholder = "Write a comment..." } })
-					}
-				</div>
-			</div>
-		</div>
+                            <td>
+                                <img src="@Url.Action("CreateResultChart", new { id = Model.CourseMonitoringReportId })" alt="Result chart" />
+                            </td>
+                        </tr>
+                        <tr style="text-align:center">
+                            <td>Score Chart</td>
+                            <td>Result Chart</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+		<div class="row">
+            <div class="col-sm-12">
+                <div class="detailBox">
+                    <div class="actionBox">
+                        <ul class="commentList">
+
+                            @foreach (var item in Model.Comments.Reverse())
+                            {
+                                <li>
+                                    <div class="commentText">
+                                        <strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
+                                        <p class="">@Html.DisplayFor(modelItem => item.content)</p>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        @using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline" }))
+                        {
+                            @Html.HiddenFor(model => model.CourseMonitoringReportId)
+                            @Html.Editor("comment_content", new { htmlAttributes = new { @class = "form-control", @maxlength = 1000, @style = "width:100%", @placeholder = "Write a comment..." } })
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+		
 	</div>
->>>>>>> efac7ebfecadb5ad99cdd51aa4765d2bd728b49b
 </div>
+
+<!-- <div style="margin-right: 20px; text-align: right">
+    <a href="@Url.Action("getpdf","CL")">Get the chart in Pdf</a>
+</div> -->
+
 <p>
 	@{
 		if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
@@ -193,3 +143,5 @@
 
 	@Html.ActionLink("Back to List", "ReportList")
 </p>
+
+

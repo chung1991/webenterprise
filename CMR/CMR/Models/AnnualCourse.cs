@@ -11,9 +11,7 @@ namespace CMR.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    [MetadataTypeAttribute(typeof(AnnualCourseMD))]
+    
     public partial class AnnualCourse
     {
         public AnnualCourse()

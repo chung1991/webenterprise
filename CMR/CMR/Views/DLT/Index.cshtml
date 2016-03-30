@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CMR.Models.CourseMonitoringReport>
+
+<table class="tablesaw" data-tablesaw-mode="stack">
+    <thead>
+        <tr>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
+                @Html.DisplayName("#")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+                @Html.DisplayName("Course Name")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+                @Html.DisplayName("Student Total")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+                @Html.DisplayName("Mark A")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+                @Html.DisplayName("Mark B")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
+                @Html.DisplayName("Mark C")
+            </th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">
+                @Html.DisplayName("Status")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @{
+        var index = 0;
+    }
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @{
+            index++;
+            @index;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnnualCourse.Course.courseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.studentTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.markA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.markB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.markC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApproveStatu.name)
+                </td>
+                <td>
+                    @Html.ActionLink("Detail", "Detail", new { reportId = item.CourseMonitoringReportId })
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
