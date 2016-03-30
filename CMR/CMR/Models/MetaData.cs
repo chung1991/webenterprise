@@ -36,14 +36,28 @@ namespace CMR.Models
     }
     public class CourseMD
     {
+        [Required]
+        [StringLength(30, ErrorMessage = "Length of course name must be less than 30")]
         [Display(Name = "Course name")]
-        public string name { get; set; }
+        [RegularExpression(@"^([a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \&\-]+)$", ErrorMessage = "Special character is not allowed !")]
+        public string courseName { get; set; }
+
+        [Required]
+        [Display(Name = "Faculty name")]
+        public Nullable<int> facultyId { get; set; }
     }
 
     public class AnnualCourseMD
     {
         [Display(Name = "Academic year")]
-        public Nullable<int> academicYear { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required]
+        public DateTime academicYear { get; set; }
+
+        [Display(Name = "Course name")]
+        [Required]
+        public Nullable<int> courseId { get; set; }
     }
 
     public class AnnualCourseRecordMD

@@ -12,6 +12,8 @@ namespace CMR.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CRMContext : DbContext
     {
@@ -34,5 +36,31 @@ namespace CMR.Models
         public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+    
+        public virtual int sp_InsertAnnualCourse(Nullable<System.DateTime> academicYear, Nullable<int> courseId)
+        {
+            var academicYearParameter = academicYear.HasValue ?
+                new ObjectParameter("academicYear", academicYear) :
+                new ObjectParameter("academicYear", typeof(System.DateTime));
+    
+            var courseIdParameter = courseId.HasValue ?
+                new ObjectParameter("courseId", courseId) :
+                new ObjectParameter("courseId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertAnnualCourse", academicYearParameter, courseIdParameter);
+        }
+    
+        public virtual int sp_InsertCourse(string courseName, Nullable<int> facultyId)
+        {
+            var courseNameParameter = courseName != null ?
+                new ObjectParameter("courseName", courseName) :
+                new ObjectParameter("courseName", typeof(string));
+    
+            var facultyIdParameter = facultyId.HasValue ?
+                new ObjectParameter("facultyId", facultyId) :
+                new ObjectParameter("facultyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertCourse", courseNameParameter, facultyIdParameter);
+        }
     }
 }

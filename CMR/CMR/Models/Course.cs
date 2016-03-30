@@ -20,8 +20,9 @@ namespace CMR.Models
         }
     
         public int courseId { get; set; }
-        public string name { get; set; }
+        public string courseName { get; set; }
         public Nullable<int> facultyId { get; set; }
+        public string Status { get; set; }
     
         public virtual ICollection<AnnualCourse> AnnualCourses { get; set; }
         public virtual Faculty Faculty { get; set; }
