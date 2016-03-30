@@ -7,6 +7,8 @@ using CMR.Models;
 using PagedList;
 using CMR.Security;
 using System.Data.Entity;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace CMR.Controllers
 {
@@ -72,7 +74,6 @@ namespace CMR.Controllers
         }
 
         public ActionResult Detail(int reportId) {
-			System.Diagnostics.Debug.WriteLine("Detail " + reportId);
             CRMContext db = new CRMContext();
             var report = db.CourseMonitoringReports.SingleOrDefault(c => c.CourseMonitoringReportId == reportId);
             if (report == null)
@@ -91,16 +92,42 @@ namespace CMR.Controllers
         }
 
         [HttpPost]
-        public ActionResult Approve(int courseMonitoringReportId, int status, String approve_desc)
+        public async Task<ActionResult> Approve(int courseMonitoringReportId, int status, String approve_desc)
         {
             CRMContext db = new CRMContext();
             var report = db.CourseMonitoringReports.SingleOrDefault(c => c.CourseMonitoringReportId == courseMonitoringReportId);
             if (report != null)
             {
+                var statusName = "";
                 report.approveStatusId = status;
                 report.approve_desc = approve_desc;
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
+                var userName = User.Identity.Name;
+                var user = db.Accounts.SingleOrDefault(u => u.userName == userName);
+                var ClEmail = report.AnnualCourse.Account.Profile.email;
+                if (status == 3)
+                {
+                     statusName = "rejected";
+                }
+                else if (status == 4)
+                {
+                    statusName = "approved";
+                }
+
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(ClEmail));
+                message.Subject = "Course Monitoring Report";
+                message.Body = string.Format(body, user.Profile.name, user.Profile.email, "Your report have been "+statusName +" by "+user.Profile.name);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    await smtp.SendMailAsync(message);
+
+                }
+                
             }
             return RedirectToAction("Detail", new { reportId = courseMonitoringReportId });
         }

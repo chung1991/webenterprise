@@ -1,18 +1,5 @@
-﻿
-@model PagedList.IPagedList<CMR.Models.CourseMonitoringReport>
-@using PagedList.Mvc;
-<h4>Your Course Reports</h4>
+﻿@model IEnumerable<CMR.Models.CourseMonitoringReport>
 
-@using (Html.BeginForm())
-{
-    <div class="row" style="margin-bottom:10px;">
-        <div class="col-sm-4">
-            @Html.TextBox("SearchString", ViewBag.currentFilter as String, new { @class = "form-control", @placeholder = "Course name..." })
-        </div>
-        <div class="col-sm-2"><input type="submit" value="Search" class="btn btn-default" /></div>
-        <div class="col-sm-offset-6"></div>
-    </div>    
-}
 <table class="tablesaw" data-tablesaw-mode="stack">
     <thead>
         <tr>
@@ -20,7 +7,7 @@
                 @Html.DisplayName("#")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
-                @Html.ActionLink("Course Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.currentFilter })
+                @Html.DisplayName("Course Name")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
                 @Html.DisplayName("Student Total")
@@ -32,20 +19,21 @@
                 @Html.DisplayName("Mark B")
             </th>
             <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
-                @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.currentFilter })
+                @Html.DisplayName("Mark C")
             </th>
-            <th>Action</th>
+            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">
+                @Html.DisplayName("Status")
+            </th>
+            <th></th>
         </tr>
     </thead>
-    
     @{
         var index = 0;
     }
     <tbody>
-
-
         @foreach (var item in Model)
         {
+
             <tr>
                 <td>
                     @{
@@ -66,6 +54,9 @@
                     @Html.DisplayFor(modelItem => item.markB)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.markC)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.ApproveStatu.name)
                 </td>
                 <td>
@@ -75,8 +66,3 @@
         }
     </tbody>
 </table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

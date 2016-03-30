@@ -22,6 +22,14 @@ namespace CMR.Controllers
             {
                 return RedirectToAction("Index", "CM");
             }
+            if (User.IsInRole("DLT"))
+            {
+                return RedirectToAction("Index", "DLT");
+            }
+            if (User.IsInRole("PVC"))
+            {
+                return RedirectToAction("Index", "PVC");
+            }
             return View();
         }
 

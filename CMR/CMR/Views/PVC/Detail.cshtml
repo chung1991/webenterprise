@@ -1,0 +1,89 @@
+﻿@model CMR.Models.CourseMonitoringReport
+
+<div>
+    <h4>CourseMonitoringReport</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Course Name")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AnnualCourse.Course.courseName)
+        </dd>
+        <dt>
+            @Html.DisplayName("Student Total")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.studentTotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mark A")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markA)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mark B")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markB)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mark C")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markC)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Mark D")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markD)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Evaluation")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.clEvaluation)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Status")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApproveStatu.name)
+        </dd>
+        <dt>
+            @Html.DisplayName("Sender")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnnualCourse.Account.userName)
+        </dd>
+        <dt>
+            DLT Response
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dltComment)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

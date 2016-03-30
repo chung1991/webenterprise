@@ -305,12 +305,14 @@
     <Content Include="Views\CL\ViewAvaibleAnnualCourse.cshtml" />
     <Content Include="Views\Shared\_DLTAction.cshtml" />
     <Content Include="Views\Shared\_PVCAction.cshtml" />
+    <Content Include="Views\DLT\Index.cshtml" />
+    <Content Include="Views\DLT\Detail.cshtml" />
+    <Content Include="Views\PVC\Index.cshtml" />
+    <Content Include="Views\PVC\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Annual\" />
-    <Folder Include="Views\DLT\" />
-    <Folder Include="Views\PVC\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
