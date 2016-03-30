@@ -6,8 +6,9 @@
 			<h4>AnnualCourseRecord</h4>
 			<hr />
 			<dl class="dl-horizontal">
+
 				<dt>
-					@Html.DisplayNameFor(model => model.AnnualCourse.Course.courseName)
+					@Html.DisplayNameFor(model => model.AnnualCourse.Course.courseId)
 				</dt>
 
 				<dd>
@@ -76,8 +77,18 @@
 				</dd>
 
 			</dl>
-
-
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <img src="@Url.Action("CreateScoreChart", new { id = 1})" alt="Score chart" />
+                        </td>
+                        <td>
+                            <img src="@Url.Action("CreateResultChart", new {id = 1})" alt="Result chart" />
+                        </td>
+                    </tr>               
+                </table>
+            </div>
 
 		</div>
 		<div class="col-sm-8">
@@ -106,6 +117,10 @@
 	</div>
 </div>
 
+<!-- <div style="margin-right: 20px; text-align: right">
+    <a href="@Url.Action("getpdf","CL")">Get the chart in Pdf</a>
+</div> -->
+
 <p>
 	@{
 		if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
@@ -116,3 +131,5 @@
 
 	@Html.ActionLink("Back to List", "ReportList")
 </p>
+
+

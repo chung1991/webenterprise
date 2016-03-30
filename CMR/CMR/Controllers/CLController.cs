@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using CMR.Utilities;
+using System.Web.SessionState;
+using System.Web.Helpers;
 
 namespace CMR.Controllers
 {
@@ -302,5 +305,84 @@ namespace CMR.Controllers
             return RedirectToAction("Index");
         }
 
+     //  [HttpGet]
+    //    public FileResult GetPdf()
+   //     {
+           // var chartData = BrowserShareRepository.GetBrowserShares();
+         //   var chartStream = chartData.ChartImageStream();
+
+          //  return File(PdfUtility.GetSimplePdf(chartStream).GetBuffer()
+         //       , @"application/pdf", "BrowserShareChart.pdf");
+    //    }
+
+        [HttpGet]
+        public FileResult GetChart()
+        {
+            var chartData = BrowserShareRepository.GetBrowserShares();
+            return File(chartData.ChartImageStream().GetBuffer()
+                , @"image/png", "BrowserShareChart.png");
+        }
+
+        public ActionResult CreateBar()
+        {
+            //Create bar chart
+            var chart = new Chart(width:300,height:200)
+            .AddSeries(     chartType: "bar",
+                            xValue: new[] { "10 ", "50", "30 ", "70" },
+                            yValues: new[] { "50", "70", "90", "110" })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+        public ActionResult CreateScoreChart(int id)
+        {
+            CRMContext db = new CRMContext();
+            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
+
+            String scoreA = acr.markA.ToString();
+            String scoreB = acr.markB.ToString();
+            String scoreC = acr.markC.ToString();
+            String scoreD = acr.markD.ToString();
+            //Create bar chart
+            var chart = new Chart(width: 300, height: 200)
+            .AddSeries(chartType: "pie",
+                            xValue: new[] { "Excellent", "Good", "Ok", "NG" },
+                            yValues: new[] { scoreA, scoreB, scoreC, scoreD })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+
+        public ActionResult CreateResultChart(int id)
+        {
+            CRMContext db = new CRMContext();
+            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
+
+            String scoreA = acr.markA.ToString();
+            String scoreB = acr.markB.ToString();
+            String scoreC = acr.markC.ToString();
+            String scoreD = acr.markD.ToString();
+
+            String pass = (acr.markA + acr.markB + acr.markC).ToString();
+            String fail = acr.markD.ToString();
+            //Create bar chart
+            var chart = new Chart(width: 300, height: 200)
+            .AddSeries(chartType: "pie",
+                            xValue: new[] { "Passed", "Failed"},
+                            yValues: new[] { pass, fail })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+        public ActionResult CreateLine(int id)
+        {
+            //Create bar chart
+            var chart = new Chart(width: 600, height: 200)
+            .AddSeries(chartType: "line",
+                            xValue: new[] { "10 ", "50", "30 ", "70" },
+                            yValues: new[] { "50", "70", "90", "110" })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
     }
 }
