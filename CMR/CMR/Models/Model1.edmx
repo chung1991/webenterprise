@@ -37,7 +37,7 @@
             <PropertyRef Name="commentId" />
           </Key>
           <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="content" Type="varchar" MaxLength="500" />
+          <Property Name="content" Type="varchar" MaxLength="1000" />
           <Property Name="accountId" Type="int" />
           <Property Name="monitoringReportId" Type="int" />
           <Property Name="time" Type="datetime" />
@@ -145,7 +145,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__account__2E1BDC42">
+        <Association Name="FK__Comment__account__49C3F6B7">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -157,7 +157,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Comment__monitor__2F10007B">
+        <Association Name="FK__Comment__monitor__4AB81AF0">
           <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="0..1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
@@ -275,11 +275,11 @@
             <End Role="Course" EntitySet="Course" />
             <End Role="AnnualCourse" EntitySet="AnnualCourse" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__account__2E1BDC42" Association="Self.FK__Comment__account__2E1BDC42">
+          <AssociationSet Name="FK__Comment__account__49C3F6B7" Association="Self.FK__Comment__account__49C3F6B7">
             <End Role="Account" EntitySet="Account" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comment__monitor__2F10007B" Association="Self.FK__Comment__monitor__2F10007B">
+          <AssociationSet Name="FK__Comment__monitor__4AB81AF0" Association="Self.FK__Comment__monitor__4AB81AF0">
             <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReport" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
@@ -378,7 +378,7 @@
             <End Role="Faculty" EntitySet="Faculties" />
             <End Role="Course" EntitySet="Courses" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="accountId" />
@@ -422,7 +422,7 @@
             <PropertyRef Name="commentId" />
           </Key>
           <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="accountId" Type="Int32" />
           <Property Name="monitoringReportId" Type="Int32" />
           <Property Name="time" Type="DateTime" Precision="3" />
@@ -748,7 +748,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
