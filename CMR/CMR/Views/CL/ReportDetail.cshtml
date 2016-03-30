@@ -1,82 +1,5 @@
 ﻿@model CMR.Models.CourseMonitoringReport
 
-<<<<<<< HEAD
-<div>
-    <h4>AnnualCourseRecord</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayName("Course Name")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.Course.courseName)
-        </dd>
-        <dt>
-            @Html.DisplayName("Academic Year")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AnnualCourse.academicYear)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Student Total")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.studentTotal)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark A")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markA)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark B")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markB)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark C")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markC)
-        </dd>
-
-        <dt>
-            @Html.DisplayName("Mark D")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.markD)
-        </dd>
-        <dt>
-            @Html.DisplayName("Evaluation")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.clEvaluation)
-        </dd>
-        <dt>
-            @Html.DisplayName("Status")
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApproveStatu.name)
-        </dd>
-
-    </dl>
-=======
-
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
@@ -157,7 +80,7 @@
 
 
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-8">
 			<div class="detailBox">
 				<div class="actionBox">
 					<ul class="commentList">
@@ -181,8 +104,8 @@
 			</div>
 		</div>
 	</div>
->>>>>>> efac7ebfecadb5ad99cdd51aa4765d2bd728b49b
 </div>
+
 <p>
 	@{
 		if (Model.approveStatusId == 1 || Model.approveStatusId == 3)
