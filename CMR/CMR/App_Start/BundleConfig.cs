@@ -26,7 +26,8 @@ namespace CMR
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-					  "~/Content/CommentStyle.css"));
+					  "~/Content/CommentStyle.css",
+					  "~/Content/Misc.css"));
         }
     }
 }

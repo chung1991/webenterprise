@@ -2,100 +2,111 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "ViewAllCourse";
+	ViewBag.Title = "ViewAllCourse";
 }
 <h2>View All Course</h2>
 @using (Html.BeginForm())
 {
-    <div class="form-inline" style="margin-bottom:10px;">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="row">
-            @Html.TextBox("txtCourseName", ViewBag.currentFilter as String, new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Course name..." })
-            @Html.DropDownList("txtFacultyName", (SelectList)ViewBag.Faculty, "--- Select faculty ---", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Faculty name..." })
-            @Html.DropDownList("txtStatus", (SelectList)ViewBag.State, "--- Select status ---", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Faculty name..." })
-            <input type="submit" value="Search" class="btn btn-default" style="margin-bottom:5px;" />
-        </div>
-    </div>
+	<div class="form-inline" style="margin-bottom:10px;">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		<div class="row">
+			@Html.TextBox("txtCourseName", ViewBag.currentFilter as String, new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Course name..." })
+			@Html.DropDownList("txtFacultyName", (SelectList)ViewBag.Faculty, "--- Select faculty ---", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Faculty name..." })
+			@Html.DropDownList("txtStatus", (SelectList)ViewBag.State, "--- Select status ---", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Faculty name..." })
+			<input type="submit" value="Search" class="btn btn-default" style="margin-bottom:5px;" />
+		</div>
+	</div>
 }
 
 
 <p>
-    @Html.ActionLink("Create New", "AddCourse")
-    @{
-        var index = 0;
-        var straight = " | ";
-    }
+	@Html.ActionLink("Create New", "AddCourse")
+	@{
+		var index = 0;
+		var straight = " | ";
+	}
 </p>
-<table class="tablesaw" data-tablesaw-mode="stack">
-    <thead>
-        <tr>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
 
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
-                @Html.ActionLink("Faculty name", "ViewAllCourse", new { sortOrder = ViewBag.SortFacultyName, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
-                @Html.ActionLink("Course name", "ViewAllCourse", new { sortOrder = ViewBag.SortCourseName, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                @Html.ActionLink("Status", "ViewAllCourse", new { sortOrder = ViewBag.SortStatus, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
-                @Html.ActionLink("Avaible course", "ViewAllCourse", new { sortOrder = ViewBag.SortCount, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th>
+@if (Model.Count() > 0)
+{
+	<div>
 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @{
-            index++;
-            @index
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Faculty.facultyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.courseName)
-                </td>
-                <td>
-                    @if (item.Status.Equals("Activate"))
-                    {
-                        <img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
-                    }
-                    else
-                    {
-                        <img src="~/Content/Images/Cancel.png" style="width:30px; height:30px;" title="Cancel" />
-                    }
-                </td>
-                <td>
-                    @Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Activate").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Activate" }, new { Style = "color:white; background-color:#337AB7; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
-                    @Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Wait").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Wait" }, new { Style = "color:white; background-color:#CC9900; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
-                    @Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Finish").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Finish" }, new { Style = "color:white; background-color:#F5343D; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditCourse", new { courseId = item.courseId })
-                    @*| @Html.ActionLink("Details", "Details", new { courseId = item.courseId }) |*@
-                    @if (item.AnnualCourses.Count(x => x.Status == "Activate") == 0 && item.AnnualCourses.Count(x => x.Status == "Finish") == 0)
-                    {
-                        @straight
-                        @Html.ActionLink("Delete", "DeleteCourse", new { courseId = item.courseId }, new { onclick = "return confirm('Do you want to delete this course ?')" })
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+		<table class="tablesaw" data-tablesaw-mode="stack">
+			<thead>
+				<tr>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
 
-@Html.PagedListPager(Model, page => Url.Action("ViewAllCourse",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+						@Html.ActionLink("Faculty name", "ViewAllCourse", new { sortOrder = ViewBag.SortFacultyName, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+						@Html.ActionLink("Course name", "ViewAllCourse", new { sortOrder = ViewBag.SortCourseName, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+						@Html.ActionLink("Status", "ViewAllCourse", new { sortOrder = ViewBag.SortStatus, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+						@Html.ActionLink("Avaible course", "ViewAllCourse", new { sortOrder = ViewBag.SortCount, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th>
 
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@{
+					index++;
+					@index
+							}
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Faculty.facultyName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.courseName)
+						</td>
+						<td>
+							@if (item.Status.Equals("Activate"))
+							{
+								<img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
+							}
+							else
+							{
+								<img src="~/Content/Images/Cancel.png" style="width:30px; height:30px;" title="Cancel" />
+							}
+						</td>
+						<td>
+							@Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Activate").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Activate" }, new { Style = "color:white; background-color:#337AB7; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
+							@Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Wait").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Wait" }, new { Style = "color:white; background-color:#CC9900; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
+							@Html.ActionLink(item.AnnualCourses.Count(x => x.Status == "Finish").ToString(), "ViewAllAnnualCourse", "AnnualCourse", new { courseId = item.courseId, Status = "Finish" }, new { Style = "color:white; background-color:#F5343D; font-weight:bold;font-size:15px; text-decoration:none; padding:5px 8px; border-radius: 3px;" })
+						</td>
+						<td>
+							@Html.ActionLink("Edit", "EditCourse", new { courseId = item.courseId })
+							@*| @Html.ActionLink("Details", "Details", new { courseId = item.courseId }) |*@
+							@if (item.AnnualCourses.Count(x => x.Status == "Activate") == 0 && item.AnnualCourses.Count(x => x.Status == "Finish") == 0)
+							{
+								@straight
+								@Html.ActionLink("Delete", "DeleteCourse", new { courseId = item.courseId }, new { onclick = "return confirm('Do you want to delete this course ?')" })
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<br />
+		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+		@Html.PagedListPager(Model, page => Url.Action("ViewAllCourse",
+	new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+	</div>
+}
+else
+{
+	<div class="no-data">No data.</div>
+}
