@@ -92,9 +92,10 @@ namespace CMR.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Approve(int courseMonitoringReportId, int status, String approve_desc)
+        public ActionResult Approve(int courseMonitoringReportId, int status, String approve_desc)
         {
             CRMContext db = new CRMContext();
+            
             var report = db.CourseMonitoringReports.SingleOrDefault(c => c.CourseMonitoringReportId == courseMonitoringReportId);
             if (report != null)
             {
@@ -106,6 +107,9 @@ namespace CMR.Controllers
                 var userName = User.Identity.Name;
                 var user = db.Accounts.SingleOrDefault(u => u.userName == userName);
                 var ClEmail = report.AnnualCourse.Account.Profile.email;
+                var pvcEmail = report.AnnualCourse.Course.Faculty.Account2.Profile.email;
+                var dltEmail = report.AnnualCourse.Course.Faculty.Account1.Profile.email;
+
                 if (status == 3)
                 {
                      statusName = "rejected";
@@ -115,24 +119,28 @@ namespace CMR.Controllers
                     statusName = "approved";
                 }
 
-                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(ClEmail));
-                message.Subject = "Course Monitoring Report";
-                message.Body = string.Format(body, user.Profile.name, user.Profile.email, "Your report have been "+statusName +" by "+user.Profile.name);
-                message.IsBodyHtml = true;
+                var uri = HttpContext.Request.Url;
+                String url = uri.GetLeftPart(UriPartial.Authority);
+                String clURL = url + "/CL/ReportDetail?id=" + report.CourseMonitoringReportId;
+                
+                var body = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
+                var message = string.Format(body, user.Profile.name, user.Profile.email, "Your report have been " + statusName + " by " + user.Profile.name, clURL);
+                Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(ClEmail, message));
 
-                using (var smtp = new SmtpClient())
-                {
-                    await smtp.SendMailAsync(message);
+                String dltURL = url + "/DLT/Detail?reportId=" + report.CourseMonitoringReportId;
+                var dtlbody = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
+                var dltmessage = string.Format(dtlbody, report.AnnualCourse.Account.Profile.name, report.AnnualCourse.Account.Profile.email, "There is a report from " + report.AnnualCourse.Account.Profile.name, dltURL);
+                Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(dltEmail, dltmessage));
 
-                }
+                String pvcURL = url + "/PVC/Detail?reportId=" + report.CourseMonitoringReportId;
+                var pvcbody = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
+                var pvcmessage = string.Format(pvcbody, report.AnnualCourse.Account.Profile.name, report.AnnualCourse.Account.Profile.email, "There is a report from " + report.AnnualCourse.Account.Profile.name, pvcURL);
+                Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(pvcEmail, pvcmessage));
                 
             }
             return RedirectToAction("Detail", new { reportId = courseMonitoringReportId });
         }
 
-		
 		[HttpPost]
 		public ActionResult SubmitComment(int courseMonitoringReportId, String comment_content)
 		{

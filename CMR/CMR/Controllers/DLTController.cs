@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -50,6 +51,17 @@ namespace CMR.Controllers
                 report.dltComment = dltComment;
                 db.Entry(report).State = EntityState.Modified;
                 db.SaveChanges();
+                var clEmail = report.AnnualCourse.Account.Profile.email;
+                var userName = User.Identity.Name;
+                var user = db.Accounts.SingleOrDefault(u => u.userName == userName);
+                var body = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Content: {3}</p><p>Link: {4}</p>";
+                var uri = HttpContext.Request.Url;
+                String url = uri.GetLeftPart(UriPartial.Authority);
+
+                url = url + "/CL/ReportDetail?id=" + report.CourseMonitoringReportId;
+                var message = string.Format(body, user.Profile.name, user.Profile.email, "Your report has been repsoned.",dltComment,url);
+                Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(clEmail, message));
+
             }
             return RedirectToAction("Detail", new { reportId = courseMonitoringReportId });
         }

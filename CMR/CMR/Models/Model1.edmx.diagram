@@ -26,6 +26,7 @@
         <AssociationConnector Association="CMRDBModel.FK__CourseMon__appro__2B3F6F97" />
         <AssociationConnector Association="CMRDBModel.FK__Comment__monitor__2F10007B" />
         <AssociationConnector Association="CMRDBModel.FK__Course__facultyI__1DE57479" />
+        <EntityTypeShape EntityType="CMRDBModel.sysdiagram" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
