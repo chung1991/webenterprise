@@ -23,72 +23,84 @@
     }
 </p>
 
-<table class="tablesaw" data-tablesaw-mode="stack">
-    <thead>
-        <tr>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist"></th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
-                @Html.ActionLink("Academic year", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortAcademicYear, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
-                @Html.ActionLink("Faculty name", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortUserName, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                @Html.ActionLink("Course name", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortCourseName, currentFilter = ViewBag.currentFilter })
-            </th>
-            @*<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
-                @Html.ActionLink("Status", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortStatus, currentFilter = ViewBag.currentFilter })
-            </th>*@
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @{
-            index++;
-            @index
-                    }
-                </td>
-                <td>
-                    @Html.ValueFor(modelItem => item.academicYear, "{0:dd/MM/yyyy}")
+@if (Model.Count() > 0)
+{
+	<div>
+		<table class="tablesaw" data-tablesaw-mode="stack">
+			<thead>
+				<tr>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist"></th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+						@Html.ActionLink("Academic year", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortAcademicYear, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+						@Html.ActionLink("Faculty name", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortUserName, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+						@Html.ActionLink("Course name", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortCourseName, currentFilter = ViewBag.currentFilter })
+					</th>
+					@*<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+							@Html.ActionLink("Status", "ViewAllAnnualCourse", new { sortOrder = ViewBag.SortStatus, currentFilter = ViewBag.currentFilter })
+						</th>*@
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@{
+					index++;
+					@index
+							}
+						</td>
+						<td>
+							@Html.ValueFor(modelItem => item.academicYear, "{0:dd/MM/yyyy}")
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course.Faculty.facultyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Course.courseName)
-                </td>
-                @*<td>
-                    @if (item.Status.Equals("Activate"))
-                    {
-                        <img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
-                    }
-                    else if (item.Status.Equals("Finish"))
-                    {
-                        <img src="~/Content/Images/Finish.png" style="width:30px; height:30px;" title="Finish" />
-                    }
-                    else
-                    {
-                        <img src="~/Content/Images/Wait.png" style="width:35px; height:35px;" title="Cancel" />
-                    }
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Course.Faculty.facultyName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Course.courseName)
+						</td>
+						@*<td>
+								@if (item.Status.Equals("Activate"))
+								{
+									<img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
+								}
+								else if (item.Status.Equals("Finish"))
+								{
+									<img src="~/Content/Images/Finish.png" style="width:30px; height:30px;" title="Finish" />
+								}
+								else
+								{
+									<img src="~/Content/Images/Wait.png" style="width:35px; height:35px;" title="Cancel" />
+								}
 
-                </td>*@
-                <td>
-                    @if (item.Status == "Wait")
-                    {
-                        @Html.ActionLink("Take", "TakeAnnualCourse", new { annualCourseId = item.annualCourseId })
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+							</td>*@
+						<td>
+							@if (item.Status == "Wait")
+							{
+								@Html.ActionLink("Take", "TakeAnnualCourse", new { annualCourseId = item.annualCourseId })
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<br />
 
-@Html.PagedListPager(Model, page => Url.Action("ViewAvaibleAnnualCourse",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+
+		@Html.PagedListPager(Model, page => Url.Action("ViewAvaibleAnnualCourse",
+	new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+	</div>
+}
+else
+{
+	<div class="no-data">No data.</div>
+}

@@ -1,82 +1,91 @@
-﻿
-@model PagedList.IPagedList<CMR.Models.CourseMonitoringReport>
+﻿@model PagedList.IPagedList<CMR.Models.CourseMonitoringReport>
 @using PagedList.Mvc;
 <h4>Your Course Reports</h4>
 
 @using (Html.BeginForm())
 {
-    <div class="row" style="margin-bottom:10px;">
-        <div class="col-sm-4">
-            @Html.TextBox("SearchString", ViewBag.currentFilter as String, new { @class = "form-control", @placeholder = "Course name..." })
-        </div>
-        <div class="col-sm-2"><input type="submit" value="Search" class="btn btn-default" /></div>
-        <div class="col-sm-offset-6"></div>
-    </div>    
+	<div class="row" style="margin-bottom:10px;">
+		<div class="col-sm-4">
+			@Html.TextBox("SearchString", ViewBag.currentFilter as String, new { @class = "form-control", @placeholder = "Course name..." })
+		</div>
+		<div class="col-sm-2"><input type="submit" value="Search" class="btn btn-default" /></div>
+		<div class="col-sm-offset-6"></div>
+	</div>
 }
-<table class="tablesaw" data-tablesaw-mode="stack">
-    <thead>
-        <tr>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
-                @Html.DisplayName("#")
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
-                @Html.ActionLink("Course Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
-                @Html.DisplayName("Student Total")
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                @Html.DisplayName("Mark A")
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
-                @Html.DisplayName("Mark B")
-            </th>
-            <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
-                @Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.currentFilter })
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    
-    @{
-        var index = 0;
-    }
-    <tbody>
+
+@if (Model.Count() > 0)
+{
+	<div>
+		<table class="tablesaw" data-tablesaw-mode="stack">
+			<thead>
+				<tr>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
+						@Html.DisplayName("#")
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
+						@Html.ActionLink("Course Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">
+						@Html.DisplayName("Student Total")
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
+						@Html.DisplayName("Mark A")
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">
+						@Html.DisplayName("Mark B")
+					</th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">
+						@Html.ActionLink("Status", "Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.currentFilter })
+					</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+
+			@{
+	var index = 0;
+			}
+			<tbody>
 
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @{
-            index++;
-            @index;
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AnnualCourse.Course.courseName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.studentTotal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.markA)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.markB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApproveStatu.name)
-                </td>
-                <td>
-                    @Html.ActionLink("Detail", "Detail", new { reportId = item.CourseMonitoringReportId })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@{
+					index++;
+					@index;
+							}
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.AnnualCourse.Course.courseName)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.studentTotal)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.markA)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.markB)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.ApproveStatu.name)
+						</td>
+						<td>
+							@Html.ActionLink("Detail", "Detail", new { reportId = item.CourseMonitoringReportId })
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<br />
+		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+		@Html.PagedListPager(Model, page => Url.Action("Index",
+	new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+	</div>
+}
+else
+{
+	<div class="no-data">No data.</div>
+}

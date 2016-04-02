@@ -1,0 +1,22 @@
+﻿.no-data {
+	color: #ff3700;
+	animation: blinker 0.5s linear infinite;
+}
+
+@keyframes blinker {
+	35% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	65% {
+		opacity: 1;
+	}
+}
+
+.account-name {
+	color: #9ABB1D;
+}

@@ -60,42 +60,4 @@ namespace CMR.Models
         public Nullable<int> courseId { get; set; }
     }
 
-    public class AnnualCourseRecordMD
-    {
-        [Display(Name="Fail count")]
-        [Required]
-        public Nullable<int> failCount { get; set; }
-        [Display(Name="Pass count")]
-        [Required]
-        public Nullable<int> passCount { get; set; }
-
-        [Display(Name = "Credit count")]
-        [Required]
-        public Nullable<int> creditCount { get; set; }
-        [Display(Name = "Distinct count")]
-        [Required]
-        public Nullable<int> distinctionCount { get; set; }
-
-        [Display(Name = "Evaluation")]
-        [Required]
-        public string evaluation { get; set; }
-    }
-
-    public class CourseMonitoringReportMD
-    {
-        [Display(Name="Fail Count")]
-        public Nullable<int> failCount { get; set; }
-
-        [Display(Name="Pass Count")]
-        public Nullable<int> passCount { get; set; }
-
-        [Display(Name="Credit Count")]
-        public Nullable<int> creditCount { get; set; }
-
-        [Display(Name="Dist Count")]
-        public Nullable<int> distinctionCount { get; set; }
-
-        [Display(Name="Evaluation")]
-        public string evaluation { get; set; }
-    }
 }
