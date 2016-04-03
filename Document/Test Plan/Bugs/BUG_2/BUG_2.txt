@@ -1,0 +1,3 @@
+1) Symptoms
+
+UI is broken in CM/Viewing details of CMR page
