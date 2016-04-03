@@ -38,7 +38,7 @@ namespace CMR.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CreateReport(CourseMonitoringReport acr, String waiting)
+        public ActionResult CreateReport(CourseMonitoringReport acr, String waiting)
         {
             
             if (ModelState.IsValid)
@@ -53,22 +53,22 @@ namespace CMR.Controllers
                     var AnnualCourse = db.AnnualCourses.SingleOrDefault(a => a.annualCourseId == acr.annualCourseId);
                     int CMId = (int)AnnualCourse.Course.Faculty.cmAccount;
                     var Cm = db.Accounts.SingleOrDefault(u => u.accountId == CMId);
+                    db.CourseMonitoringReports.Add(acr);
+                    db.SaveChanges();
+                    int ID = db.CourseMonitoringReports.Max(item => item.CourseMonitoringReportId);
 
-                    var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
-                    var message = new MailMessage();
-                    message.To.Add(new MailAddress(Cm.Profile.email));
-                    message.Subject = "Course Monitoring Report";
-                    message.Body = string.Format(body, user.Profile.name, user.Profile.email, "There is a report That you need to approve");
-                    message.IsBodyHtml = true;
-                    using (var smtp = new SmtpClient())
-                    {
-                        await smtp.SendMailAsync(message);
+                    var body = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
+                    var uri = HttpContext.Request.Url;
+                    String url = uri.GetLeftPart(UriPartial.Authority);
 
-                    }
+                    url = url + "/CM/Detail?reportId=" +ID;
+                    var message = string.Format(body, user.Profile.name, user.Profile.email, "There is a report that you need to approve", url);
+                    Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(Cm.Profile.email, message));
+
+                }else{
+                    db.CourseMonitoringReports.Add(acr);
+                    db.SaveChanges();
                 }
-
-                db.CourseMonitoringReports.Add(acr);
-                db.SaveChanges();
                 return RedirectToAction("ReportList");
             }
             return View();
@@ -120,11 +120,14 @@ namespace CMR.Controllers
                     int CMId =(int) AnnualCourse.Course.Faculty.cmAccount;
                     var Cm = db.Accounts.SingleOrDefault(u => u.accountId == CMId);
 
-                    var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                    var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p><p>Link: {3}</p>";
+                    var uri = HttpContext.Request.Url;
+                    String url = uri.GetLeftPart(UriPartial.Authority);
+                    url = url + "/CM/Detail?reportId=" + acr.CourseMonitoringReportId;
                     var message = new MailMessage();
                     message.To.Add(new MailAddress(Cm.Profile.email));
                     message.Subject = "Course Monitoring Report";
-                    message.Body = string.Format(body,user.Profile.name, user.Profile.email, "There is a report That you need to approve");
+                    message.Body = string.Format(body, user.Profile.name, user.Profile.email, "There is a report That you need to approve", url);
                     message.IsBodyHtml = true;
                     using (var smtp = new SmtpClient())
                     {
