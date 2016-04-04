@@ -65,5 +65,8 @@
 }
 .actionBox {
     border-top:1px dotted #bbb;
-    padding:10px;
+    padding-top:10px;
+    padding-left:10px;
+    padding-right:10px;
+	padding-bottom:15px !important;
 }
