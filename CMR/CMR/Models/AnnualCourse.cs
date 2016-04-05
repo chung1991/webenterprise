@@ -17,6 +17,7 @@ namespace CMR.Models
         public AnnualCourse()
         {
             this.CourseMonitoringReports = new HashSet<CourseMonitoringReport>();
+            this.Students = new HashSet<Student>();
         }
     
         public int annualCourseId { get; set; }
@@ -28,5 +29,6 @@ namespace CMR.Models
         public virtual Account Account { get; set; }
         public virtual Course Course { get; set; }
         public virtual ICollection<CourseMonitoringReport> CourseMonitoringReports { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
