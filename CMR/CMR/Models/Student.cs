@@ -12,12 +12,13 @@ namespace CMR.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Student
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> AnnualCourseId { get; set; }
+        public string Name { get; set; }
+        public Nullable<double> Mark { get; set; }
+    
+        public virtual AnnualCourse AnnualCourse { get; set; }
     }
 }

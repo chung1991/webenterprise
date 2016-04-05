@@ -36,7 +36,7 @@ namespace CMR.Models
         public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
     
         public virtual int sp_InsertAnnualCourse(Nullable<System.DateTime> academicYear, Nullable<int> courseId)
         {

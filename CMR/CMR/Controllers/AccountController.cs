@@ -27,7 +27,9 @@ namespace CMR.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = db.Accounts.SingleOrDefault(u => u.userName == m.userName && u.userPassword == m.passWord);
+                String pass = PasswordHandler.Encrypt(m.passWord);
+
+                var user = db.Accounts.SingleOrDefault(u => u.userName == m.userName && u.userPassword == pass);
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(m.userName, m.rememberMe);
@@ -77,7 +79,7 @@ namespace CMR.Controllers
                     Account a = new Account
                     {
                         userName = r.userName,
-                        userPassword = r.passWord,
+                        userPassword =PasswordHandler.Encrypt(r.passWord),
                         profileId = lastID,
                         roleId = r.roleId
                     };
