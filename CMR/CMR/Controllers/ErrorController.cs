@@ -12,5 +12,9 @@ namespace CMR.Controllers
         {
             return View();
         }
+        public ActionResult Error404()
+        {
+            return View();
+        }
     }
 }
