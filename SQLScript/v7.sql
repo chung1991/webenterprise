@@ -119,3 +119,15 @@ create table Student(
 [Name] varchar(100) NULL ,
 [Mark] float(53) NULL 
 )
+
+go
+create proc sp_InsertCourse
+@courseName nvarchar(100), @facultyId int as
+insert into Course(courseName, facultyId) values
+(@courseName, @facultyId)
+go
+create proc sp_InsertAnnualCourse
+@academicYear datetime, @courseId int as
+insert into AnnualCourse(academicYear, courseId) values
+(@academicYear, @courseId)
+go

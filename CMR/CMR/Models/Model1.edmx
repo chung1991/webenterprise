@@ -264,6 +264,14 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_InsertAnnualCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="academicYear" Type="datetime" Mode="In" />
+          <Parameter Name="courseId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseName" Type="nvarchar" Mode="In" />
+          <Parameter Name="facultyId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CMRDBModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnnualCourse" EntityType="Self.AnnualCourse" Schema="dbo" store:Type="Tables" />
@@ -410,6 +418,14 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
             <End Role="Faculty" EntitySet="Faculties" />
             <End Role="Course" EntitySet="Courses" />
           </AssociationSet>
+          <FunctionImport Name="sp_InsertAnnualCourse1">
+            <Parameter Name="academicYear" Mode="In" Type="DateTime" />
+            <Parameter Name="courseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertCourse1">
+            <Parameter Name="courseName" Mode="In" Type="String" />
+            <Parameter Name="facultyId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -811,6 +827,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_InsertAnnualCourse1" FunctionName="CMRDBModel.Store.sp_InsertAnnualCourse" />
+          <FunctionImportMapping FunctionImportName="sp_InsertCourse1" FunctionName="CMRDBModel.Store.sp_InsertCourse" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
