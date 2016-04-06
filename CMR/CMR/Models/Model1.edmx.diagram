@@ -4,30 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="629912c4db8c4113b52e1a1a663770a3" Name="Diagram1">
-        <EntityTypeShape EntityType="CMRDBModel.Account" Width="1.5" PointX="3" PointY="4.75" />
-        <EntityTypeShape EntityType="CMRDBModel.AnnualCourse" Width="1.5" PointX="9.75" PointY="6.5" />
-        <EntityTypeShape EntityType="CMRDBModel.ApproveStatu" Width="1.5" PointX="9.75" PointY="4" />
-        <EntityTypeShape EntityType="CMRDBModel.Comment" Width="1.5" PointX="14.25" PointY="6.125" />
-        <EntityTypeShape EntityType="CMRDBModel.Course" Width="1.5" PointX="7.5" PointY="8.75" />
-        <EntityTypeShape EntityType="CMRDBModel.CourseMonitoringReport" Width="1.5" PointX="12" PointY="5.875" />
-        <EntityTypeShape EntityType="CMRDBModel.Faculty" Width="1.5" PointX="5.25" PointY="8.5" />
-        <EntityTypeShape EntityType="CMRDBModel.Profile" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="CMRDBModel.Role" Width="1.5" PointX="0.75" PointY="5.5" />
-        <EntityTypeShape EntityType="CMRDBModel.Student" Width="1.5" PointX="12" PointY="11.5" />
-        <AssociationConnector Association="CMRDBModel.FK__Account__profile__15502E78" />
-        <AssociationConnector Association="CMRDBModel.FK__Account__roleId__164452B1" />
-        <AssociationConnector Association="CMRDBModel.FK__AnnualCou__clAcc__239E4DCF" />
-        <AssociationConnector Association="CMRDBModel.FK__Comment__account__2E1BDC42" />
-        <AssociationConnector Association="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" />
-        <AssociationConnector Association="CMRDBModel.FK__Faculty__dltAcco__1A14E395" />
-        <AssociationConnector Association="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" />
-        <AssociationConnector Association="CMRDBModel.FK__AnnualCou__cours__22AA2996" />
-        <AssociationConnector Association="CMRDBModel.FK__CourseMon__annua__2A4B4B5E" />
-        <AssociationConnector Association="CMRDBModel.FK__Student__AnnualC__30F848ED" />
-        <AssociationConnector Association="CMRDBModel.FK__CourseMon__appro__2B3F6F97" />
-        <AssociationConnector Association="CMRDBModel.FK__Comment__monitor__2F10007B" />
-        <AssociationConnector Association="CMRDBModel.FK__Course__facultyI__1DE57479" />
+      <Diagram DiagramId="52c0e8c113f64d1587b5356521921a7e" Name="Diagram1">
+        <EntityTypeShape EntityType="CMRDBModel.Account" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.AnnualCourse" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.ApproveStatu" Width="1.5" PointX="9.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Comment" Width="1.5" PointX="14.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Course" Width="1.5" PointX="7.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.CourseMonitoringReport" Width="1.5" PointX="12" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Faculty" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Profile" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Role" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMRDBModel.Student" Width="1.5" PointX="12" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="CMRDBModel.FK__Account__profile__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Account__roleId__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__AnnualCou__clAcc__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Comment__account__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Faculty__dltAcco__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__AnnualCou__cours__22AA2996" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__CourseMon__annua__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Student__AnnualC__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__CourseMon__appro__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Comment__monitor__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="CMRDBModel.FK__Course__facultyI__1DE57479" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

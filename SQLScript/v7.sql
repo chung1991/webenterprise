@@ -74,7 +74,7 @@ insert into Course(courseName, facultyId) values('Science in use', '1')
 go
 create table AnnualCourse (
 	annualCourseId int primary key identity(1, 1),
-	academicYear date,
+	academicYear int,
 	courseId int foreign key(courseId) references Course(courseId),
 	clAccount int foreign key(clAccount) references Account(accountId),
 	Status nvarchar(10) default 'Wait' check(Status = 'Activate' or Status = 'Finish' or Status = 'Wait')
@@ -127,7 +127,7 @@ insert into Course(courseName, facultyId) values
 (@courseName, @facultyId)
 go
 create proc sp_InsertAnnualCourse
-@academicYear datetime, @courseId int as
+@academicYear int, @courseId int as
 insert into AnnualCourse(academicYear, courseId) values
 (@academicYear, @courseId)
 go

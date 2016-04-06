@@ -6,7 +6,6 @@ using System.Web;
 
 namespace CMR.Models
 {
-
         public class LoginModel{
             [Display(Name="User name")]
             [Required]

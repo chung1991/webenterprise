@@ -12,6 +12,7 @@ using PagedList;
 using CMR.Utilities;
 using System.Web.SessionState;
 using System.Web.Helpers;
+using System.Text.RegularExpressions;
 
 namespace CMR.Controllers
 {
@@ -225,74 +226,101 @@ namespace CMR.Controllers
             List<AnnualCourse> annucalCourses = new List<AnnualCourse>();
             ViewBag.From = txtAcademicYearFrom;
             ViewBag.To = txtAcademicYearTo;
-           
+            Regex regex = new Regex(@"^\d{4}$");
+            Match from = regex.Match(txtAcademicYearFrom);
+            Match to = regex.Match(txtAcademicYearTo);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord == "")
-            {
-                ModelState.AddModelError("", "Please, typing any field for searching !");
-                var annualCourses = from anc in db.AnnualCourses where anc.Course.courseName == ""  select anc;
-                return View(annualCourses.ToPagedList(pageNumber, pageSize));
+
+            if (from.Success && to.Success) {
+                
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord == "")
+                {
+                    ModelState.AddModelError("", "Please, typing any field for searching !");
+                    var annualCourses = from anc in db.AnnualCourses where anc.Course.courseName == "" select anc;
+                    return View(annualCourses.ToPagedList(pageNumber, pageSize));
+                }
+                else
+                {
+                    List<AnnualCourse> listAnnualCourse = getAnnualCourseSearching(txtAcademicYearFrom, txtAcademicYearTo, txtKeyWord);
+                    return View(listAnnualCourse.ToPagedList(pageNumber, pageSize));
+
+                }
+
             }
             else
             {
                 List<AnnualCourse> listAnnualCourse = getAnnualCourseSearching(txtAcademicYearFrom, txtAcademicYearTo, txtKeyWord);
+                if (listAnnualCourse == null)
+                {
+                    listAnnualCourse = new List<AnnualCourse>();
+                }
+                ModelState.AddModelError("", "From or To Year is not valid");
                 return View(listAnnualCourse.ToPagedList(pageNumber, pageSize));
-
             }
+            
         }
 
         public List<AnnualCourse> getAnnualCourseSearching(String txtAcademicYearFrom, String txtAcademicYearTo, String txtKeyWord)
         {
-            CRMContext db = new CRMContext();
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord == "")
+            try
             {
-                DateTime dt = DateTime.Parse(txtAcademicYearFrom);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dt && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord == "")
-            {
-                DateTime dt = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dt && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord != "" )
-            {
-                var annualCourses = (from anc in db.AnnualCourses where anc.Course.courseName.Contains(txtKeyWord) && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-           
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord == "")
-            {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord != "")
-            {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dtFrom && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
-            }
-            
-           
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord != "")
-            {
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dtTo && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
-            }
+                CRMContext db = new CRMContext();
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord == "")
+                {
+                    int dt = Int32.Parse(txtAcademicYearFrom);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dt && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord == "")
+                {
+                    int dt = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dt && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord != "")
+                {
+                    var annualCourses = (from anc in db.AnnualCourses where anc.Course.courseName.Contains(txtKeyWord) && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
 
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord == "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord != "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dtFrom && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                {
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dtTo && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+            }
+            catch (Exception e)
             {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
+                
             }
             return null;
+            
         }
 
 
@@ -300,7 +328,9 @@ namespace CMR.Controllers
         {
             CRMContext db = new CRMContext();
             AnnualCourse anCourse = db.AnnualCourses.SingleOrDefault(ac => ac.annualCourseId == annualCourseId);
-            Account a = (Account)System.Web.HttpContext.Current.Session["UserSession"];
+            var currUser = User.Identity;
+            String userName = currUser.Name;
+            Account a = db.Accounts.SingleOrDefault(u => u.userName == userName);
             anCourse.clAccount = a.accountId;
             anCourse.Status = "Activate";
             db.SaveChanges();

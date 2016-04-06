@@ -2,13 +2,13 @@
 <div class="sidebar">
     <ul>
         <li>
-            <a href="#" class="head collapsed @Html.ActivePage("CL")"><i class="fa fa-users fa-lg"></i> Courses <span class="arrow"></span></a>
+            <a href="#" class="head collapsed @Html.ActivePage("CL")"><i class="fa fa-users fa-lg"></i> Courses</a>
             <ul class="sub-menu">
                 <li class="@Html.ActivePage("CL","Index")">
-                    @Html.ActionLink("Your courses", "Index", "CL")
+                    @Html.ActionLink("Your annual courses", "Index", "CL")
                 </li>
                 <li class="@Html.ActivePage("CL","ViewAvaibleAnnualCourse")">
-                    @Html.ActionLink("Avaible annual course", "ViewAvaibleAnnualCourse", "CL")
+                    @Html.ActionLink("Available annual courses", "ViewAvaibleAnnualCourse", "CL")
                 </li>
                 <li class="@Html.ActivePage("CL","ReportList")">
                     @Html.ActionLink("Course Report", "ReportList", "CL")

@@ -42,3 +42,12 @@ textarea {
 	#myModal .modal-dialog  {width:550px;}
 
 }
+.sidebar ul li a[href="#"]{
+    pointer-events:none;
+    cursor:default;
+}
+
+.disableLink{
+    pointer-events:none;
+    cursor:default;
+}

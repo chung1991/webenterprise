@@ -11,6 +11,7 @@ using System.Net;
 
 namespace CMR.Controllers
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class CourseController : Controller
     {
         CRMContext db = new CRMContext();

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CMRDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CMRDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="accountId" />
@@ -20,7 +20,7 @@
             <PropertyRef Name="annualCourseId" />
           </Key>
           <Property Name="annualCourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="academicYear" Type="date" />
+          <Property Name="academicYear" Type="int" />
           <Property Name="courseId" Type="int" />
           <Property Name="clAccount" Type="int" />
           <Property Name="Status" Type="nvarchar" MaxLength="10" />
@@ -265,7 +265,7 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Function Name="sp_InsertAnnualCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="academicYear" Type="datetime" Mode="In" />
+          <Parameter Name="academicYear" Type="int" Mode="In" />
           <Parameter Name="courseId" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_InsertCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -343,90 +343,11 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
             <End Role="Student" EntitySet="Student" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMRDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="sp_InsertAnnualCourse">
-            <Parameter Name="academicYear" Mode="In" Type="DateTime" />
-            <Parameter Name="courseId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_InsertCourse">
-            <Parameter Name="courseName" Mode="In" Type="String" />
-            <Parameter Name="facultyId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Accounts" EntityType="CMRDBModel.Account" />
-          <EntitySet Name="AnnualCourses" EntityType="CMRDBModel.AnnualCourse" />
-          <EntitySet Name="ApproveStatus" EntityType="CMRDBModel.ApproveStatu" />
-          <EntitySet Name="Comments" EntityType="CMRDBModel.Comment" />
-          <EntitySet Name="Courses" EntityType="CMRDBModel.Course" />
-          <EntitySet Name="CourseMonitoringReports" EntityType="CMRDBModel.CourseMonitoringReport" />
-          <EntitySet Name="Faculties" EntityType="CMRDBModel.Faculty" />
-          <EntitySet Name="Profiles" EntityType="CMRDBModel.Profile" />
-          <EntitySet Name="Roles" EntityType="CMRDBModel.Role" />
-          <EntitySet Name="Students" EntityType="CMRDBModel.Student" />
-          <AssociationSet Name="FK__Account__profile__15502E78" Association="CMRDBModel.FK__Account__profile__15502E78">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Account__roleId__164452B1" Association="CMRDBModel.FK__Account__roleId__164452B1">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Account" EntitySet="Accounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AnnualCou__clAcc__239E4DCF" Association="CMRDBModel.FK__AnnualCou__clAcc__239E4DCF">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__account__2E1BDC42" Association="CMRDBModel.FK__Comment__account__2E1BDC42">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__cmAccou__1B0907CE" Association="CMRDBModel.FK__Faculty__cmAccou__1B0907CE">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__dltAcco__1A14E395" Association="CMRDBModel.FK__Faculty__dltAcco__1A14E395">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Faculty__pvcAcco__1920BF5C" Association="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Faculty" EntitySet="Faculties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__AnnualCou__cours__22AA2996" Association="CMRDBModel.FK__AnnualCou__cours__22AA2996">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__annua__2A4B4B5E" Association="CMRDBModel.FK__CourseMon__annua__2A4B4B5E">
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Student__AnnualC__30F848ED" Association="CMRDBModel.FK__Student__AnnualC__30F848ED">
-            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
-            <End Role="Student" EntitySet="Students" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CourseMon__appro__2B3F6F97" Association="CMRDBModel.FK__CourseMon__appro__2B3F6F97">
-            <End Role="ApproveStatu" EntitySet="ApproveStatus" />
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__monitor__2F10007B" Association="CMRDBModel.FK__Comment__monitor__2F10007B">
-            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Course__facultyI__1DE57479" Association="CMRDBModel.FK__Course__facultyI__1DE57479">
-            <End Role="Faculty" EntitySet="Faculties" />
-            <End Role="Course" EntitySet="Courses" />
-          </AssociationSet>
-          <FunctionImport Name="sp_InsertAnnualCourse1">
-            <Parameter Name="academicYear" Mode="In" Type="DateTime" />
-            <Parameter Name="courseId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_InsertCourse1">
-            <Parameter Name="courseName" Mode="In" Type="String" />
-            <Parameter Name="facultyId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          </EntityContainer>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="accountId" />
@@ -436,27 +357,27 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="userPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="profileId" Type="Int32" />
           <Property Name="roleId" Type="Int32" />
-          <NavigationProperty Name="Profile" Relationship="CMRDBModel.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
-          <NavigationProperty Name="Role" Relationship="CMRDBModel.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
-          <NavigationProperty Name="AnnualCourses" Relationship="CMRDBModel.FK__AnnualCou__clAcc__239E4DCF" FromRole="Account" ToRole="AnnualCourse" />
-          <NavigationProperty Name="Comments" Relationship="CMRDBModel.FK__Comment__account__2E1BDC42" FromRole="Account" ToRole="Comment" />
-          <NavigationProperty Name="Faculties" Relationship="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" FromRole="Account" ToRole="Faculty" />
-          <NavigationProperty Name="Faculties1" Relationship="CMRDBModel.FK__Faculty__dltAcco__1A14E395" FromRole="Account" ToRole="Faculty" />
-          <NavigationProperty Name="Faculties2" Relationship="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__Account__profile__15502E78" FromRole="Account" ToRole="Profile" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__clAcc__239E4DCF" FromRole="Account" ToRole="AnnualCourse" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__account__2E1BDC42" FromRole="Account" ToRole="Comment" />
+          <NavigationProperty Name="Faculties" Relationship="Self.FK__Faculty__cmAccou__1B0907CE" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Faculties1" Relationship="Self.FK__Faculty__dltAcco__1A14E395" FromRole="Account" ToRole="Faculty" />
+          <NavigationProperty Name="Faculties2" Relationship="Self.FK__Faculty__pvcAcco__1920BF5C" FromRole="Account" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="AnnualCourse">
           <Key>
             <PropertyRef Name="annualCourseId" />
           </Key>
           <Property Name="annualCourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="academicYear" Type="DateTime" Precision="0" />
+          <Property Name="academicYear" Type="Int32" />
           <Property Name="courseId" Type="Int32" />
           <Property Name="clAccount" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__AnnualCou__clAcc__239E4DCF" FromRole="AnnualCourse" ToRole="Account" />
-          <NavigationProperty Name="Course" Relationship="CMRDBModel.FK__AnnualCou__cours__22AA2996" FromRole="AnnualCourse" ToRole="Course" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="CMRDBModel.FK__CourseMon__annua__2A4B4B5E" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
-          <NavigationProperty Name="Students" Relationship="CMRDBModel.FK__Student__AnnualC__30F848ED" FromRole="AnnualCourse" ToRole="Student" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__AnnualCou__clAcc__239E4DCF" FromRole="AnnualCourse" ToRole="Account" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__AnnualCou__cours__22AA2996" FromRole="AnnualCourse" ToRole="Course" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__annua__2A4B4B5E" FromRole="AnnualCourse" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Student__AnnualC__30F848ED" FromRole="AnnualCourse" ToRole="Student" />
         </EntityType>
         <EntityType Name="ApproveStatu">
           <Key>
@@ -464,7 +385,7 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </Key>
           <Property Name="approveStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CourseMonitoringReports" Relationship="CMRDBModel.FK__CourseMon__appro__2B3F6F97" FromRole="ApproveStatu" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="CourseMonitoringReports" Relationship="Self.FK__CourseMon__appro__2B3F6F97" FromRole="ApproveStatus" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -475,8 +396,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="accountId" Type="Int32" />
           <Property Name="monitoringReportId" Type="Int32" />
           <Property Name="time" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__Comment__account__2E1BDC42" FromRole="Comment" ToRole="Account" />
-          <NavigationProperty Name="CourseMonitoringReport" Relationship="CMRDBModel.FK__Comment__monitor__2F10007B" FromRole="Comment" ToRole="CourseMonitoringReport" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Comment__account__2E1BDC42" FromRole="Comment" ToRole="Account" />
+          <NavigationProperty Name="CourseMonitoringReport" Relationship="Self.FK__Comment__monitor__2F10007B" FromRole="Comment" ToRole="CourseMonitoringReport" />
         </EntityType>
         <EntityType Name="Course">
           <Key>
@@ -486,8 +407,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="courseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="facultyId" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AnnualCourses" Relationship="CMRDBModel.FK__AnnualCou__cours__22AA2996" FromRole="Course" ToRole="AnnualCourse" />
-          <NavigationProperty Name="Faculty" Relationship="CMRDBModel.FK__Course__facultyI__1DE57479" FromRole="Course" ToRole="Faculty" />
+          <NavigationProperty Name="AnnualCourses" Relationship="Self.FK__AnnualCou__cours__22AA2996" FromRole="Course" ToRole="AnnualCourse" />
+          <NavigationProperty Name="Faculty" Relationship="Self.FK__Course__facultyI__1DE57479" FromRole="Course" ToRole="Faculty" />
         </EntityType>
         <EntityType Name="CourseMonitoringReport">
           <Key>
@@ -505,9 +426,9 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="approve_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="dltComment" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="dateCreated" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="AnnualCourse" Relationship="CMRDBModel.FK__CourseMon__annua__2A4B4B5E" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
-          <NavigationProperty Name="ApproveStatu" Relationship="CMRDBModel.FK__CourseMon__appro__2B3F6F97" FromRole="CourseMonitoringReport" ToRole="ApproveStatu" />
-          <NavigationProperty Name="Comments" Relationship="CMRDBModel.FK__Comment__monitor__2F10007B" FromRole="CourseMonitoringReport" ToRole="Comment" />
+          <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__CourseMon__annua__2A4B4B5E" FromRole="CourseMonitoringReport" ToRole="AnnualCourse" />
+          <NavigationProperty Name="ApproveStatu" Relationship="Self.FK__CourseMon__appro__2B3F6F97" FromRole="CourseMonitoringReport" ToRole="ApproveStatus" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__monitor__2F10007B" FromRole="CourseMonitoringReport" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Faculty">
           <Key>
@@ -518,10 +439,10 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="pvcAccount" Type="Int32" />
           <Property Name="dltAccount" Type="Int32" />
           <Property Name="cmAccount" Type="Int32" />
-          <NavigationProperty Name="Account" Relationship="CMRDBModel.FK__Faculty__cmAccou__1B0907CE" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Account1" Relationship="CMRDBModel.FK__Faculty__dltAcco__1A14E395" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Account2" Relationship="CMRDBModel.FK__Faculty__pvcAcco__1920BF5C" FromRole="Faculty" ToRole="Account" />
-          <NavigationProperty Name="Courses" Relationship="CMRDBModel.FK__Course__facultyI__1DE57479" FromRole="Faculty" ToRole="Course" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Faculty__cmAccou__1B0907CE" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK__Faculty__dltAcco__1A14E395" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Account2" Relationship="Self.FK__Faculty__pvcAcco__1920BF5C" FromRole="Faculty" ToRole="Account" />
+          <NavigationProperty Name="Courses" Relationship="Self.FK__Course__facultyI__1DE57479" FromRole="Faculty" ToRole="Course" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -533,7 +454,7 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <Property Name="dateOfBirth" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Accounts" Relationship="CMRDBModel.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__profile__15502E78" FromRole="Profile" ToRole="Account" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -542,7 +463,7 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="roleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="roleDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Accounts" Relationship="CMRDBModel.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__roleId__164452B1" FromRole="Role" ToRole="Account" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -552,11 +473,11 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <Property Name="AnnualCourseId" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Mark" Type="Double" />
-          <NavigationProperty Name="AnnualCourse" Relationship="CMRDBModel.FK__Student__AnnualC__30F848ED" FromRole="Student" ToRole="AnnualCourse" />
+          <NavigationProperty Name="AnnualCourse" Relationship="Self.FK__Student__AnnualC__30F848ED" FromRole="Student" ToRole="AnnualCourse" />
         </EntityType>
         <Association Name="FK__Account__profile__15502E78">
-          <End Type="CMRDBModel.Profile" Role="Profile" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="*" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
               <PropertyRef Name="profileId" />
@@ -567,8 +488,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Account__roleId__164452B1">
-          <End Type="CMRDBModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="*" />
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="roleId" />
@@ -579,8 +500,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AnnualCou__clAcc__239E4DCF">
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -591,8 +512,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Comment__account__2E1BDC42">
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Comment" Role="Comment" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -603,8 +524,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__cmAccou__1B0907CE">
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -615,8 +536,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__dltAcco__1A14E395">
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -627,8 +548,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Faculty__pvcAcco__1920BF5C">
-          <End Type="CMRDBModel.Account" Role="Account" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="*" />
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Account">
               <PropertyRef Name="accountId" />
@@ -639,8 +560,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__AnnualCou__cours__22AA2996">
-          <End Type="CMRDBModel.Course" Role="Course" Multiplicity="0..1" />
-          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="*" />
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="courseId" />
@@ -651,8 +572,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CourseMon__annua__2A4B4B5E">
-          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="0..1" />
-          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="*" />
+          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
+          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AnnualCourse">
               <PropertyRef Name="annualCourseId" />
@@ -663,8 +584,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Student__AnnualC__30F848ED">
-          <End Type="CMRDBModel.AnnualCourse" Role="AnnualCourse" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Student" Role="Student" Multiplicity="*" />
+          <End Role="AnnualCourse" Type="Self.AnnualCourse" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AnnualCourse">
               <PropertyRef Name="annualCourseId" />
@@ -675,10 +596,10 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CourseMon__appro__2B3F6F97">
-          <End Type="CMRDBModel.ApproveStatu" Role="ApproveStatu" Multiplicity="0..1" />
-          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="*" />
+          <End Role="ApproveStatus" Type="Self.ApproveStatu" Multiplicity="0..1" />
+          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ApproveStatu">
+            <Principal Role="ApproveStatus">
               <PropertyRef Name="approveStatusId" />
             </Principal>
             <Dependent Role="CourseMonitoringReport">
@@ -687,8 +608,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Comment__monitor__2F10007B">
-          <End Type="CMRDBModel.CourseMonitoringReport" Role="CourseMonitoringReport" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Comment" Role="Comment" Multiplicity="*" />
+          <End Role="CourseMonitoringReport" Type="Self.CourseMonitoringReport" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CourseMonitoringReport">
               <PropertyRef Name="CourseMonitoringReportId" />
@@ -699,8 +620,8 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Course__facultyI__1DE57479">
-          <End Type="CMRDBModel.Faculty" Role="Faculty" Multiplicity="0..1" />
-          <End Type="CMRDBModel.Course" Role="Course" Multiplicity="*" />
+          <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Faculty">
               <PropertyRef Name="facultyId" />
@@ -710,7 +631,79 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="CRMContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AnnualCourses" EntityType="Self.AnnualCourse" />
+          <EntitySet Name="ApproveStatus" EntityType="Self.ApproveStatu" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="CourseMonitoringReports" EntityType="Self.CourseMonitoringReport" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+          <EntitySet Name="Profiles" EntityType="Self.Profile" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK__Account__profile__15502E78" Association="Self.FK__Account__profile__15502E78">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__roleId__164452B1" Association="Self.FK__Account__roleId__164452B1">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnnualCou__clAcc__239E4DCF" Association="Self.FK__AnnualCou__clAcc__239E4DCF">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__account__2E1BDC42" Association="Self.FK__Comment__account__2E1BDC42">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__cmAccou__1B0907CE" Association="Self.FK__Faculty__cmAccou__1B0907CE">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__dltAcco__1A14E395" Association="Self.FK__Faculty__dltAcco__1A14E395">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Faculty__pvcAcco__1920BF5C" Association="Self.FK__Faculty__pvcAcco__1920BF5C">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Faculty" EntitySet="Faculties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnnualCou__cours__22AA2996" Association="Self.FK__AnnualCou__cours__22AA2996">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CourseMon__annua__2A4B4B5E" Association="Self.FK__CourseMon__annua__2A4B4B5E">
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__AnnualC__30F848ED" Association="Self.FK__Student__AnnualC__30F848ED">
+            <End Role="AnnualCourse" EntitySet="AnnualCourses" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CourseMon__appro__2B3F6F97" Association="Self.FK__CourseMon__appro__2B3F6F97">
+            <End Role="ApproveStatus" EntitySet="ApproveStatus" />
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__monitor__2F10007B" Association="Self.FK__Comment__monitor__2F10007B">
+            <End Role="CourseMonitoringReport" EntitySet="CourseMonitoringReports" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__facultyI__1DE57479" Association="Self.FK__Course__facultyI__1DE57479">
+            <End Role="Faculty" EntitySet="Faculties" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <FunctionImport Name="sp_InsertAnnualCourse">
+            <Parameter Name="academicYear" Mode="In" Type="Int32" />
+            <Parameter Name="courseId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertCourse">
+            <Parameter Name="courseName" Mode="In" Type="String" />
+            <Parameter Name="facultyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -719,116 +712,116 @@ warning 6002: The table/view 'CMRDB.dbo.Student' does not have a primary key def
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="CMRDBModel.Account">
               <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="roleId" ColumnName="roleId" />
-                <ScalarProperty Name="profileId" ColumnName="profileId" />
-                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
                 <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="profileId" ColumnName="profileId" />
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AnnualCourses">
             <EntityTypeMapping TypeName="CMRDBModel.AnnualCourse">
               <MappingFragment StoreEntitySet="AnnualCourse">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="clAccount" ColumnName="clAccount" />
-                <ScalarProperty Name="courseId" ColumnName="courseId" />
-                <ScalarProperty Name="academicYear" ColumnName="academicYear" />
                 <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
+                <ScalarProperty Name="academicYear" ColumnName="academicYear" />
+                <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="clAccount" ColumnName="clAccount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ApproveStatus">
             <EntityTypeMapping TypeName="CMRDBModel.ApproveStatu">
               <MappingFragment StoreEntitySet="ApproveStatus">
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="CMRDBModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="monitoringReportId" ColumnName="monitoringReportId" />
-                <ScalarProperty Name="accountId" ColumnName="accountId" />
-                <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="commentId" ColumnName="commentId" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="accountId" ColumnName="accountId" />
+                <ScalarProperty Name="monitoringReportId" ColumnName="monitoringReportId" />
+                <ScalarProperty Name="time" ColumnName="time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Courses">
             <EntityTypeMapping TypeName="CMRDBModel.Course">
               <MappingFragment StoreEntitySet="Course">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="facultyId" ColumnName="facultyId" />
-                <ScalarProperty Name="courseName" ColumnName="courseName" />
                 <ScalarProperty Name="courseId" ColumnName="courseId" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+                <ScalarProperty Name="facultyId" ColumnName="facultyId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CourseMonitoringReports">
             <EntityTypeMapping TypeName="CMRDBModel.CourseMonitoringReport">
               <MappingFragment StoreEntitySet="CourseMonitoringReport">
-                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
-                <ScalarProperty Name="dltComment" ColumnName="dltComment" />
-                <ScalarProperty Name="approve_desc" ColumnName="approve_desc" />
-                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
-                <ScalarProperty Name="clEvaluation" ColumnName="clEvaluation" />
-                <ScalarProperty Name="markD" ColumnName="markD" />
-                <ScalarProperty Name="markC" ColumnName="markC" />
-                <ScalarProperty Name="markB" ColumnName="markB" />
-                <ScalarProperty Name="markA" ColumnName="markA" />
-                <ScalarProperty Name="studentTotal" ColumnName="studentTotal" />
-                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
                 <ScalarProperty Name="CourseMonitoringReportId" ColumnName="CourseMonitoringReportId" />
+                <ScalarProperty Name="annualCourseId" ColumnName="annualCourseId" />
+                <ScalarProperty Name="studentTotal" ColumnName="studentTotal" />
+                <ScalarProperty Name="markA" ColumnName="markA" />
+                <ScalarProperty Name="markB" ColumnName="markB" />
+                <ScalarProperty Name="markC" ColumnName="markC" />
+                <ScalarProperty Name="markD" ColumnName="markD" />
+                <ScalarProperty Name="clEvaluation" ColumnName="clEvaluation" />
+                <ScalarProperty Name="approveStatusId" ColumnName="approveStatusId" />
+                <ScalarProperty Name="approve_desc" ColumnName="approve_desc" />
+                <ScalarProperty Name="dltComment" ColumnName="dltComment" />
+                <ScalarProperty Name="dateCreated" ColumnName="dateCreated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Faculties">
             <EntityTypeMapping TypeName="CMRDBModel.Faculty">
               <MappingFragment StoreEntitySet="Faculty">
-                <ScalarProperty Name="cmAccount" ColumnName="cmAccount" />
-                <ScalarProperty Name="dltAccount" ColumnName="dltAccount" />
-                <ScalarProperty Name="pvcAccount" ColumnName="pvcAccount" />
-                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
                 <ScalarProperty Name="facultyId" ColumnName="facultyId" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="pvcAccount" ColumnName="pvcAccount" />
+                <ScalarProperty Name="dltAccount" ColumnName="dltAccount" />
+                <ScalarProperty Name="cmAccount" ColumnName="cmAccount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="CMRDBModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
-                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
-                <ScalarProperty Name="telephone" ColumnName="telephone" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="profileId" ColumnName="profileId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="dateOfBirth" ColumnName="dateOfBirth" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="CMRDBModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
-                <ScalarProperty Name="roleName" ColumnName="roleName" />
                 <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="roleName" ColumnName="roleName" />
+                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="CMRDBModel.Student">
               <MappingFragment StoreEntitySet="Student">
-                <ScalarProperty Name="Mark" ColumnName="Mark" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AnnualCourseId" ColumnName="AnnualCourseId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AnnualCourseId" ColumnName="AnnualCourseId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_InsertAnnualCourse1" FunctionName="CMRDBModel.Store.sp_InsertAnnualCourse" />
-          <FunctionImportMapping FunctionImportName="sp_InsertCourse1" FunctionName="CMRDBModel.Store.sp_InsertCourse" />
+          <FunctionImportMapping FunctionImportName="sp_InsertAnnualCourse" FunctionName="CMRDBModel.Store.sp_InsertAnnualCourse" />
+          <FunctionImportMapping FunctionImportName="sp_InsertCourse" FunctionName="CMRDBModel.Store.sp_InsertCourse" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

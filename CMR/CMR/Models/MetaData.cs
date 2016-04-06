@@ -46,14 +46,13 @@ namespace CMR.Models
         [Display(Name = "Faculty name")]
         public Nullable<int> facultyId { get; set; }
     }
-
+   
     public class AnnualCourseMD
     {
         [Display(Name = "Academic year")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [RegularExpression(@"^\d{4}$",ErrorMessage="Year format isn't correct")]
         [Required]
-        public DateTime academicYear { get; set; }
+        public int academicYear { get; set; }
 
         [Display(Name = "Course name")]
         [Required]

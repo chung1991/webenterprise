@@ -38,11 +38,11 @@ namespace CMR.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Student> Students { get; set; }
     
-        public virtual int sp_InsertAnnualCourse(Nullable<System.DateTime> academicYear, Nullable<int> courseId)
+        public virtual int sp_InsertAnnualCourse(Nullable<int> academicYear, Nullable<int> courseId)
         {
             var academicYearParameter = academicYear.HasValue ?
                 new ObjectParameter("academicYear", academicYear) :
-                new ObjectParameter("academicYear", typeof(System.DateTime));
+                new ObjectParameter("academicYear", typeof(int));
     
             var courseIdParameter = courseId.HasValue ?
                 new ObjectParameter("courseId", courseId) :
@@ -62,32 +62,6 @@ namespace CMR.Models
                 new ObjectParameter("facultyId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertCourse", courseNameParameter, facultyIdParameter);
-        }
-    
-        public virtual int sp_InsertAnnualCourse1(Nullable<System.DateTime> academicYear, Nullable<int> courseId)
-        {
-            var academicYearParameter = academicYear.HasValue ?
-                new ObjectParameter("academicYear", academicYear) :
-                new ObjectParameter("academicYear", typeof(System.DateTime));
-    
-            var courseIdParameter = courseId.HasValue ?
-                new ObjectParameter("courseId", courseId) :
-                new ObjectParameter("courseId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertAnnualCourse1", academicYearParameter, courseIdParameter);
-        }
-    
-        public virtual int sp_InsertCourse1(string courseName, Nullable<int> facultyId)
-        {
-            var courseNameParameter = courseName != null ?
-                new ObjectParameter("courseName", courseName) :
-                new ObjectParameter("courseName", typeof(string));
-    
-            var facultyIdParameter = facultyId.HasValue ?
-                new ObjectParameter("facultyId", facultyId) :
-                new ObjectParameter("facultyId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertCourse1", courseNameParameter, facultyIdParameter);
         }
     }
 }

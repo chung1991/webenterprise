@@ -8,8 +8,8 @@
     <div class="form-inline" style="margin-bottom:10px;">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="row">
-            @Html.TextBox("txtAcademicYearFrom", ViewBag.From as String, "{0:dd/MM/yyyy}", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='date')", onfocusout = "(this.type='text')", @placeholder = "Time from..." })
-            @Html.TextBox("txtAcademicYearTo", ViewBag.To as String, "{0:dd/MM/yyyy}", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='date')", onfocusout = "(this.type='text')", @placeholder = "Time To..." })
+            @Html.TextBox("txtAcademicYearFrom", ViewBag.From as String, "", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='text')", onfocusout = "(this.type='text')", @placeholder = "Time from..." })
+            @Html.TextBox("txtAcademicYearTo", ViewBag.To as String, "", new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", onfocus = "(this.type='text')", onfocusout = "(this.type='text')", @placeholder = "Time To..." })
             @Html.TextBox("txtKeyWord", ViewBag.KeyWord as String, new { @class = "form-control", @Style = "border-radius:0px; margin-bottom:5px;", @placeholder = "Course name..." })   
             <input type="submit" value="Search" class="btn btn-default" style="margin-bottom:5px;" />
         </div>
@@ -29,7 +29,9 @@
 		<table class="tablesaw" data-tablesaw-mode="stack">
 			<thead>
 				<tr>
-					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist"></th>
+					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">
+                        @Html.DisplayName("#")
+                    </th>
 					<th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="1">
 						@Html.ActionLink("Academic year", "ViewAvaibleAnnualCourse", new { sortOrder = ViewBag.SortAcademicYear, currentFilter = ViewBag.currentFilter })
 					</th>
@@ -56,7 +58,7 @@
 							}
 						</td>
 						<td>
-							@Html.ValueFor(modelItem => item.academicYear, "{0:dd/MM/yyyy}")
+							@Html.ValueFor(modelItem => item.academicYear)
 
 						</td>
 						<td>
@@ -65,21 +67,6 @@
 						<td>
 							@Html.DisplayFor(modelItem => item.Course.courseName)
 						</td>
-						@*<td>
-								@if (item.Status.Equals("Activate"))
-								{
-									<img src="~/Content/Images/Activate.png" style="width:30px; height:30px;" title="Activate" />
-								}
-								else if (item.Status.Equals("Finish"))
-								{
-									<img src="~/Content/Images/Finish.png" style="width:30px; height:30px;" title="Finish" />
-								}
-								else
-								{
-									<img src="~/Content/Images/Wait.png" style="width:35px; height:35px;" title="Cancel" />
-								}
-
-							</td>*@
 						<td>
 							@if (item.Status == "Wait")
 							{
@@ -102,5 +89,7 @@
 }
 else
 {
-	<div class="no-data">No data.</div>
+    <div class="alert alert-danger" style="text-align:center">
+        No data
+    </div>
 }

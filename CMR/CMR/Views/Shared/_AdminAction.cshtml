@@ -2,7 +2,7 @@
 <div class="sidebar">
     <ul>
         <li>
-            <a href="#" class="head collapsed @Html.ActivePage("Account")"><i class="fa fa-users fa-lg"></i> Users <span class="arrow"></span></a>
+            <a href="#" class="head collapsed @Html.ActivePage("Account")"><i class="fa fa-users fa-lg"></i> Users </a>
             <ul class="sub-menu">
                 <li class="@Html.ActivePage("Account","Index")">
                     @Html.ActionLink("List of users", "Index", "Account")
@@ -14,7 +14,7 @@
             </ul>
         </li>
         <li>
-            <a href="#" class="head collapsed @Html.ActivePage("Course")"><i class="fa fa-folder-open"></i> Course Mangement <span class="arrow"></span></a>
+            <a href="#" class="head collapsed @Html.ActivePage("Course")"><i class="fa fa-folder-open"></i> Course Mangement </a>
             <ul class="sub-menu">
                 <li class="@Html.ActivePage("Course","ViewAllCourse")">
                     @Html.ActionLink("List of courses", "ViewAllCourse", "Course")
@@ -25,7 +25,7 @@
             </ul>
         </li>
         <li>
-            <a href="#" class="head collapsed @Html.ActivePage("AnnualCourse")"><i class="fa fa-folder-open"></i> AnnualCourse Mangement <span class="arrow"></span></a>
+            <a href="#" class="head collapsed @Html.ActivePage("AnnualCourse")"><i class="fa fa-folder-open"></i> AnnualCourse Mangement </a>
             <ul class="sub-menu">
                 <li class="@Html.ActivePage("AnnualCourse","ViewAllAnnualCourse")">
                     @Html.ActionLink("List of annual courses", "ViewAllAnnualCourse", "AnnualCourse")
