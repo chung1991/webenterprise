@@ -35,5 +35,16 @@
                 </li>
             </ul>
         </li>
+        <li>
+            <a href="#" class="head collapsed @Html.ActivePage("AnnualCourse")"><i class="fa fa-folder-open"></i> Reports </a>
+            <ul class="sub-menu">
+                <li class="@Html.ActivePage("AnnualCourse","ViewAllAnnualCourse")">
+                    @Html.ActionLink("Statistic Report", "ViewAllAnnualCourse", "AnnualCourse")
+                </li>
+                <li class="@Html.ActivePage("AnnualCourse","AddAnnualCourse")">
+                    @Html.ActionLink("Exception Report", "AddAnnualCourse", "AnnualCourse")
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
