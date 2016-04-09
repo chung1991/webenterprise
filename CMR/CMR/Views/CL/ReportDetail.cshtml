@@ -145,9 +145,9 @@
 	</div>
 </div>
 
-<!-- <div style="margin-right: 20px; text-align: right">
-    <a href="@Url.Action("getpdf","CL")">Get the chart in Pdf</a>
-</div> -->
+ <div style="margin-right: 20px; text-align: right">
+     @Html.ActionLink("Print PDF", "PrintDetailReport", new { id = Model.CourseMonitoringReportId })
+</div>
 
 <p>
 	@{
