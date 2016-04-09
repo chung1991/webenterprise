@@ -12,7 +12,7 @@ using PagedList;
 using System.Web.SessionState;
 using System.Web.Helpers;
 using System.Text.RegularExpressions;
-using Rotativa;
+//using Rotativa;
 
 namespace CMR.Controllers
 {
@@ -127,12 +127,12 @@ namespace CMR.Controllers
             return View(acr);
         }
 
-        public ActionResult PrintDetailReport(int id)
-        {
-            return new ActionAsPdf(
-                           "ReportDetail",
-                           new { id = id }) { FileName = "DetailReport.pdf" };
-        }
+        //public ActionResult PrintDetailReport(int id)
+        //{
+        //    return new ActionAsPdf(
+        //                   "ReportDetail",
+        //                   new { id = id }) { FileName = "DetailReport.pdf" };
+        //}
 
         public ActionResult EditReport(int id)
         {
