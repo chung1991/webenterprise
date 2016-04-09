@@ -347,17 +347,16 @@ namespace CMR.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult CreateScoreChart(int id)
+        public ActionResult CreateScoreChart(CourseMonitoringReport acr)
         {
-            CRMContext db = new CRMContext();
-            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
-
             String scoreA = acr.markA.ToString();
             String scoreB = acr.markB.ToString();
             String scoreC = acr.markC.ToString();
             String scoreD = acr.markD.ToString();
             //Create bar chart
-            var chart = new Chart(width: 300, height: 200)
+            var chart = new Chart(width: 300, height: 200, theme : ChartTheme.Blue)
+            .AddTitle("Score Statistic")
+            .AddLegend()
             .AddSeries(chartType: "pie",
                             xValue: new[] { "Excellent", "Good", "Ok", "NG" },
                             yValues: new[] { scoreA, scoreB, scoreC, scoreD })
@@ -366,11 +365,8 @@ namespace CMR.Controllers
         }
 
 
-        public ActionResult CreateResultChart(int id)
+        public ActionResult CreateResultChart(CourseMonitoringReport acr)
         {
-            CRMContext db = new CRMContext();
-            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
-
             String scoreA = acr.markA.ToString();
             String scoreB = acr.markB.ToString();
             String scoreC = acr.markC.ToString();
@@ -379,7 +375,9 @@ namespace CMR.Controllers
             String pass = (acr.markA + acr.markB + acr.markC).ToString();
             String fail = acr.markD.ToString();
             //Create bar chart
-            var chart = new Chart(width: 300, height: 200)
+            var chart = new Chart(width: 300, height: 200, theme : ChartTheme.Blue)
+            .AddTitle("Result Statistic")
+            .AddLegend()
             .AddSeries(chartType: "pie",
                             xValue: new[] { "Passed", "Failed"},
                             yValues: new[] { pass, fail })
