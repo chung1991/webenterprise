@@ -34,6 +34,40 @@ namespace CMR.Controllers
         public ActionResult CreateReport(String annualCourseId)
         {
             ViewBag.annualCourseId = annualCourseId;
+            int Id=Int32.Parse(annualCourseId);
+            CRMContext db = new CRMContext();
+            var students = (from student in db.Students
+                           where student.AnnualCourseId == Id
+                           select student).ToList();
+            int markA=0;
+            int markB=0;
+            int markC=0;
+            int markD=0;
+            int total = 0;
+            foreach(Student s in students){
+                if (s.Mark >= 80)
+                {
+                    markA++;
+                }
+                if (s.Mark >= 60 && s.Mark <= 79)
+                {
+                    markB++;
+                }
+                if (s.Mark >= 40 && s.Mark <= 59)
+                {
+                    markC++;
+                }
+                if (s.Mark < 40)
+                {
+                    markD++;
+                }
+                total++;
+            }
+            ViewBag.markA = markA;
+            ViewBag.markB = markB;
+            ViewBag.markC = markC;
+            ViewBag.markD = markD;
+            ViewBag.total = total;
             return View();
         }
 
