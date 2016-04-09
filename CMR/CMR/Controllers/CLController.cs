@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using CMR.Utilities;
 using System.Web.SessionState;
 using System.Web.Helpers;
 using System.Text.RegularExpressions;
+using Rotativa;
 
 namespace CMR.Controllers
 {
@@ -93,6 +93,13 @@ namespace CMR.Controllers
             return View(acr);
         }
 
+        public ActionResult PrintDetailReport(int id)
+        {
+            return new ActionAsPdf(
+                           "ReportDetail",
+                           new { id = id }) { FileName = "DetailReport.pdf" };
+        }
+
         public ActionResult EditReport(int id)
         {
             CRMContext db = new CRMContext();
@@ -156,6 +163,8 @@ namespace CMR.Controllers
 
             return RedirectToAction("ReportList");
         }
+
+        
 
 		[HttpPost]
 		public ActionResult SubmitComment(int courseMonitoringReportId, String comment_content)
@@ -336,35 +345,6 @@ namespace CMR.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
-        }
-
-     //  [HttpGet]
-    //    public FileResult GetPdf()
-   //     {
-           // var chartData = BrowserShareRepository.GetBrowserShares();
-         //   var chartStream = chartData.ChartImageStream();
-
-          //  return File(PdfUtility.GetSimplePdf(chartStream).GetBuffer()
-         //       , @"application/pdf", "BrowserShareChart.pdf");
-    //    }
-
-        [HttpGet]
-        public FileResult GetChart()
-        {
-            var chartData = BrowserShareRepository.GetBrowserShares();
-            return File(chartData.ChartImageStream().GetBuffer()
-                , @"image/png", "BrowserShareChart.png");
-        }
-
-        public ActionResult CreateBar()
-        {
-            //Create bar chart
-            var chart = new Chart(width:300,height:200)
-            .AddSeries(     chartType: "bar",
-                            xValue: new[] { "10 ", "50", "30 ", "70" },
-                            yValues: new[] { "50", "70", "90", "110" })
-                            .GetBytes("png");
-            return File(chart, "image/bytes");
         }
 
         public ActionResult CreateScoreChart(int id)

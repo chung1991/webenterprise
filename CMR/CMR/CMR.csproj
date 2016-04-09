@@ -74,6 +74,9 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -170,7 +173,6 @@
     <Compile Include="Models\ApproveStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\BrowserShareModel.cs" />
     <Compile Include="Models\Comment.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -214,9 +216,6 @@
     <Compile Include="Security\CustomAuthorize.cs" />
     <Compile Include="Security\CustomRoleProvider.cs" />
     <Compile Include="Security\PasswordHandler.cs" />
-    <Compile Include="Utilities\BrowserShareChat.cs" />
-    <Compile Include="Utilities\MyChartBase.cs" />
-    <Compile Include="Utilities\PdfUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -242,6 +241,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.2.1.js" />
@@ -272,6 +272,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-2.2.2.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.2.js" />
     <Content Include="Scripts\jquery-2.2.2.min.js" />
@@ -336,6 +337,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Utilities\" />
     <Folder Include="Views\Annual\" />
   </ItemGroup>
   <ItemGroup>
