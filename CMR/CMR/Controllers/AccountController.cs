@@ -199,6 +199,7 @@ namespace CMR.Controllers
             return View(rm);
         }
 
+        [CustomAuthorize(Roles = "Admin")]
         public ActionResult Delete(int accountId=0)
         {
             if (accountId == 0)
@@ -219,6 +220,7 @@ namespace CMR.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAuthorize(Roles = "Admin")]
         public Boolean verifyUser(String userName,bool edit=false,String oldUser="")
         {
             if (edit)
@@ -232,6 +234,7 @@ namespace CMR.Controllers
             return user == null ? false : true; 
         }
 
+        [CustomAuthorize(Roles = "Admin")]
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

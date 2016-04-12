@@ -21,7 +21,7 @@ namespace CMR.Models
         }
     
         public int annualCourseId { get; set; }
-        public Nullable<System.DateTime> academicYear { get; set; }
+        public Nullable<int> academicYear { get; set; }
         public Nullable<int> courseId { get; set; }
         public Nullable<int> clAccount { get; set; }
         public string Status { get; set; }

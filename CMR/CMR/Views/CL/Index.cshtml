@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<CMR.Models.AnnualCourse>
-<h4>Your Courses</h4>
+<h4>Your Annual Courses</h4>
 @{
 	var index = 1;
 }
@@ -55,7 +55,9 @@
 }
 else
 {
-	<div class="no-data">No data.</div>
+    <div class="alert alert-danger" style="text-align:center">
+        No data
+    </div>
 }
 
 

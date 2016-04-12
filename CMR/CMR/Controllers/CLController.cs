@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
-using CMR.Utilities;
 using System.Web.SessionState;
 using System.Web.Helpers;
+using System.Text.RegularExpressions;
+//using Rotativa;
 
 namespace CMR.Controllers
 {
@@ -33,6 +34,40 @@ namespace CMR.Controllers
         public ActionResult CreateReport(String annualCourseId)
         {
             ViewBag.annualCourseId = annualCourseId;
+            int Id=Int32.Parse(annualCourseId);
+            CRMContext db = new CRMContext();
+            var students = (from student in db.Students
+                           where student.AnnualCourseId == Id
+                           select student).ToList();
+            int markA=0;
+            int markB=0;
+            int markC=0;
+            int markD=0;
+            int total = 0;
+            foreach(Student s in students){
+                if (s.Mark >= 80)
+                {
+                    markA++;
+                }
+                if (s.Mark >= 60 && s.Mark <= 79)
+                {
+                    markB++;
+                }
+                if (s.Mark >= 40 && s.Mark <= 59)
+                {
+                    markC++;
+                }
+                if (s.Mark < 40)
+                {
+                    markD++;
+                }
+                total++;
+            }
+            ViewBag.markA = markA;
+            ViewBag.markB = markB;
+            ViewBag.markC = markC;
+            ViewBag.markD = markD;
+            ViewBag.total = total;
             return View();
         }
 
@@ -91,6 +126,13 @@ namespace CMR.Controllers
 
             return View(acr);
         }
+
+        //public ActionResult PrintDetailReport(int id)
+        //{
+        //    return new ActionAsPdf(
+        //                   "ReportDetail",
+        //                   new { id = id }) { FileName = "DetailReport.pdf" };
+        //}
 
         public ActionResult EditReport(int id)
         {
@@ -155,6 +197,8 @@ namespace CMR.Controllers
 
             return RedirectToAction("ReportList");
         }
+
+        
 
 		[HttpPost]
 		public ActionResult SubmitComment(int courseMonitoringReportId, String comment_content)
@@ -225,74 +269,101 @@ namespace CMR.Controllers
             List<AnnualCourse> annucalCourses = new List<AnnualCourse>();
             ViewBag.From = txtAcademicYearFrom;
             ViewBag.To = txtAcademicYearTo;
-           
+            Regex regex = new Regex(@"^\d{4}$");
+            Match from = regex.Match(txtAcademicYearFrom);
+            Match to = regex.Match(txtAcademicYearTo);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord == "")
-            {
-                ModelState.AddModelError("", "Please, typing any field for searching !");
-                var annualCourses = from anc in db.AnnualCourses where anc.Course.courseName == ""  select anc;
-                return View(annualCourses.ToPagedList(pageNumber, pageSize));
+
+            if (from.Success && to.Success) {
+                
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord == "")
+                {
+                    ModelState.AddModelError("", "Please, typing any field for searching !");
+                    var annualCourses = from anc in db.AnnualCourses where anc.Course.courseName == "" select anc;
+                    return View(annualCourses.ToPagedList(pageNumber, pageSize));
+                }
+                else
+                {
+                    List<AnnualCourse> listAnnualCourse = getAnnualCourseSearching(txtAcademicYearFrom, txtAcademicYearTo, txtKeyWord);
+                    return View(listAnnualCourse.ToPagedList(pageNumber, pageSize));
+
+                }
+
             }
             else
             {
                 List<AnnualCourse> listAnnualCourse = getAnnualCourseSearching(txtAcademicYearFrom, txtAcademicYearTo, txtKeyWord);
+                if (listAnnualCourse == null)
+                {
+                    listAnnualCourse = new List<AnnualCourse>();
+                }
+                ModelState.AddModelError("", "From or To Year is not valid");
                 return View(listAnnualCourse.ToPagedList(pageNumber, pageSize));
-
             }
+            
         }
 
         public List<AnnualCourse> getAnnualCourseSearching(String txtAcademicYearFrom, String txtAcademicYearTo, String txtKeyWord)
         {
-            CRMContext db = new CRMContext();
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord == "")
+            try
             {
-                DateTime dt = DateTime.Parse(txtAcademicYearFrom);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dt && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord == "")
-            {
-                DateTime dt = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dt && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord != "" )
-            {
-                var annualCourses = (from anc in db.AnnualCourses where anc.Course.courseName.Contains(txtKeyWord) && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-           
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord == "")
-            {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" select anc).ToList();
-                return annualCourses;
-            }
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord != "")
-            {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dtFrom && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
-            }
-            
-           
-            if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord != "")
-            {
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dtTo && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
-            }
+                CRMContext db = new CRMContext();
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord == "")
+                {
+                    int dt = Int32.Parse(txtAcademicYearFrom);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dt && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord == "")
+                {
+                    int dt = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dt && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo == "" && txtKeyWord != "")
+                {
+                    var annualCourses = (from anc in db.AnnualCourses where anc.Course.courseName.Contains(txtKeyWord) && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
 
-            if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord == "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" select anc).ToList();
+                    return annualCourses;
+                }
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo == "" && txtKeyWord != "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear >= dtFrom && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+
+                if (txtAcademicYearFrom == "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                {
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where anc.academicYear <= dtTo && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+                if (txtAcademicYearFrom != "" && txtAcademicYearTo != "" && txtKeyWord != "")
+                {
+                    int dtFrom = Int32.Parse(txtAcademicYearFrom);
+                    int dtTo = Int32.Parse(txtAcademicYearTo);
+                    var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
+                    return annualCourses;
+                }
+
+            }
+            catch (Exception e)
             {
-                DateTime dtFrom = DateTime.Parse(txtAcademicYearFrom);
-                DateTime dtTo = DateTime.Parse(txtAcademicYearTo);
-                var annualCourses = (from anc in db.AnnualCourses where (anc.academicYear >= dtFrom && anc.academicYear <= dtTo) && anc.Status == "Wait" && anc.Course.courseName.Contains(txtKeyWord) select anc).ToList();
-                return annualCourses;
+                
             }
             return null;
+            
         }
 
 
@@ -300,7 +371,9 @@ namespace CMR.Controllers
         {
             CRMContext db = new CRMContext();
             AnnualCourse anCourse = db.AnnualCourses.SingleOrDefault(ac => ac.annualCourseId == annualCourseId);
-            Account a = (Account)System.Web.HttpContext.Current.Session["UserSession"];
+            var currUser = User.Identity;
+            String userName = currUser.Name;
+            Account a = db.Accounts.SingleOrDefault(u => u.userName == userName);
             anCourse.clAccount = a.accountId;
             anCourse.Status = "Activate";
             db.SaveChanges();
@@ -308,46 +381,16 @@ namespace CMR.Controllers
             return RedirectToAction("Index");
         }
 
-     //  [HttpGet]
-    //    public FileResult GetPdf()
-   //     {
-           // var chartData = BrowserShareRepository.GetBrowserShares();
-         //   var chartStream = chartData.ChartImageStream();
-
-          //  return File(PdfUtility.GetSimplePdf(chartStream).GetBuffer()
-         //       , @"application/pdf", "BrowserShareChart.pdf");
-    //    }
-
-        [HttpGet]
-        public FileResult GetChart()
+        public ActionResult CreateScoreChart(CourseMonitoringReport acr)
         {
-            var chartData = BrowserShareRepository.GetBrowserShares();
-            return File(chartData.ChartImageStream().GetBuffer()
-                , @"image/png", "BrowserShareChart.png");
-        }
-
-        public ActionResult CreateBar()
-        {
-            //Create bar chart
-            var chart = new Chart(width:300,height:200)
-            .AddSeries(     chartType: "bar",
-                            xValue: new[] { "10 ", "50", "30 ", "70" },
-                            yValues: new[] { "50", "70", "90", "110" })
-                            .GetBytes("png");
-            return File(chart, "image/bytes");
-        }
-
-        public ActionResult CreateScoreChart(int id)
-        {
-            CRMContext db = new CRMContext();
-            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
-
             String scoreA = acr.markA.ToString();
             String scoreB = acr.markB.ToString();
             String scoreC = acr.markC.ToString();
             String scoreD = acr.markD.ToString();
             //Create bar chart
-            var chart = new Chart(width: 300, height: 200)
+            var chart = new Chart(width: 300, height: 200, theme : ChartTheme.Blue)
+            .AddTitle("Score Statistic")
+            .AddLegend()
             .AddSeries(chartType: "pie",
                             xValue: new[] { "Excellent", "Good", "Ok", "NG" },
                             yValues: new[] { scoreA, scoreB, scoreC, scoreD })
@@ -356,11 +399,8 @@ namespace CMR.Controllers
         }
 
 
-        public ActionResult CreateResultChart(int id)
+        public ActionResult CreateResultChart(CourseMonitoringReport acr)
         {
-            CRMContext db = new CRMContext();
-            CourseMonitoringReport acr = db.CourseMonitoringReports.SingleOrDefault(a => a.CourseMonitoringReportId == id);
-
             String scoreA = acr.markA.ToString();
             String scoreB = acr.markB.ToString();
             String scoreC = acr.markC.ToString();
@@ -369,7 +409,9 @@ namespace CMR.Controllers
             String pass = (acr.markA + acr.markB + acr.markC).ToString();
             String fail = acr.markD.ToString();
             //Create bar chart
-            var chart = new Chart(width: 300, height: 200)
+            var chart = new Chart(width: 300, height: 200, theme : ChartTheme.Blue)
+            .AddTitle("Result Statistic")
+            .AddLegend()
             .AddSeries(chartType: "pie",
                             xValue: new[] { "Passed", "Failed"},
                             yValues: new[] { pass, fail })

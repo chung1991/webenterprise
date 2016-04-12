@@ -91,17 +91,12 @@
                     <table>
                         <tr>
                             <td>
-                                <img src="@Url.Action("CreateScoreChart", new { id = Model.CourseMonitoringReportId})" alt="Score chart" />
+                                <img src="@Url.Action("CreateScoreChart", Model)" alt="Score chart" />
                             </td>
 
                             <td>
-                                <img src="@Url.Action("CreateResultChart", new { id = Model.CourseMonitoringReportId })" alt="Result chart" />
+                                <img src="@Url.Action("CreateResultChart", Model)" alt="Result chart" />
                             </td>
-                        </tr>
-                        <tr style="text-align:center">
-                            <td>Score Chart</td>
-                            <td>Result Chart</td>
-                        </tr>
                     </table>
                 </div>
 
@@ -145,9 +140,10 @@
 	</div>
 </div>
 
-<!-- <div style="margin-right: 20px; text-align: right">
-    <a href="@Url.Action("getpdf","CL")">Get the chart in Pdf</a>
-</div> -->
+ <div style="margin-right: 20px; text-align: right">
+   <!--<a href="@Url.Action("PrintDetailReport","CL")">Get report in Pdf</a>--> 
+     @Html.ActionLink("Print PDF", "PrintDetailReport", new { id = Model.CourseMonitoringReportId })
+</div>
 
 <p>
 	@{

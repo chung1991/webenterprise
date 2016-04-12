@@ -38,11 +38,11 @@ namespace CMR.Models
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Student> Students { get; set; }
     
-        public virtual int sp_InsertAnnualCourse(Nullable<System.DateTime> academicYear, Nullable<int> courseId)
+        public virtual int sp_InsertAnnualCourse(Nullable<int> academicYear, Nullable<int> courseId)
         {
             var academicYearParameter = academicYear.HasValue ?
                 new ObjectParameter("academicYear", academicYear) :
-                new ObjectParameter("academicYear", typeof(System.DateTime));
+                new ObjectParameter("academicYear", typeof(int));
     
             var courseIdParameter = courseId.HasValue ?
                 new ObjectParameter("courseId", courseId) :
