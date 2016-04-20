@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CMR.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -25,5 +26,6 @@ namespace CMR.CustomHtmlHelpers
             }
             return "Send Ok";
         }
+
     }
 }
