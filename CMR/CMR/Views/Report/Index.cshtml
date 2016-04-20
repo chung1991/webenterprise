@@ -1,5 +1,75 @@
-﻿@model CMR.Models.CourseMonitoringReport
-
+﻿@model IEnumerable<CMR.Models.CourseMonitoringReport>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Our Awesome Chart!</h2>
+    <table>
+        <tr>
+            @Html.ActionLink("Print PDF", "PrintReport")
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateArea")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateStackColumn100")" alt="Column100 chart" /></td>   
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateBar")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateBoxPlot")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateBubble")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateCandlestick")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateColumn")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateDoughnut")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateErrorBar")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateFastLine")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateFastPoint")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateFunnel")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateKagi")" alt="Area chart" /></td>
+            <td><img src="@Url.Action("CreateLine")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreatePie")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreatePoint")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateRange")" alt="Area chart" /></td>
+            <td><img src="@Url.Action("CreateRangeBar")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreatePyramid")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateRadar")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateRenko")" alt="Area chart" /></td>
+            <td><img src="@Url.Action("CreateSpline")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateSplineArea")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateSplineRange")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateStackedArea")" alt="Area chart" /></td>
+            <td><img src="@Url.Action("CreateStepLine")" alt="Column100 chart" /></td>
+        </tr>
+        <tr>
+            <td><img src="@Url.Action("CreateStackedBar")" alt="Area chart" /></td>
+            <td><<img src="@Url.Action("CreateStackedColumn")" alt="Column100 chart" /></td>
+        </tr>
+    </table>
+</body>
+</html>
 
 
 
