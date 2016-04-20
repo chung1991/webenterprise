@@ -89,6 +89,23 @@
 
     </dl>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <img src="@Url.Action("CreateScoreChart", Model)" alt="Score chart" />
+                    </td>
+
+                    <td>
+                        <img src="@Url.Action("CreateResultChart", Model)" alt="Result chart" />
+                    </td>
+            </table>
+        </div>
+
+    </div>
+</div>
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
@@ -101,7 +118,7 @@
                 <h4 class="modal-title">Report Action</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("ResponseComment", "DLT", FormMethod.Post))
+                @using (Html.BeginForm("ResponseComment", "DLT", FormMethod.Post, new { @class = "form-inline",@id="form-comment" }))
                 {
                     @Html.HiddenFor(model => model.CourseMonitoringReportId)
                     <div class="form-horizontal">
@@ -123,3 +140,16 @@
 
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form-comment").submit(function () {
+            var content = $("#comment_content").val().trim();
+            if (content) {
+                return true;
+            }
+            alert("Comment text must not be empty!");
+            return false;
+        });
+    });
+
+</script>

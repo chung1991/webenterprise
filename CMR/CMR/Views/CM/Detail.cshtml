@@ -85,7 +85,23 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-12">
+            <div>
+                <table>
+                    <tr>
+                        <td>
+                            <img src="@Url.Action("CreateScoreChart", Model)" alt="Score chart" />
+                        </td>
 
+                        <td>
+                            <img src="@Url.Action("CreateResultChart", Model)" alt="Result chart" />
+                        </td>
+                </table>
+            </div>
+
+        </div>
+    </div>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -142,7 +158,7 @@
                             </li>
                         }
                     </ul>
-                    @using (Html.BeginForm("SubmitComment", "CM", FormMethod.Post, new { @class = "form-inline" }))
+                    @using (Html.BeginForm("SubmitComment", "CM", FormMethod.Post, new { @class = "form-inline", @id = "form-comment" }))
                     {
                         @Html.HiddenFor(model => model.CourseMonitoringReportId)
                         @Html.Editor("comment_content", new { htmlAttributes = new { @oninput = "onTypeComment()", @class = "form-control", @id = "comment_content", @maxlength = 1000, @style = "width:100%", @placeholder = "Write a comment..." } })
@@ -163,3 +179,16 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form-comment").submit(function () {
+            var content = $("#comment_content").val().trim();
+            if (content) {
+                return true;
+            }
+            alert("Comment text must not be empty!");
+            return false;
+        });
+    });
+
+</script>

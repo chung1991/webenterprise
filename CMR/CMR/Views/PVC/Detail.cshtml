@@ -82,8 +82,69 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <img src="@Url.Action("CreateScoreChart", Model)" alt="Score chart" />
+                    </td>
+
+                    <td>
+                        <img src="@Url.Action("CreateResultChart", Model)" alt="Result chart" />
+                    </td>
+            </table>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="detailBox">
+            <div class="actionBox">
+                <ul class="commentList">
+
+                    @foreach (var item in Model.Comments.Reverse())
+                    {
+                        <li>
+                            <div class="commentText">
+                                <strong>@Html.DisplayFor(modelItem => item.Account.userName)</strong> <span class="date sub-text">on @Html.DisplayFor(modelItem => item.time)</span>
+                                <p class="">@Html.DisplayFor(modelItem => item.content)</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                @using (Html.BeginForm("SubmitComment", "PVC", FormMethod.Post, new { @class = "form-inline", @id = "form-comment" }))
+                {
+                    @Html.HiddenFor(model => model.CourseMonitoringReportId)
+                    @Html.Editor("comment_content", new { htmlAttributes = new { @oninput = "onTypeComment()", @class = "form-control", @id = "comment_content", @maxlength = 1000, @style = "width:100%", @placeholder = "Write a comment..." } })
+                }
+                <span id="charCounter" class="pull-right" style="font-size:10px; color:#808080; padding-right:20px">0000</span>
+                <script type="text/javascript">
+                    var counter = document.getElementById("charCounter");
+                    var content = document.getElementById("comment_content");
+                    counter.firstChild.nodeValue = content.value.length + "/" + 1000;
+                    function onTypeComment() {
+                        counter.firstChild.nodeValue = content.value.length + "/" + 1000;
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form-comment").submit(function () {
+                var content = $("#comment_content").val().trim();
+                if (content) {
+                    return true;
+                }
+                alert("Comment text must not be empty!");
+                return false;
+            });
+        });
+
+    </script>
 
 

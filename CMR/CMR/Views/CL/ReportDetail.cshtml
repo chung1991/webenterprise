@@ -118,11 +118,11 @@
                                 </li>
                             }
                         </ul>
-                        @using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline" }))
+                        @using (Html.BeginForm("SubmitComment", "CL", FormMethod.Post, new { @class = "form-inline",@id="form-comment" }))
                         {
                             @Html.HiddenFor(model => model.CourseMonitoringReportId)
                             @Html.Editor("comment_content", new { htmlAttributes = new { @oninput = "onTypeComment()", @class = "form-control", @id = "comment_content", @maxlength = 1000, @style = "width:100%", @placeholder = "Write a comment..." } })
-					}
+					    }
 					<span id="charCounter" class="pull-right" style="font-size:10px; color:#808080; padding-right:20px">0000</span>
 					<script type="text/javascript">
 						var counter = document.getElementById("charCounter");
@@ -155,5 +155,18 @@
 
 	@Html.ActionLink("Back to List", "ReportList")
 </p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#form-comment").submit(function () {
+            var content = $("#comment_content").val().trim();
+            if (content) {
+                return true;
+            }
+            alert("Comment text must not be empty!");
+            return false;
+        });
+    });
+
+</script>
 
 
