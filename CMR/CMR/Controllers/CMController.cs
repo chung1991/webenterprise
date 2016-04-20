@@ -9,6 +9,7 @@ using CMR.Security;
 using System.Data.Entity;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 
 namespace CMR.Controllers
 {
@@ -129,12 +130,12 @@ namespace CMR.Controllers
 
                 String dltURL = url + "/DLT/Detail?reportId=" + report.CourseMonitoringReportId;
                 var dtlbody = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
-                var dltmessage = string.Format(dtlbody, report.AnnualCourse.Account.Profile.name, report.AnnualCourse.Account.Profile.email, "There is a report from " + report.AnnualCourse.Account.Profile.name, dltURL);
+                var dltmessage = string.Format(dtlbody, user.Profile.name, user.Profile.email, "There is a report of " + report.AnnualCourse.Account.Profile.name, dltURL);
                 Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(dltEmail, dltmessage));
 
                 String pvcURL = url + "/PVC/Detail?reportId=" + report.CourseMonitoringReportId;
                 var pvcbody = "<p>Email From: {0} ({1})</p><p>Message: {2}</p><p>Link: {3}</p>";
-                var pvcmessage = string.Format(pvcbody, report.AnnualCourse.Account.Profile.name, report.AnnualCourse.Account.Profile.email, "There is a report from " + report.AnnualCourse.Account.Profile.name, pvcURL);
+                var pvcmessage = string.Format(pvcbody, report.AnnualCourse.Account.Profile.name, report.AnnualCourse.Account.Profile.email, "There is a report of " + report.AnnualCourse.Account.Profile.name, pvcURL);
                 Task.Run(async () => await CustomHtmlHelpers.Helpers.sendMail(pvcEmail, pvcmessage));
                 
             }
@@ -161,6 +162,44 @@ namespace CMR.Controllers
 			}
 			return View();
 		}
+
+        public ActionResult CreateScoreChart(CourseMonitoringReport acr)
+        {
+            String scoreA = acr.markA.ToString();
+            String scoreB = acr.markB.ToString();
+            String scoreC = acr.markC.ToString();
+            String scoreD = acr.markD.ToString();
+            //Create bar chart
+            var chart = new Chart(width: 300, height: 200, theme: ChartTheme.Blue)
+            .AddTitle("Score Statistic")
+            .AddLegend()
+            .AddSeries(chartType: "pie",
+                            xValue: new[] { "Excellent", "Good", "Ok", "NG" },
+                            yValues: new[] { scoreA, scoreB, scoreC, scoreD })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+
+        public ActionResult CreateResultChart(CourseMonitoringReport acr)
+        {
+            String scoreA = acr.markA.ToString();
+            String scoreB = acr.markB.ToString();
+            String scoreC = acr.markC.ToString();
+            String scoreD = acr.markD.ToString();
+
+            String pass = (acr.markA + acr.markB + acr.markC).ToString();
+            String fail = acr.markD.ToString();
+            //Create bar chart
+            var chart = new Chart(width: 300, height: 200, theme: ChartTheme.Blue)
+            .AddTitle("Result Statistic")
+            .AddLegend()
+            .AddSeries(chartType: "pie",
+                            xValue: new[] { "Passed", "Failed" },
+                            yValues: new[] { pass, fail })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
 
     }
 }

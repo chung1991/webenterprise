@@ -246,5 +246,35 @@ namespace CMR.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        public ActionResult insertDumyData()
+        {
+            ViewBag.annualCourses = new SelectList(db.AnnualCourses, "annualCourseId", "annualCourseId");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult insertDumyData(int annualCourseId)
+        {
+            Random r = new Random();
+            int range = r.Next(50, 100);
+
+            for (int i = 0; i < range; i++)
+            {
+                int mark = r.Next(0, 100);
+                Student s = new Student
+                {
+                    AnnualCourseId = annualCourseId,
+                    Name = "Nguyen Van a_" + i,
+                    Mark = mark
+                };
+                db.Students.Add(s);
+                db.SaveChanges();
+            }
+            ViewBag.annualCourses = new SelectList(db.AnnualCourses, "annualCourseId", "annualCourseId");
+            return View();
+        }
     }
+
+    
 }
