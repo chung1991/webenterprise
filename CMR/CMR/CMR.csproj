@@ -344,10 +344,7 @@
     <Content Include="Views\PVC\Index.cshtml" />
     <Content Include="Views\PVC\Detail.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\insertDumyData.cshtml" />
-=======
->>>>>>> Add moving report from admin menu
     <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
