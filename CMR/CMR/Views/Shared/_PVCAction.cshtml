@@ -7,6 +7,12 @@
                 <li class="@Html.ActivePage("PVC","Index")">
                     @Html.ActionLink("Course Reports", "", "")
                 </li>
+                <li class="@Html.ActivePage("Report","StatisticReport")">
+                    @Html.ActionLink("Statistic Report", "StatisticReport", "Report")
+                </li>
+                <li class="@Html.ActivePage("Report", "ExceptionReport")">
+                    @Html.ActionLink("Exception Report", "ExceptionReport", "Report")
+                </li>
             </ul>
         </li>
     </ul>

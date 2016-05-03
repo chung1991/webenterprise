@@ -10,15 +10,64 @@
 <body>
     <div>
         <h1>Exception Report</h1>
-        @Html.ActionLink("Print PDF", "PrintReport")
+        @Html.ActionLink("Print PDF", "PrintExceptionReport")
     </div>
-    <div>
-        <table class="tablesaw" data-tablesaw-mode="stack">
-            <tr>
-                <td><img src="@Url.Action("CreatePendingReportChart")" alt="Status CMR Chart" /></td>
-                <td><img src="@Url.Action("CreateNoResponseReportChart")" alt="Status CMR Chart" /></td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Url.Action("CreatePendingReportChart")" alt="Status CMR Chart" class="img-responsive" />
+        </div>
+        <div class="col-md-4 ">
+            <table class="tablesaw" data-tablesaw-mode="stack">
+                <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">#</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Pending Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (KeyValuePair<string, CMR.Models.StatisticModel> kvp in ViewBag.dict1)
+                    {
+                        <tr>
+                            <td>
+                                @kvp.Key
+                            </td>
+                            <td>
+                                @kvp.Value.pendingCount
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="col-md-6">
+            <img src="@Url.Action("CreateNoResponseReportChart")" alt="Status CMR Chart" class="img-responsive" />
+        </div>
+        <div class="col-md-4">
+            <table class="tablesaw" data-tablesaw-mode="stack">
+                <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">#</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">No response Report</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (KeyValuePair<string, CMR.Models.StatisticModel> kvp in ViewBag.dict1)
+                    {
+                        <tr>
+                            <td>
+                                @kvp.Key
+                            </td>
+                            <td>
+                                @kvp.Value.pendingCount
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>
