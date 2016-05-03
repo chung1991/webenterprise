@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CMR.Models.CourseMonitoringReport>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Index</h2>
+    <table>
+        <tr>
+            @Html.ActionLink("Print PDF", "PrintReport")
+        </tr>
+        <tr>
+            <td><<img src="@Url.Action("CreateStackColumn100")" alt="Status CMR Chart" /></td>   
+        </tr>
+    </table>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CMR.Models.StackedChartData>
+@using JQChart.Web.Mvc
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery.jqChart.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery.jqRangeSlider.css" />
+    <!--<link rel="stylesheet" type="text/css" href="~/Content/themes/le-frog/jquery-ui-1.8.20.css" />-->
+    <script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.mousewheel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqChart.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.jqRangeSlider.min.js")" type="text/javascript"></script>
+    <!--[if IE]><script lang="javascript" type="text/javascript" src="@Url.Content("~/Scripts/excanvas.js")"></script><![endif]-->
+    <script lang="javascript" type="text/javascript">
+
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Summarize Report</h1>
+    </div>
+    <div>
+        @(Html.JQChart()
+                .Chart(Model)
+                .ID("jqChart")
+                .Width(500)
+                .Height(300)
+                .Title("Stacked Column Chart")
+                .Animation(TimeSpan.FromSeconds(1))
+                .Shadows(true)
+                .Axes(axis =>
+                    {
+                        axis.CategoryAxis(Location.Bottom).Categories(el => el.Label);
+                    }
+                )
+                .Series(series =>
+                    {
+                        series.StackedColumn().Title("Stacked 1")
+                                              .YValues(el => el.Value1)
+                                              .Labels(label => label.Font("12px sans-serif"));
+
+                        series.StackedColumn().Title("Stacked 2")
+                                              .YValues(el => el.Value2)
+                                              .Labels(label => label.Font("12px sans-serif"));
+
+                        series.StackedColumn().Title("Stacked 3")
+                                              .YValues(el => el.Value3)
+                                              .Labels(label => label.Font("12px sans-serif"));
+                    }
+                )
+                .Render()
+        )
+    </div>
+</body>
+</html>
+

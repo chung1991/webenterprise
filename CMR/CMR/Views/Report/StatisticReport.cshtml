@@ -1,0 +1,55 @@
+﻿
+    <!DOCTYPE HTML>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title></title>
+    </head>
+    <body>
+        <div>
+            <h1>Statistic Report</h1>
+            @Html.ActionLink("Print PDF", "PrintStatisticReport")
+        </div>
+        <div>
+            <img src="@Url.Action("CreateStatusStatisTicReportChart")" alt="Status statistic Chart" class="img-responsive" />
+        </div>
+        <br />
+        <br />
+        <div>
+            <table class="tablesaw" data-tablesaw-mode="stack">
+                <thead>
+                    <tr>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">#</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Pending</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Waiting</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Rejected</th>
+                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">Approved</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (KeyValuePair<string, CMR.Models.StatisticModel> kvp in ViewBag.dict)
+                    {
+                        <tr>
+                            <td>
+                                @kvp.Key
+                            </td>
+                            <td>
+                                @kvp.Value.pendingCount
+                            </td>
+                            <td>
+                                @kvp.Value.waitingCount
+                            </td>
+                            <td>
+                                @kvp.Value.rejectedCount
+                            </td>
+                            <td>
+                                @kvp.Value.approvedCount
+                            </td>
+                        </tr>
+                    }
+                  </tbody>
+</table>
+        </div>
+    </body>
+</html>

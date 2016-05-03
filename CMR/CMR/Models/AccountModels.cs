@@ -51,6 +51,7 @@ namespace CMR.Models
             [Display(Name="Birthday")]
             [DataType(DataType.Date)]
             [Required]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
             public DateTime dateOfBirth { get; set; }
 
             [Display(Name = "Address")]

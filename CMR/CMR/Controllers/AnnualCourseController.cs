@@ -43,6 +43,8 @@ namespace CMR.Controllers
                 {
                     db.sp_InsertAnnualCourse(ac.academicYear, ac.courseId);
                     db.SaveChanges();
+                    int lastID = db.AnnualCourses.Max(a => a.annualCourseId);
+                    insertDumyData(lastID);
                     return RedirectToAction("ViewAllAnnualCourse");
                 }
                 else
@@ -312,6 +314,25 @@ namespace CMR.Controllers
             items.Add(new SelectListItem { Text = "Finish", Value = "Finish" });
             return items;
         }
+        public void insertDumyData(int annualCourseId)
+        {
+            Random r = new Random();
+            int range = r.Next(50, 100);
+
+            for (int i = 0; i < range; i++)
+            {
+                int mark = r.Next(0, 100);
+                Student s = new Student
+                {
+                    AnnualCourseId = annualCourseId,
+                    Name = "Nguyen Van a " + i,
+                    Mark = mark
+                };
+                db.Students.Add(s);
+                db.SaveChanges();
+            }
+        }
 
     }
+
 }
