@@ -8,6 +8,8 @@ using System.Web.Security;
 using CMR.Security;
 using System.Net;
 using System.Data.Entity;
+using PagedList;
+
 
 namespace CMR.Controllers
 {
@@ -92,13 +94,46 @@ namespace CMR.Controllers
             ViewBag.roles = new SelectList(db.Roles, "roleId", "roleName");
             return View(r);
         }
-        [CustomAuthorize(Roles = "Admin")]
-        public ActionResult Index()
-        {
-            var list = (from acc in db.Accounts
-                        select acc).ToList();
 
-            return View(list);
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult Index(string sortOrder, String currentFilter,String searchString, int? page)
+        {
+            ViewBag.NameSortParm = sortOrder == "UserName" ? "name_desc" : "UserName";
+            ViewBag.currentSort = sortOrder;
+            ViewBag.currentFilter = searchString;
+           
+            var list = (from acc in db.Accounts
+                        select acc);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    list = list.OrderByDescending(c => c.userName);
+                    break;
+                case "UserName":
+                    list = list.OrderBy(c => c.userName);
+                    break;
+                default:
+                    list = list.OrderBy(c => c.accountId);
+                    break;
+            }
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                list = list.Where(l => l.userName.Contains(searchString)||l.Profile.email.Contains(searchString)||l.Role.roleName.Contains(searchString));
+            }
+
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber,pageSize));
         }
 
         [CustomAuthorize(Roles = "Admin")]
@@ -265,7 +300,7 @@ namespace CMR.Controllers
                 Student s = new Student
                 {
                     AnnualCourseId = annualCourseId,
-                    Name = "Nguyen Van a_" + i,
+                    Name = "Nguyen Van a " + i,
                     Mark = mark
                 };
                 db.Students.Add(s);
