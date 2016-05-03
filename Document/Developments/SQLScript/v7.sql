@@ -45,8 +45,8 @@ go
 insert into Account values('admin', 'UGSFaY3o+K8=', 1, 1)
 insert into Account values('CLAccount', 'UGSFaY3o+K8=', 2, 2)
 insert into Account values('CMAccount', 'UGSFaY3o+K8=', 3, 3)
-insert into Account values('DLTccount', 'UGSFaY3o+K8=', 4, 4)
-insert into Account values('PVCccount', 'UGSFaY3o+K8=', 5, 5)
+insert into Account values('DLTAccount', 'UGSFaY3o+K8=', 4, 4)
+insert into Account values('PVCAccount', 'UGSFaY3o+K8=', 5, 5)
 
 go
 create table Faculty (
@@ -58,9 +58,9 @@ create table Faculty (
 )
 go
 insert into Faculty values('Sience',5,4,3)
-insert into Faculty values('Software',null,null,null)
-insert into Faculty values('Hardware',null,null,null)
-insert into Faculty values('Managment Bussiness',null,null,null)
+insert into Faculty values('Software',5,4,3)
+insert into Faculty values('Hardware',5,4,3)
+insert into Faculty values('Managment Bussiness',5,4,3)
 
 go
 create table Course (
@@ -114,7 +114,7 @@ create table Comment (
 )
 go
 create table Student(
-[ID] int NOT NULL IDENTITY(1,1) ,
+[ID] int primary key IDENTITY(1,1) ,
 [AnnualCourseId] int foreign key (AnnualCourseId) references AnnualCourse (annualCourseId) ,
 [Name] varchar(100) NULL ,
 [Mark] float(53) NULL 
