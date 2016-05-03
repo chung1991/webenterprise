@@ -81,7 +81,7 @@ namespace CMR.Controllers
                         userName = r.userName,
                         userPassword =PasswordHandler.Encrypt(r.passWord),
                         profileId = lastID,
-                        roleId = r.roleId
+                        roleId = 2
                     };
 
                     db.Accounts.Add(a);
@@ -175,7 +175,7 @@ namespace CMR.Controllers
                         userName=rm.userName,
                         userPassword=rm.passWord,
                         profileId=ac.profileId,
-                        roleId=rm.roleId
+                        roleId=2
                     };
                     db.Entry(ac).CurrentValues.SetValues(account);
                     db.SaveChanges();
