@@ -348,7 +348,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Utilities\" />
-    <Folder Include="Views\Annual\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
