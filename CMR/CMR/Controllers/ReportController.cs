@@ -65,7 +65,13 @@ namespace CMR.Controllers
                     model.rejectedCount++;
                 }
             }
-            ViewBag.dict = dictionary;
+            var dictionary2 = new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary.OrderBy(i => i.Key))
+            {
+                dictionary2.Add(item.Key,item.Value);
+            }
+
+            ViewBag.dict = dictionary2;
             return View();
         }
 
@@ -109,8 +115,18 @@ namespace CMR.Controllers
                     model.pendingCount++;
                 }
             }
-            ViewBag.dict1 = dictionary1;
-            ViewBag.dict2 = dictionary2;
+            var dictionary11= new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary1.OrderBy(i => i.Key))
+            {
+                dictionary11.Add(item.Key, item.Value);
+            }
+            var dictionary22 = new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary2.OrderBy(i => i.Key))
+            {
+                dictionary22.Add(item.Key, item.Value);
+            }
+            ViewBag.dict1 = dictionary11;
+            ViewBag.dict2 = dictionary22;
             return View();
         }
 
@@ -152,8 +168,12 @@ namespace CMR.Controllers
                     model.rejectedCount++;
                 }
             }
-
-            String[] academicYears = dictionary.Keys.ToArray<String>();
+            var dictionary2 = new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary.OrderBy(i => i.Key))
+            {
+                dictionary2.Add(item.Key, item.Value);
+            }
+            String[] academicYears = dictionary2.Keys.ToArray<String>();
             Dictionary<string, string[]> pendingDict = new Dictionary<string, string[]>();
             Dictionary<string, string[]> waitingDict = new Dictionary<string, string[]>();
             Dictionary<string, string[]> approveDict = new Dictionary<string, string[]>();
@@ -166,7 +186,7 @@ namespace CMR.Controllers
 
             for (int i = 0; i < academicYears.Count(); i++) {
                 String year = academicYears[i];
-                StatisticModel theModel = dictionary[year];
+                StatisticModel theModel = dictionary2[year];
 
                 if (i == 0)
                 {
@@ -234,7 +254,12 @@ namespace CMR.Controllers
                     model.pendingCount++;
                 }
             }
-            String[] academicYears = dictionary.Keys.ToArray<String>();
+            var dictionary2 = new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary.OrderBy(i => i.Key))
+            {
+                dictionary2.Add(item.Key, item.Value);
+            }
+            String[] academicYears = dictionary2.Keys.ToArray<String>();
             Dictionary<string, string[]> pendingDict = new Dictionary<string, string[]>();
             String[] pendingList = null;
    
@@ -242,7 +267,7 @@ namespace CMR.Controllers
             for (int i = 0; i < academicYears.Count(); i++)
             {
                 String year = academicYears[i];
-                StatisticModel theModel = dictionary[year];
+                StatisticModel theModel = dictionary2[year];
 
                 if (i == 0)
                 {
@@ -284,14 +309,19 @@ namespace CMR.Controllers
                     model.pendingCount++;
                 }
             }
-            String[] academicYears = dictionary.Keys.ToArray<String>();
+            var dictionary2 = new Dictionary<string, StatisticModel>();
+            foreach (var item in dictionary.OrderBy(i => i.Key))
+            {
+                dictionary2.Add(item.Key, item.Value);
+            }
+            String[] academicYears = dictionary2.Keys.ToArray<String>();
             Dictionary<string, string[]> pendingDict = new Dictionary<string, string[]>();
             String[] pendingList = null;
 
             for (int i = 0; i < academicYears.Count(); i++)
             {
                 String year = academicYears[i];
-                StatisticModel theModel = dictionary[year];
+                StatisticModel theModel = dictionary2[year];
 
                 if (i == 0)
                 {
