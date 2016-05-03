@@ -38,11 +38,11 @@
         <li>
             <a href="#" class="head collapsed @Html.ActivePage("Report")"><i class="fa fa-users fa-lg"></i> Reports </a>
             <ul class="sub-menu">
-                <li class="@Html.ActivePage("Report","Index")">
-                    @Html.ActionLink("Statistic Report", "Index", "Report")
+                <li class="@Html.ActivePage("Report","StatisticReport")">
+                    @Html.ActionLink("Statistic Report", "StatisticReport", "Report")
                 </li>
-                <li class="@Html.ActivePage("Account","Register")">
-                    @Html.ActionLink("Exception Report", "Index", "Report")
+                <li class="@Html.ActivePage("Report", "ExceptionReport")">
+                    @Html.ActionLink("Exception Report", "ExceptionReport", "Report")
                 </li>
             </ul>
         </li>

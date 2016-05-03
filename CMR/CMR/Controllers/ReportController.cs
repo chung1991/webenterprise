@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace CMR.Controllers
 {
-    
+     [CustomAuthorize(Roles = "Admin")]
     public class ReportController : Controller
     {
         // GET: Report
@@ -21,6 +21,79 @@ namespace CMR.Controllers
             CRMContext db = new CRMContext();
             return View(db.CourseMonitoringReports.ToList());
             //return View();
+        }
+
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult SummarizeReport()
+        {
+            return View(StackedChartData.GetData());
+        }
+
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult StatisticReport()
+        {
+            CRMContext db = new CRMContext();
+            return View(db.CourseMonitoringReports.ToList());
+        }
+
+        [CustomAuthorize(Roles = "Admin")]
+        public ActionResult ExceptionReport()
+        {
+            CRMContext db = new CRMContext();
+            return View(db.CourseMonitoringReports.ToList());
+        }
+
+        public ActionResult CreateStatusStatisTicReportChart()
+        {
+            CRMContext db = new CRMContext();
+            //Create bar chart
+            var chart = new Chart(width: 800, height: 400, theme: ChartTheme.Green)
+                .AddTitle("Status statistic of Course Monitoring Report Chart")
+                .AddLegend()
+                .AddSeries(chartType: "StackedColumn",
+                                xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016" },
+                                yValues: new[] { "12", "14", "17", "10", "8" },
+                                name: "Pending")
+                .AddSeries(chartType: "StackedColumn",
+                                xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016" },
+                                yValues: new[] { "5", "9", "20", "11", "33" },
+                                name: "Waiting")
+                .AddSeries(chartType: "StackedColumn",
+                                xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016" },
+                                yValues: new[] { "2", "0", "15", "7", "25" },
+                                name: "Rejected")
+                .AddSeries(chartType: "StackedColumn",
+                                xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016" },
+                                yValues: new[] { "20", "30", "40", "50", "60" },
+                                name: "Approved")
+                .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+        public ActionResult CreatePendingReportChart()
+        {
+            //Create bar chart
+            var chart = new Chart(width: 600, height: 300, theme: ChartTheme.Green)
+            .AddTitle("Pending Course Monitoring Report Chart")
+            .AddLegend()
+            .AddSeries(chartType: "Bar",
+                            xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016", },
+                            yValues: new[] { "12", "14", "17", "10", "8" })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
+        }
+
+        public ActionResult CreateNoResponseReportChart()
+        {
+            //Create bar chart
+            var chart = new Chart(width: 600, height: 300, theme: ChartTheme.Green)
+            .AddTitle("No Response Course Monitoring Report Chart")
+            .AddLegend()
+            .AddSeries(chartType: "Bar",
+                            xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016", },
+                            yValues: new[] { "4", "9", "5", "2", "7" })
+                            .GetBytes("png");
+            return File(chart, "image/bytes");
         }
 
         public ActionResult CreateArea()
@@ -39,15 +112,17 @@ namespace CMR.Controllers
         public ActionResult CreateStackColumn100()
         {
             //Create bar chart
-            var chart = new Chart(width: 300, height: 200)
+            var chart = new Chart(width: 300, height: 200, theme : ChartTheme.Vanilla)
             .AddTitle("Stack Column 100")
             .AddLegend()
-            .AddSeries(chartType: "StackedColumn100",
+            .AddSeries(chartType: "StackedColumn",
                             xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016"},
-                            yValues: new[] { "100", "100", "100", "100", "100" })
-            .AddSeries(chartType: "StackedColumn100",
+                            yValues: new[] { "20", "20", "20", "20", "20" },
+                            name: "Wait", markerStep : 4)
+            .AddSeries(chartType: "StackedColumn",
                             xValue: new[] { "2012 ", "2013", "2014 ", "2015", "2016"},
-                            yValues: new[] { "20", "10", "10", "50", "90" })
+                            yValues: new[] { "10", "30", "10", "40", "5" },
+                            name: "Approved", markerStep: 5)
                             .GetBytes("png");
             return File(chart, "image/bytes");
         }

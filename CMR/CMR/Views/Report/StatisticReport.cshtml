@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>Statistic Report</h1>
+        @Html.ActionLink("Print PDF", "PrintReport")
+    </div>
+    <div>
+        <img src="@Url.Action("CreateStatusStatisTicReportChart")" alt="Status statistic Chart" />
+    </div>
+    <br />
+    <br />
+    <div>
+        <table class="tablesaw" data-tablesaw-mode="stack">
+            <tr>
+                <td></td>
+                <td>Pending</td>
+                <td>Waiting</td>
+                <td>Rejected</td>
+                <td>Approved</td>
+            </tr>
+            <tr>
+                <td>2012</td>
+                <td>12</td>
+                <td>6</td>
+                <td>2</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>2013</td>
+                <td>14</td>
+                <td>9</td>
+                <td>0</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>2014</td>
+                <td>17</td>
+                <td>20</td>
+                <td>15</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>2015</td>
+                <td>10</td>
+                <td>11</td>
+                <td>7</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>2016</td>
+                <td>8</td>
+                <td>33</td>
+                <td>25</td>
+                <td>60</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

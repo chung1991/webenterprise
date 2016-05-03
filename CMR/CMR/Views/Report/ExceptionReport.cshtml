@@ -1,0 +1,24 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>Exception Report</h1>
+        @Html.ActionLink("Print PDF", "PrintReport")
+    </div>
+    <div>
+        <table class="tablesaw" data-tablesaw-mode="stack">
+            <tr>
+                <td><img src="@Url.Action("CreatePendingReportChart")" alt="Status CMR Chart" /></td>
+                <td><img src="@Url.Action("CreateNoResponseReportChart")" alt="Status CMR Chart" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -215,6 +215,7 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StackedChartData.cs" />
     <Compile Include="Models\Student.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -238,6 +239,8 @@
     <Content Include="Content\Images\Finish.png" />
     <Content Include="Content\Images\Finish01.png" />
     <Content Include="Content\Images\Wait.png" />
+    <Content Include="Content\jquery.jqChart.css" />
+    <Content Include="Content\jquery.jqRangeSlider.css" />
     <Content Include="Content\login_style\1.jpg" />
     <Content Include="Content\login_style\jquery.backstretch.min.js" />
     <Content Include="Content\login_style\login-form-elements.css" />
@@ -254,6 +257,8 @@
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\excanvas.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
     <Content Include="Scripts\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery-2.2.1.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -288,6 +293,9 @@
     <Content Include="Scripts\jquery-2.2.2.min.js" />
     <Content Include="Scripts\jquery-2.2.2.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.jqChart.min.js" />
+    <Content Include="Scripts\jquery.jqRangeSlider.min.js" />
+    <Content Include="Scripts\jquery.mousewheel.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -344,14 +352,15 @@
     <Content Include="Views\PVC\Index.cshtml" />
     <Content Include="Views\PVC\Detail.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Account\insertDumyData.cshtml" />
-=======
->>>>>>> Add moving report from admin menu
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\SummarizeReport.cshtml" />
+    <Content Include="Views\Report\StatisticReport.cshtml" />
+    <Content Include="Views\Report\ExceptionReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\NewFolder1\" />
     <Folder Include="Utilities\" />
     <Folder Include="Views\Annual\" />
   </ItemGroup>
