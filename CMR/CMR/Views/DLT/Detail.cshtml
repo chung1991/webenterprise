@@ -118,7 +118,7 @@
                 <h4 class="modal-title">Report Action</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("ResponseComment", "DLT", FormMethod.Post, new {@id="form-comment" }))
+                @using (Html.BeginForm("ResponseComment", "DLT", FormMethod.Post, new {@id="form-response" }))
                 {
                     @Html.HiddenFor(model => model.CourseMonitoringReportId)
                     <div class="form-horizontal">
