@@ -113,7 +113,13 @@ namespace CMR.Controllers
         public ActionResult ReportList()
         {
             CRMContext db = new CRMContext();
-            return View(db.CourseMonitoringReports.ToList());
+            var currUser = User.Identity;
+            String userName = currUser.Name;
+            var Reports = (from cmr in db.CourseMonitoringReports
+                           select cmr);
+
+            Reports = Reports.Where(s => s.AnnualCourse.Account.userName == userName);
+            return View(Reports);
         }
 
         public ActionResult ReportDetail(int id)
