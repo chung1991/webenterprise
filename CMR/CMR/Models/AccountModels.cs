@@ -48,10 +48,11 @@ namespace CMR.Models
             [Required]
             [DataType(DataType.PhoneNumber)]
             public String telephone { get; set; }
+
             [Display(Name="Birthday")]
-            [DataType(DataType.Date)]
             [Required]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+            [DataType(DataType.Date)]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
             public DateTime dateOfBirth { get; set; }
 
             [Display(Name = "Address")]
