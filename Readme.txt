@@ -1,3 +1,6 @@
+Alternative Project Website if Somee server is down
+http://www.mglushed.net/cmr
+
 Below is structure of project
 
 /CMR
