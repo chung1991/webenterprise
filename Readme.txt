@@ -1,5 +1,5 @@
 Alternative Project Website if Somee server is down
-http://www.mglushed.net/cmr
+http://www.mglushed.net/
 
 Below is structure of project
 
